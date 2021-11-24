@@ -14,8 +14,8 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.{js,vue}": "eslint",
-    "*.{css,vue}": "stylelint"
+    "*.{ts,js,vue}": "eslint --fix",
+    "*.{css,vue}": "stylelint --fix"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",

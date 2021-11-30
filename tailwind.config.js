@@ -1,3 +1,5 @@
+const { themeColor } = require('./constants/color')
+
 module.exports = {
   mode: 'jit',
   purge: [
@@ -9,6 +11,10 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    colors: {
+      white: themeColor.TEXT_COLOR,
+      'dark-blue': themeColor.BG_COLOR,
+    },
     extend: {},
   },
   variants: {

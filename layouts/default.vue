@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <Header />
+    <Header title="DJ Gassi" />
     <nuxt />
   </div>
 </template>

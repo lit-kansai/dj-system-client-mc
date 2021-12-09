@@ -1,8 +1,12 @@
 <template>
-  <h1 class="text-blue-800">Hello World!</h1>
+  <h1>Hello World!</h1>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({})
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
+  layout: 'default',
+})
+export default class IndexPage extends Vue {}
 </script>

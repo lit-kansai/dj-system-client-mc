@@ -12,8 +12,6 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
-@Component({
-  layout: 'default',
-})
+@Component({})
 export default class DefaultLayout extends Vue {}
 </script>

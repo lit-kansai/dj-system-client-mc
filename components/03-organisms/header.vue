@@ -2,12 +2,7 @@
   <div class="h-32">
     <div class="flex items-center py-3 px-5">
       <div class="flex items-center flex-grow">
-        <img
-          src="~assets/img/header_icon.png"
-          width="78px"
-          height="78px"
-          alt="header_icon.png"
-        />
+        <Logo />
         <p class="text-4xl pl-1">
           {{ title }}
         </p>

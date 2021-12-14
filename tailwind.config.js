@@ -2,6 +2,7 @@
  * @type {import('@types/tailwindcss/tailwind-config').TailwindConfig}
  */
 
+const { colors: defaultColors } = require('tailwindcss/defaultTheme')
 const generateNeon = (color) => {
   return `0 0 0rem #fff, 0 0 .2rem #fff, 0 0 2rem ${color}, 0 0 0.8rem ${color}, 0 0 2.8rem ${color}, inset 0 0 1.3rem ${color};`
 }
@@ -24,7 +25,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      white: '#FCFFF6',
+      ...defaultColors,
       'neon-blue': neonBlue,
       'neon-pink': neonPink,
       'neon-green': neonGreen,
@@ -34,6 +35,7 @@ module.exports = {
       'neon-blue': generateNeon(neonBlue),
       'neon-pink': generateNeon(neonPink),
       'neon-green': generateNeon(neonGreen),
+      'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
     },
     extend: {},
   },

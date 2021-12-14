@@ -37,7 +37,14 @@ module.exports = {
       'neon-green': generateNeon(neonGreen),
       'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
     },
-    extend: {},
+    fontFamily: {
+      sans: ['"Zen Kaku Gothic Antique"'],
+    },
+    extend: {
+      fontFamily: {
+        itim: ['Itim', 'cursive'],
+      },
+    },
   },
   variants: {
     extend: {},

@@ -1,21 +1,38 @@
 <template>
   <div class="flex flex-col items-center content-center">
-    <img width="200px" height="200px" :src="url" :alt="`${roomName} Logo`" />
+    <img
+      width="200px"
+      height="200px"
+      :src="imageUrl"
+      :alt="`${roomName} Logo`"
+    />
     <p class="mt-5 text-4xl">{{ roomName }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-@Component({})
-export default class RoomLogo extends Vue {
-  @Prop() private readonly roomName!: string
-  @Prop() private readonly imageUrl!: string
-  get url() {
-    return this.imageUrl
-      ? this.imageUrl
-      : require('@/assets/img/default_room_logo.png')
-  }
+export interface RoomLogo {
+  roomName: string
+  imageUrl: string
 }
+
+export default defineComponent({
+  props: {
+    roomLogo: { type: Object as PropType<RoomLogo>, required: true },
+  },
+  setup(props) {
+    const roomName = computed((): string => props.roomLogo.roomName)
+    const imageUrl = computed((): string =>
+      props.roomLogo.imageUrl
+        ? props.roomLogo.imageUrl
+        : require('@/assets/img/default_room_logo.png')
+    )
+    return {
+      roomName,
+      imageUrl,
+    }
+  },
+})
 </script>

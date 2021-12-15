@@ -8,8 +8,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { defineComponent } from '@vue/composition-api'
 
-@Component({})
-export default class Logo extends Vue {}
+export default defineComponent({})
 </script>

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export interface Card {
   musicTitle: string
@@ -30,17 +30,10 @@ export interface Card {
 
 export default defineComponent({
   props: {
-    card: { type: Object as PropType<Card>, required: true },
+    musicTitle: { type: String, required: true },
+    artistName: { type: String, required: true },
+    imageUrl: { type: String, required: true },
   },
-  setup(props) {
-    const musicTitle = computed((): string => props.card.musicTitle)
-    const artistName = computed((): string => props.card.artistName)
-    const imageUrl = computed((): string => props.card.imageUrl)
-    return {
-      musicTitle,
-      artistName,
-      imageUrl,
-    }
-  },
+  setup() {},
 })
 </script>

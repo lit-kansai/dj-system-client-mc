@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export interface Header {
   title: string
@@ -23,13 +23,8 @@ export interface Header {
 
 export default defineComponent({
   props: {
-    header: { type: Object as PropType<Header>, required: true },
+    title: { type: String, required: true },
   },
-  setup(props) {
-    const title = computed((): string => props.header.title)
-    return {
-      title,
-    }
-  },
+  setup() {},
 })
 </script>

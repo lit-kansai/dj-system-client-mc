@@ -1,7 +1,7 @@
 <template>
   <div class="p-11 flex">
-    <RoomLogo :room-logo="roomLogo" />
-    <Card :card="card" />
+    <RoomLogo v-bind="roomLogo" />
+    <Card v-bind="card" />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <Header title="DJ Gassi">
+    <Header v-bind="header">
       <template #right>
         <p class="text-2xl">powered by DJ GASSI</p>
       </template>
@@ -10,7 +10,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
+import { Header } from '~/components/03-organisms/header.vue'
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    const header = ref<Header>({
+      title: 'DJ Gassi',
+    })
+    return {
+      header,
+    }
+  },
+})
 </script>

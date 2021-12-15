@@ -20,12 +20,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-@Component({})
-export default class Card extends Vue {
-  @Prop() private readonly musicTitle!: string
-  @Prop() private readonly artistName!: string
-  @Prop() private readonly imageUrl!: string
+export interface Card {
+  musicTitle: string
+  artistName: string
+  imageUrl: string
 }
+
+export default defineComponent({
+  props: {
+    card: { type: Object as PropType<Card>, required: true },
+  },
+  setup(props) {
+    const musicTitle = computed((): string => props.card.musicTitle)
+    const artistName = computed((): string => props.card.artistName)
+    const imageUrl = computed((): string => props.card.imageUrl)
+    return {
+      musicTitle,
+      artistName,
+      imageUrl,
+    }
+  },
+})
 </script>

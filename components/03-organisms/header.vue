@@ -15,10 +15,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-@Component({})
-export default class Header extends Vue {
-  @Prop() private readonly title!: string
+export interface Header {
+  title: string
 }
+
+export default defineComponent({
+  props: {
+    header: { type: Object as PropType<Header>, required: true },
+  },
+  setup(props) {
+    const title = computed((): string => props.header.title)
+    return {
+      title,
+    }
+  },
+})
 </script>

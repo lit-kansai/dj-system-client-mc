@@ -13,7 +13,7 @@ const neonGreen = '#C8FF7E'
 const darkBlue = '#040B15'
 
 module.exports = {
-  mode: 'jit',
+  // mode: 'jit',
   purge: [
     './components/**/*.{vue,js}',
     './constants/**/*.ts',

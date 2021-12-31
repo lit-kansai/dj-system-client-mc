@@ -13,6 +13,8 @@
         @update:text="updateSearchWord"
       />
       <p class="gray-50">{{ searchWord }}</p>
+      <Button v-bind="textButton" />
+      <Button v-bind="searchButton" />
     </div>
   </div>
 </template>
@@ -23,6 +25,7 @@ import { RequestMusicOverview } from '../components/02-molecules/RequestMusicOve
 import { TextInput } from '../components/01-atoms/TextInput.vue'
 import { Card } from '~/components/02-molecules/Card.vue'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
+import { Button } from '~/components/01-atoms/Button.vue'
 
 export default defineComponent({
   layout: 'default',
@@ -54,6 +57,13 @@ export default defineComponent({
     const updateSearchWord = (val: string) => {
       searchWord.value = val
     }
+    const textButton = ref<Button>({
+      type: 'text',
+      text: 'MCにリクエストを送信',
+    })
+    const searchButton = ref<Button>({
+      type: 'search',
+    })
     return {
       card,
       roomLogo,
@@ -61,6 +71,8 @@ export default defineComponent({
       textInput,
       searchWord,
       updateSearchWord,
+      textButton,
+      searchButton,
     }
   },
 })

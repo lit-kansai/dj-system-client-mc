@@ -30,7 +30,7 @@ module.exports = {
       'neon-blue': neonBlue,
       'neon-pink': neonPink,
       'neon-green': neonGreen,
-      'yellow': neonYellow,
+      'yellow': yellow,
       'dark-blue': darkBlue,
     },
     boxShadow: {

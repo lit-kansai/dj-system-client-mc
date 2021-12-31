@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-export interface Card {
+export interface Button {
   text: string
   type: string
 }

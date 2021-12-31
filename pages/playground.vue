@@ -13,6 +13,7 @@
         @update:text="updateSearchWord"
       />
       <p class="gray-50">{{ searchWord }}</p>
+      <HeaderText />
     </div>
   </div>
 </template>

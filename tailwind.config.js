@@ -6,6 +6,9 @@ const { colors: defaultColors } = require('tailwindcss/defaultTheme')
 const generateNeon = (color) => {
   return `0 0 0rem #fff, 0 0 .2rem #fff, 0 0 2rem ${color}, 0 0 0.8rem ${color}, 0 0 2.8rem ${color}, inset 0 0 1.3rem ${color};`
 }
+const generateDropShadowNeon = (color) => {
+  return `0 0 5px ${color}`
+}
 
 const neonBlue = '#3E65F4'
 const neonPink = '#DD6BDA'
@@ -38,6 +41,11 @@ module.exports = {
       'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
       'text-input-neon-blue':
         '0 0 0.8rem #3E65F4, 0 0 0.4rem #3E65F4, inset 0 0 0.3rem #3E65F4',
+    },
+    dropShadow: {
+      'neon-blue': generateDropShadowNeon(neonBlue),
+      'neon-pink': generateDropShadowNeon(neonPink),
+      'neon-green': generateDropShadowNeon(neonGreen),
     },
     fontFamily: {
       sans: ['"Zen Kaku Gothic Antique"'],

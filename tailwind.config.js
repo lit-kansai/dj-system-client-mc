@@ -10,7 +10,7 @@ const generateNeon = (color) => {
 const neonBlue = '#3E65F4'
 const neonPink = '#DD6BDA'
 const neonGreen = '#C8FF7E'
-const neonYellow = '#FFD768'
+const yellow = '#FFD768'
 const darkBlue = '#040B15'
 
 module.exports = {
@@ -30,14 +30,13 @@ module.exports = {
       'neon-blue': neonBlue,
       'neon-pink': neonPink,
       'neon-green': neonGreen,
-      'neon-yellow': neonYellow,
+      'yellow': neonYellow,
       'dark-blue': darkBlue,
     },
     boxShadow: {
       'neon-blue': generateNeon(neonBlue),
       'neon-pink': generateNeon(neonPink),
       'neon-green': generateNeon(neonGreen),
-      'neon-yellow': generateNeon(neonYellow),
       'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
       'text-input-neon-blue':
         '0 0 0.8rem #3E65F4, 0 0 0.4rem #3E65F4, inset 0 0 0.3rem #3E65F4',

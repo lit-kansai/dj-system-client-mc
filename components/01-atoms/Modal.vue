@@ -1,17 +1,20 @@
-<!-- TODO: Modalのネオンを少し弱める -->
 <template>
   <div
     v-if="opened"
-    class="fixed z-50 flex items-center justify-center w-screen h-screen"
+    class="fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center bg-black bg-opacity-40"
+    @click="close()"
   >
     <div
-      class="relative p-5 border-2 border-neon-blue shadow-modal-neon-blue rounded-2xl"
+      class="max-h-[80%] max-w-[80%] relative z-30 p-5 border-2 opacity-100 border-neon-blue shadow-modal-neon-blue rounded-2xl"
     >
       <ModalCloseButton
-        class="absolute top-0 right-0 origin-center translate-x-1/2 -translate-y-1/2"
+        class="absolute top-0 right-0 transform origin-center translate-x-1/2 -translate-y-1/2"
         @click.native="close()"
       />
-      <div class="border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl">
+      <div
+        class="border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl"
+        @click.stop=""
+      >
         <div class="bg-gray-800 rounded-2xl">
           <slot name="content"> </slot>
         </div>

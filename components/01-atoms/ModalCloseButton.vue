@@ -1,9 +1,9 @@
 <template>
   <button
-    class="bg-gray-800 text-gray-200 flex rounded-full border-2 border-neon-yellow p-2 active:opacity-40"
+    class="flex p-2 text-gray-200 bg-gray-800 border-2 rounded-full opacity-100 border-yellow hover:opacity-60"
   >
     <svg
-      class="fill h-6 w-6"
+      class="w-6 h-6 fill"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

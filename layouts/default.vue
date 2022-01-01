@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { Header } from '~/components/03-organisms/Header.vue'
+import { Header } from '~/components/03-organisms/header.vue'
 
 export default defineComponent({
   setup() {

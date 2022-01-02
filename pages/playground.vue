@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="p-11 flex">
+    <Modal v-bind="modal" @close="closeModal">
+      <template #content>
+        <div class="w-[80vh] h-[50vh]"></div>
+      </template>
+    </Modal>
+    <div class="flex p-11">
+      <button @click="openModal">openModal</button>
       <RoomLogo v-bind="roomLogo" />
       <Card v-bind="card" />
     </div>
@@ -26,6 +32,7 @@ import { TextInput } from '../components/01-atoms/TextInput.vue'
 import { Card } from '~/components/02-molecules/Card.vue'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Button } from '~/components/01-atoms/Button.vue'
+import { Modal } from '~/components/01-atoms/Modal.vue'
 
 export default defineComponent({
   layout: 'default',
@@ -39,6 +46,9 @@ export default defineComponent({
     const roomLogo = ref<RoomLogo>({
       roomName: 'ルーム名',
       imageUrl: '',
+    })
+    const modal = ref<Modal>({
+      opened: true,
     })
     const requestMusicOverview = ref<RequestMusicOverview>({
       musicTitle: 'ヒステリックナイトガール',
@@ -65,8 +75,16 @@ export default defineComponent({
       type: 'search',
       text: '',
     })
+    const openModal = () => {
+      console.log(modal)
+      modal.value.opened = !modal.value.opened
+    }
+    const closeModal = () => {
+      modal.value.opened = false
+    }
     return {
       card,
+      modal,
       roomLogo,
       requestMusicOverview,
       textInput,
@@ -74,6 +92,8 @@ export default defineComponent({
       updateSearchWord,
       textButton,
       searchButton,
+      openModal,
+      closeModal,
     }
   },
 })

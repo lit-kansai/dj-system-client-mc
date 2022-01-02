@@ -1,9 +1,9 @@
 <template>
   <div class="h-32">
-    <div class="flex items-center py-3 px-5">
+    <div class="flex items-center px-5 py-3">
       <div class="flex items-center flex-grow">
         <Logo />
-        <p class="text-4xl pl-1">
+        <p class="pl-1 text-4xl">
           {{ title }}
         </p>
       </div>

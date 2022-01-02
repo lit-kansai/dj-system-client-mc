@@ -1,7 +1,5 @@
 <template>
-  <button
-    class="p-3 cursor-pointer border rounded-md bg-yellow"
-  >
+  <button class="p-3 cursor-pointer rounded-md bg-yellow">
     <div v-if="type == 'text'">
       <p class="text-2xl">{{ text }}</p>
     </div>

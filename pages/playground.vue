@@ -63,6 +63,7 @@ export default defineComponent({
     })
     const searchButton = ref<Button>({
       type: 'search',
+      text: '',
     })
     return {
       card,

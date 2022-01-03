@@ -14,6 +14,7 @@ const neonBlue = '#3E65F4'
 const neonPink = '#DD6BDA'
 const neonGreen = '#C8FF7E'
 const yellow = '#FFD768'
+const whiteYellow = '#FFE08B'
 const darkBlue = '#040B15'
 
 module.exports = {
@@ -34,6 +35,7 @@ module.exports = {
       'neon-pink': neonPink,
       'neon-green': neonGreen,
       yellow,
+      whiteYellow,
       'dark-blue': darkBlue,
     },
     boxShadow: {

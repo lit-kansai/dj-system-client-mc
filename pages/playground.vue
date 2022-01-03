@@ -19,7 +19,7 @@
         @update:text="updateSearchWord"
       />
       <p class="gray-50">{{ searchWord }}</p>
-      <HeaderText />
+      <HeaderText v-bind="headerText" />
     </div>
   </div>
 </template>
@@ -31,6 +31,7 @@ import { TextInput } from '../components/01-atoms/TextInput.vue'
 import { Card } from '~/components/02-molecules/Card.vue'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Modal } from '~/components/01-atoms/Modal.vue'
+import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
 
 export default defineComponent({
   layout: 'default',
@@ -72,6 +73,9 @@ export default defineComponent({
     const closeModal = () => {
       modal.value.opened = false
     }
+    const headerText = ref<HeaderText>({
+      text: 'DJ GASSI',
+    })
     return {
       card,
       modal,
@@ -82,6 +86,7 @@ export default defineComponent({
       updateSearchWord,
       openModal,
       closeModal,
+      headerText,
     }
   },
 })

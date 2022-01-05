@@ -64,6 +64,12 @@ const config: NuxtConfig = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  // typescript: {
+  //   typeCheck: {
+  //     eslint: true,
+  //     vue: true,
+  //   },
+  // },
 }
 
 export default config

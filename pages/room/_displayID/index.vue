@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>mc/room/:id</h1>
-    <p>{{ id }}</p>
+    <h1>mc/room/:displayID</h1>
+    <p>{{ displayID }}</p>
     <NuxtLink to="/top">top</NuxtLink>
   </div>
 </template>
@@ -11,8 +11,8 @@ import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
-    const id = $nuxt.$route.params.id
-    return { id }
+    const { displayID } = $nuxt.$route.params
+    return { displayID }
   },
 })
 </script>

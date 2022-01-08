@@ -1,10 +1,7 @@
 <template>
-  <img
-    src="~assets/img/header_icon.png"
-    width="78px"
-    height="78px"
-    alt="header_icon.png"
-  />
+  <div class="h-full">
+    <img width="40px" src="~assets/img/header_icon.png" alt="header_icon.png" />
+  </div>
 </template>
 
 <script lang="ts">

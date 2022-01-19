@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen">
+  <div class="h-screen min-h-screen">
     <Header v-bind="header">
       <template #right>
         <p class="text-2xl">powered by DJ GASSI</p>

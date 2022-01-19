@@ -15,6 +15,7 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "rootDir": ".",
     "paths": {
       "~/*": [
         "./*"
@@ -29,12 +30,14 @@
       "@types/node"
     ]
   },
+  "include": [
+		"./**/*.ts",
+		"./**/*.vue",
+		"**/*"
+	],
   "exclude": [
     "node_modules",
     ".nuxt",
     "dist"
-  ],
-	"files": [
-		"vue-shim.d.ts"
-	]
+  ]
 }

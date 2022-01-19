@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { RequestMusicOverview } from '../components/02-molecules/RequestMusicOverview.vue'
-import { TextInput } from '../components/01-atoms/TextInput.vue'
+import { RequestMusicOverview } from '~/components/02-molecules/RequestMusicOverview.vue'
+import { TextInput } from '~/types/components/textInput'
 import { Card } from '~/components/02-molecules/Card.vue'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Button } from '~/components/01-atoms/Button.vue'

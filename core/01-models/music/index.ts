@@ -1,3 +1,6 @@
+import * as Helper from './helper'
+import { Card } from '~/types/components/card'
+
 export interface Artist {
   id: string
   name: string
@@ -8,7 +11,7 @@ export interface Album {
   jacketUrl: string
 }
 
-export interface Music {
+export interface IMusicEntity {
   id: string
   artists: Artist[]
   album: Album
@@ -16,14 +19,20 @@ export interface Music {
   duration: number
 }
 
-export class MusicModel implements Music {
+export interface IMusicHelper {
+  toCardComponentProps: Card
+}
+
+export type IMusicModel = IMusicEntity & IMusicHelper
+
+export class MusicModel implements IMusicModel {
   private readonly _id: string
   private readonly _artists: Artist[]
   private readonly _album: Album
   private readonly _name: string
   private readonly _duration: number
 
-  constructor(response: Music) {
+  constructor(response: IMusicEntity) {
     this._id = response.id
     this._artists = response.artists
     this._album = response.album
@@ -49,5 +58,9 @@ export class MusicModel implements Music {
 
   get duration(): number {
     return this._duration
+  }
+
+  get toCardComponentProps(): Card {
+    return Helper.toCard(this)
   }
 }

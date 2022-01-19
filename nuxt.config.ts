@@ -1,3 +1,4 @@
+import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
@@ -51,6 +52,7 @@ const config: NuxtConfig = {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -64,12 +66,10 @@ const config: NuxtConfig = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  // typescript: {
-  //   typeCheck: {
-  //     eslint: true,
-  //     vue: true,
-  //   },
-  // },
+  alias: {
+    '@': path.resolve(__dirname),
+    '~': path.resolve(__dirname),
+  },
 }
 
 export default config

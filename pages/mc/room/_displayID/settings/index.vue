@@ -8,10 +8,12 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { computed, useRoute } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const id = $nuxt.$route.params.id
+    const route = useRoute()
+    const id = computed(() => route.value.params.id)
     return { id }
   },
 })

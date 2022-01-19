@@ -5,20 +5,13 @@
     :placeholder="placeholder"
     :spellcheck="spellcheck"
     :autocomplete="autocomplete"
-    class="transition ease-in duration-100 text-gray-200 appearance-none w-full bg-gray-800 py-4 px-3 rounded-lg border-neon-blue border-2 focus:shadow-text-input-neon-blue focus:outline-none"
+    class="w-full px-3 py-4 text-gray-200 bg-gray-800 border-2 rounded-lg appearance-none transition ease-in duration-100 border-neon-blue focus:shadow-text-input-neon-blue focus:outline-none"
   />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref } from '@vue/composition-api'
-
-export interface TextInput {
-  text: Ref<string>
-  type: string
-  placeholder: string
-  spellcheck: boolean
-  autocomplete: string
-}
+import { computed, defineComponent } from '@vue/composition-api'
+import { TextInput } from '~/types/components/textInput'
 
 export default defineComponent({
   props: {

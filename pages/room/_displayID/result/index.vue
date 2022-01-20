@@ -9,9 +9,9 @@
         @update:text="updateSearchWord"
       />
     </div>
-    <Container>
+    <Container class="m-8">
       <template #content>
-        <div class="min-h-screen p-6 rounded-2xl">
+        <div class="min-h-screen p-6 m-4 rounded-2xl">
           <div>
             <HeaderText text="RESULT" />
           </div>

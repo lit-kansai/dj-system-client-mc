@@ -1,5 +1,5 @@
 <template>
-  <p class="mt-5 text-4xl text-neon-pink drop-shadow-neon-pink">{{ text }}</p>
+  <p class="text-4xl text-neon-pink drop-shadow-neon-pink">{{ text }}</p>
 </template>
 
 <script lang="ts">

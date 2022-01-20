@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-[calc(100%-84px)]">
-    <div class="p-8 mt-1 border-r-2 border-gray-700">
+  <div class="flex">
+    <div class="min-h-screen p-8 mt-1 border-r-2 border-gray-700">
       <HeaderText text="DJ Gassi" />
       <TextInput
         v-model="textInput.text"
@@ -9,13 +9,9 @@
         @update:text="updateSearchWord"
       />
     </div>
-    <div
-      class="w-full h-full p-5 m-16 border-2 border-neon-blue shadow-modal-neon-blue rounded-2xl"
-    >
-      <div
-        class="min-h-full bg-gray-800 border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl"
-      >
-        <div class="p-6 rounded-2xl">
+    <Container>
+      <template #content>
+        <div class="min-h-screen p-6 rounded-2xl">
           <div>
             <HeaderText text="RESULT" />
           </div>
@@ -23,8 +19,8 @@
             <Card v-for="(card, index) in cards" v-bind="card" :key="index" />
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </Container>
   </div>
 </template>
 

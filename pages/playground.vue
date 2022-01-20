@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { RequestMusicOverview } from '~/components/02-molecules/RequestMusicOverview.vue'
 import { TextInput } from '~/types/components/textInput'
 import { Card } from '~/components/02-molecules/Card.vue'

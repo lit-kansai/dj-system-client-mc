@@ -38,7 +38,7 @@ import {
   onMounted,
 } from '@nuxtjs/composition-api'
 import { FetchMusicGateway } from '~/core/02-gateways/fetchMusic'
-import { useFetchMusic } from '~/core/04-composables/useMusic'
+import { useFetchMusic } from '~/core/03-composables/useMusic'
 import { TextInput } from '~/types/components/textInput'
 import { Card } from '~/types/components/card'
 

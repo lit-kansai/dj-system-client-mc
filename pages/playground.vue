@@ -22,6 +22,13 @@
       <Button v-bind="textButton" />
       <Button v-bind="searchButton" />
       <HeaderText v-bind="headerText" />
+      <Container>
+        <template #content>
+          <div class="p-8">
+            <HeaderText v-bind="headerText" />
+          </div>
+        </template>
+      </Container>
     </div>
   </div>
 </template>

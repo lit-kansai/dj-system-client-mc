@@ -30,11 +30,7 @@ const config: NuxtConfig = {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/composition-api',
-    '@/plugins/axios-accessor',
-    '@/plugins/axios',
-  ],
+  plugins: ['@/plugins/composition-api', '@/plugins/axios', '@/plugins/router'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -62,7 +58,9 @@ const config: NuxtConfig = {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'https://dj-system-api.herokuapp.com',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

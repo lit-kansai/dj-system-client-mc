@@ -1,5 +1,5 @@
 <template>
-  <div class="h-4/5 flex justify-center items-center">
+  <div class="h-full flex justify-center items-center">
     <div class="w-full max-w-7xl flex justify-between items-center">
       <RoomLogo v-bind="roomLogo" class="w-[500px]" />
       <TextInput

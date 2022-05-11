@@ -1,6 +1,9 @@
 import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
+const environment = process.env.NODE_ENV
+const environmentSettings = require(`./environments/${environment}.ts`)
+
 const config: NuxtConfig = {
   telemetry: true,
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -30,11 +33,7 @@ const config: NuxtConfig = {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/composition-api',
-    '@/plugins/axios-accessor',
-    '@/plugins/axios',
-  ],
+  plugins: ['@/plugins/composition-api', '@/plugins/axios'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -62,7 +61,10 @@ const config: NuxtConfig = {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: environmentSettings.API_URL,
+  },
+  env: environmentSettings,
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

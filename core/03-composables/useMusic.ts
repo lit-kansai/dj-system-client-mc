@@ -1,8 +1,8 @@
 import { Ref, ref } from '@vue/composition-api'
 import { IMusicModel } from '~/core/01-models/music'
-import { IFetchMusicGateway } from '~/core/02-gateways/fetchMusic'
+import { IFetchMusicRepository } from '~/core/02-repositories/fetchMusic'
 
-export const useFetchMusic = (gateway: IFetchMusicGateway) => {
+export const useFetchMusic = (gateway: IFetchMusicRepository) => {
   const musics: Ref<IMusicModel[]> = ref([])
   const fetchMusic = () => {
     gateway

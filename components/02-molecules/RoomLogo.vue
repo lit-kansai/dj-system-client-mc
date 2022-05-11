@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center content-center">
-    <img width="200px" height="200px" :src="url" :alt="`${roomName} Logo`" />
+    <img :src="url" :alt="`${roomName} Logo`" />
     <p class="mt-5 text-4xl">{{ roomName }}</p>
   </div>
 </template>

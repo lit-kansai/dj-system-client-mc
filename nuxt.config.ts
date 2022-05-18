@@ -33,7 +33,11 @@ const config: NuxtConfig = {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/composition-api', '@/plugins/axios'],
+  plugins: [
+    '@/plugins/composition-api',
+    '@/plugins/axios',
+    '@/plugins/nuxtInstance',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -65,6 +69,9 @@ const config: NuxtConfig = {
     baseURL: environmentSettings.API_URL,
   },
   env: environmentSettings,
+  router: {
+    middleware: ['auth'],
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

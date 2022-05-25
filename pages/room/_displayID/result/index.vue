@@ -33,7 +33,7 @@ import {
   useRoute,
   onMounted,
 } from '@nuxtjs/composition-api'
-import { FetchMusicGateway } from '~/core/02-gateways/fetchMusic'
+import { FetchMusicRepositoryImpl } from '~/core/02-repositories/fetchMusic'
 import { useFetchMusic } from '~/core/03-composables/useMusic'
 import { TextInput } from '~/types/components/textInput'
 import { Card } from '~/types/components/card'
@@ -43,7 +43,7 @@ export default defineComponent({
     const route = useRoute()
     const id = computed(() => route.value.params.displayID)
     const { searchWord, textInput, updateSearchWord } = useComponents()
-    const { musics, fetchMusic } = useFetchMusic(new FetchMusicGateway())
+    const { musics, fetchMusic } = useFetchMusic(new FetchMusicRepositoryImpl())
 
     const cards: ComputedRef<Card[]> = computed(() =>
       musics.value.map((music) => music.toCardComponentProps)

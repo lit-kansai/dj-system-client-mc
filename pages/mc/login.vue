@@ -31,9 +31,8 @@ import { useGoogleLogin } from '~/core/03-composables/useGoogleLogin'
 export default defineComponent({
   setup() {
     const { headerText, loginButton } = useComponentComposables()
-    const { googleLogin } = useGoogleLogin()
     const onLoginButtonClick = () => {
-      googleLogin.then((res) => window.open(res.redirectUrl))
+      useGoogleLogin().then((res) => window.open(res.redirectUrl))
     }
     return { headerText, loginButton, onLoginButtonClick }
   },

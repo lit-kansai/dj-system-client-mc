@@ -1,15 +1,16 @@
 import { Context } from '@nuxt/types'
-// import { SnakeConverter } from '~/utils/snakeToCamel'
 import { CamelConverter } from '~/utils/camelToSnake'
 import { initializeAxios } from '~/utils/api'
+import { SnakeConverter } from '~/utils/snakeToCamel'
 
 export default function ({ $axios }: Context) {
-  // $axios.onRequest((config) => {
-  // console.log(request)
-  // request.data = SnakeConverter.convert(request.data)
-  // return request
-  // console.log(config.url)
-  // })
+  $axios.onRequest((request) => {
+    if (request.data && request.data?.convert) {
+      const data = SnakeConverter.convert(request.data)
+      delete data.convert
+      return data
+    }
+  })
 
   initializeAxios($axios)
   $axios.onResponse((response) => {

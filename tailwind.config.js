@@ -63,6 +63,9 @@ module.exports = {
       fontFamily: {
         itim: ['Itim', 'cursive'],
       },
+      gridTemplateColumns: {
+        'title-and-content': '300px minmax(100px, 1fr)',
+      },
     },
   },
   variants: {

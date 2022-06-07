@@ -1,5 +1,7 @@
 <template>
   <div>
+    <MemberOtayoriModal />
+    <hr />
     <Modal v-bind="modal" @close="closeModal">
       <template #content>
         <div class="w-[80vh] h-[50vh]"></div>
@@ -57,7 +59,7 @@ export default defineComponent({
       imageUrl: '',
     })
     const modal = ref<Modal>({
-      opened: true,
+      opened: false,
     })
     const requestMusicOverview = ref<RequestMusicOverview>({
       musicTitle: 'ヒステリックナイトガール',

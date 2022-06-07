@@ -2,7 +2,8 @@
   <div>
     <Modal v-bind="modal" @close="closeModal">
       <template #content>
-        <MemberCompleteModal />
+        <MemberOtayori />
+        <!-- <MemberComplete /> -->
       </template>
     </Modal>
     <div class="flex p-11">

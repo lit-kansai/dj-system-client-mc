@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="opened"
-    class="fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center bg-black bg-opacity-40"
+    class="animate-fade-in-down transform fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center bg-black bg-opacity-40"
     @click="close()"
   >
     <div

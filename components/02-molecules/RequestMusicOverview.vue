@@ -5,8 +5,8 @@
     <img
       :src="imageUrl"
       :alt="`${musicTitle} | ${artistName}`"
-      width="77px"
-      height="77px"
+      width="70px"
+      height="70px"
     />
     <div class="ml-4 text-gray-100">
       <p class="text-3xl truncate">

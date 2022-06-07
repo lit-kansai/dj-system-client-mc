@@ -66,6 +66,46 @@ module.exports = {
       gridTemplateColumns: {
         'title-and-content': '300px minmax(100px, 1fr)',
       },
+      keyframes: {
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+        'fade-out-down': {
+          from: {
+            opacity: '1',
+          },
+          to: {
+            opacity: '0',
+          },
+        },
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+        'fade-out-up': {
+          from: {
+            opacity: '1',
+          },
+          to: {
+            opacity: '0',
+          },
+        },
+      },
+      animation: {
+        'fade-in-down': 'fade-in-down 0.3s ease-out',
+        'fade-out-down': 'fade-out-down 0.3s ease-out',
+        'fade-in-up': 'fade-in-up 0.3s ease-out',
+        'fade-out-up': 'fade-out-up 0.3s ease-out',
+      },
     },
   },
   variants: {

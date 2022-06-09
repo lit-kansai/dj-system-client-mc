@@ -5,7 +5,7 @@
     @click="close()"
   >
     <div
-      class="max-h-[80%] max-w-[80%] relative z-30 p-5 border-2 opacity-100 border-neon-blue shadow-modal-neon-blue rounded-2xl"
+      class="mr-6 ml-6 md:max-h-[80%] md:max-w-[80%] relative z-30 p-3.5 md:p-5 border-2 opacity-100 border-neon-blue shadow-modal-neon-blue rounded-2xl"
     >
       <ModalCloseButton
         class="absolute top-0 right-0 transform origin-center translate-x-1/2 -translate-y-1/2"

@@ -1,18 +1,20 @@
 <template>
-  <div class="p-10">
+  <div class="p-5 md:p-10">
     <div class="flex items-end mb-10">
       <HeaderText text="OTAYORI" class="mr-3" />
-      <p>MCに! お便り! 送れますよ!</p>
+      <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
-    <div class="grid grid-cols-title-and-content gap-5 mb-10">
+    <div
+      class="grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5 mb-10"
+    >
       <p>リクエスト曲</p>
-      <RequestMusicOverview v-bind="requestMusicOverview" />
+      <RequestMusicOverview v-bind="requestMusicOverview" class="mb-5" />
       <p>ラジオネーム（任意）</p>
-      <TextInput text="" />
+      <TextInput text="" class="mb-5" placeholder="例)がっしー" />
       <p>お便り内容（任意）</p>
-      <TextInput text="" />
+      <TextInput text="" placeholder="例)今日も一日がんばるぞ!" />
     </div>
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-1">
       <Button text="リクエストを送信" />
     </div>
   </div>

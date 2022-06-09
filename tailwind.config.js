@@ -64,7 +64,7 @@ module.exports = {
         itim: ['Itim', 'cursive'],
       },
       gridTemplateColumns: {
-        'title-and-content': '300px minmax(100px, 1fr)',
+        'title-and-content': '165px minmax(300px, 1fr)',
       },
       keyframes: {
         'fade-in-down': {

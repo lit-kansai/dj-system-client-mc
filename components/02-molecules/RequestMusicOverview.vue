@@ -2,17 +2,12 @@
   <div
     class="flex p-3 border rounded-md border-neon-green shadow-card-neon-green"
   >
-    <img
-      :src="imageUrl"
-      :alt="`${musicTitle} | ${artistName}`"
-      width="70px"
-      height="70px"
-    />
-    <div class="ml-4 text-gray-100">
-      <p class="text-3xl truncate">
+    <img :src="imageUrl" :alt="`${musicTitle} | ${artistName}`" width="50px" />
+    <div class="ml-2 text-gray-100 w-full overflow-hidden">
+      <p class="text-lg truncate">
         {{ musicTitle }}
       </p>
-      <p class="text-2xl pl-1 truncate">
+      <p class="pl-1 truncate">
         {{ artistName }}
       </p>
     </div>

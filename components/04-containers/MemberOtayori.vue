@@ -14,7 +14,7 @@
       <p>お便り内容（任意）</p>
       <TextInput text="" placeholder="例)今日も一日がんばるぞ!" />
     </div>
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-1">
       <Button text="リクエストを送信" />
     </div>
   </div>

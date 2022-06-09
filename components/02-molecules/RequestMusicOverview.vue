@@ -4,7 +4,7 @@
   >
     <img :src="imageUrl" :alt="`${musicTitle} | ${artistName}`" width="50px" />
     <div class="ml-2 text-gray-100 w-full overflow-hidden">
-      <p class="text-2xl truncate">
+      <p class="text-lg truncate">
         {{ musicTitle }}
       </p>
       <p class="pl-1 truncate">

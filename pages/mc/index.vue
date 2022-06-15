@@ -7,7 +7,7 @@
         <div class="p-4">
           <!-- Header -->
           <div class="flex items-end gap-x-3">
-            <HeaderText v-bind="headerText" />
+            <HeaderText v-bind="roomHeaderText" />
             <NuxtLink to="/top" class="text-yellow">
               &gt;&gt; ルームを作成する
             </NuxtLink>
@@ -38,6 +38,14 @@
         </div>
       </template>
     </Container>
+    <!-- account -->
+    <Container class="mt-10">
+      <template #content>
+        <div>
+          <HeaderText v-bind="accountHeaderText" />
+        </div>
+      </template>
+    </Container>
   </div>
 </template>
 
@@ -53,8 +61,11 @@ export interface Room {
 
 export default defineComponent({
   setup() {
-    const headerText = ref<HeaderText>({
+    const roomHeaderText = ref<HeaderText>({
       text: 'Rooms',
+    })
+    const accountHeaderText = ref<HeaderText>({
+      text: 'Accounts',
     })
     const rooms = ref<Room[]>([
       {
@@ -68,7 +79,7 @@ export default defineComponent({
         displayId: 'dj-sawa-kuma',
       },
     ])
-    return { headerText, rooms }
+    return { roomHeaderText, accountHeaderText, rooms }
   },
 })
 </script>

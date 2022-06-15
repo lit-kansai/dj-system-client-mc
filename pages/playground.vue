@@ -3,7 +3,7 @@
     <Modal v-bind="modal" @close="closeModal">
       <template #content>
         <MemberOtayori />
-        <!-- <MemberComplete /> -->
+        <!-- <Complete title="送信完了" subtitle="流れるのをお楽しみに!" /> -->
       </template>
     </Modal>
     <div class="flex p-11">

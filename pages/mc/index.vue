@@ -12,8 +12,11 @@
               &gt;&gt; ルームを作成する
             </NuxtLink>
           </div>
+          <p class="mt-3">
+            "Room"ごとに曲のリクエストを募集することができます。
+          </p>
           <!-- Table -->
-          <table class="mt-3 md:mt-5 w-full table-fixed border-collapse">
+          <table class="mt-3 w-full table-fixed border-collapse">
             <thead class="hidden md:table-header-group text-left">
               <tr class="border border-gray-400">
                 <th class="pl-3 pt-2 pb-2">ルーム名</th>

@@ -5,7 +5,7 @@
     <div
       class="bg-gray-800 border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl"
     >
-      <div class="p-4">
+      <div class="p-4 md:p-6">
         <slot name="content"></slot>
       </div>
     </div>

@@ -41,6 +41,12 @@ module.exports = {
       whiteYellow,
       'dark-blue': darkBlue,
     },
+    backgroundColor: (theme) => ({
+      ...theme('colors'),
+      'neon-blue': neonBlue,
+      'neon-pink': neonPink,
+      'neon-green': neonGreen,
+    }),
     boxShadow: {
       'neon-blue': generateNeon(neonBlue),
       'neon-pink': generateNeon(neonPink),

@@ -1,6 +1,7 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto">
     <p class="mt-5 mb-5">ホーム</p>
+    <!-- Rooms -->
     <Container>
       <template #content>
         <div class="p-4">

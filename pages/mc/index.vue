@@ -8,7 +8,7 @@
           <!-- Header -->
           <div class="flex items-end gap-x-3">
             <HeaderText v-bind="roomHeaderText" />
-            <NuxtLink to="/top" class="text-yellow">
+            <NuxtLink to="/mc/room/create" class="text-yellow">
               &gt;&gt; ルームを作成する
             </NuxtLink>
           </div>

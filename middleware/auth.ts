@@ -41,10 +41,10 @@ const onEnterGoogleLoginPage = () => {
 }
 
 const onEnterLoginRequiredPage = () => {
-  const { redirect } = $nuxt
+  // const { redirect } = $nuxt
   const { hasUserCredentials } = useUserCredentials()
   if (!hasUserCredentials()) {
-    redirect(GOOGLE_LOGIN_PAGE_PATH)
+    // redirect(GOOGLE_LOGIN_PAGE_PATH)
   }
 }
 

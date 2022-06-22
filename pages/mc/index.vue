@@ -131,17 +131,17 @@ export default defineComponent({
     const rooms = ref<Room[]>([
       {
         name: 'DJちっち',
-        description: 'こんにちは',
+        description: 'A日程用',
         displayId: 'dj-chicchi',
       },
       {
         name: 'DJさわっくま',
-        description: 'はろー',
+        description: 'B日程用',
         displayId: 'dj-sawa-kuma',
       },
       {
         name: 'DJたいちゃん',
-        description: 'はろー',
+        description: 'スクール大阪日A',
         displayId: 'dj-taichan',
       },
     ])

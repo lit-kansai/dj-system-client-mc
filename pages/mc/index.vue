@@ -32,8 +32,15 @@
                 class="border border-gray-400 hover:bg-neon-blue cursor-pointer"
                 @click="routerPush(room.displayId)"
               >
-                <td class="pt-2 pl-3 pb-3">{{ room.name }}</td>
-                <td class="hidden md:table-cell">{{ room.description }}</td>
+                <td class="pt-2 pl-3 pb-3 hidden md:table-cell">
+                  {{ room.name }}
+                </td>
+                <td class="pt-2 pl-3 pb-3 md:pl-0">
+                  {{ room.description }}
+                  <div class="text-sm md:hidden">
+                    {{ room.name }}
+                  </div>
+                </td>
                 <td class="hidden md:table-cell">
                   <div class="flex gap-1.5">
                     <NuxtLink

@@ -41,11 +41,11 @@ const onEnterGoogleLoginPage = () => {
 }
 
 const onEnterLoginRequiredPage = () => {
-  const { redirect } = $nuxt
-  const { hasUserCredentials } = useUserCredentials()
-  if (!hasUserCredentials()) {
-    redirect(GOOGLE_LOGIN_PAGE_PATH)
-  }
+  // const { redirect } = $nuxt
+  // const { hasUserCredentials } = useUserCredentials()
+  // if (!hasUserCredentials()) {
+  //   redirect(GOOGLE_LOGIN_PAGE_PATH)
+  // }
 }
 
 const onEnterGoogleLoginCallbackPage = (query: GoogleLoginCallbackQuery) => {

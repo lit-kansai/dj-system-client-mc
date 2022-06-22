@@ -30,6 +30,7 @@
                 v-for="room in rooms"
                 :key="room.displayId"
                 class="border border-gray-400 hover:bg-neon-blue cursor-pointer"
+                @click="routerPush(room.displayId)"
               >
                 <td class="pt-2 pl-3 pb-3">{{ room.name }}</td>
                 <td class="hidden md:table-cell">{{ room.description }}</td>
@@ -97,6 +98,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
+import { useRouter } from '@nuxtjs/composition-api'
 import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
 
 export interface Room {
@@ -112,6 +114,7 @@ export interface Account {
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const roomHeaderText = ref<HeaderText>({
       text: 'Rooms',
     })
@@ -145,7 +148,10 @@ export default defineComponent({
         isConnected: true,
       },
     ])
-    return { roomHeaderText, accountHeaderText, accounts, rooms }
+    const routerPush = (displayId: String) => {
+      router.push(`/mc/room/${displayId}`)
+    }
+    return { roomHeaderText, accountHeaderText, accounts, rooms, routerPush }
   },
 })
 </script>

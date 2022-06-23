@@ -2,20 +2,24 @@
   <div
     class="flex p-3 border rounded-md border-neon-green shadow-card-neon-green"
   >
-    <img :src="imageUrl" :alt="`${musicTitle} | ${artistName}`" width="50px" />
-    <div class="ml-2 text-gray-100 w-full overflow-hidden">
+    <img
+      :src="props.imageUrl"
+      :alt="`${props.musicTitle} | ${props.artistName}`"
+      width="50px"
+    />
+    <div class="w-full ml-2 overflow-hidden text-gray-100">
       <p class="text-lg truncate">
-        {{ musicTitle }}
+        {{ props.musicTitle }}
       </p>
       <p class="pl-1 truncate">
-        {{ artistName }}
+        {{ props.artistName }}
       </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 
 export interface RequestMusicOverview {
   musicTitle: string
@@ -25,9 +29,7 @@ export interface RequestMusicOverview {
 
 export default defineComponent({
   props: {
-    musicTitle: { type: String, required: true },
-    artistName: { type: String, required: true },
-    imageUrl: { type: String, required: true },
+    props: { type: Object as PropType<RequestMusicOverview>, required: true },
   },
   setup() {},
 })

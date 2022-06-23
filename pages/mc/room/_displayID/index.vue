@@ -3,39 +3,41 @@
     <p class="mt-5 mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ room.name }}
     </p>
-    <!-- Details -->
-    <Container>
-      <template #content>
-        <div class="flex items-end gap-x-3">
-          <HeaderText v-bind="detailTitle" />
-          <NuxtLink
-            :to="`/mc/room/${room.displayId}/settings`"
-            class="text-yellow"
-          >
-            &gt;&gt; ルームを編集する
-          </NuxtLink>
-        </div>
-        <ul class="mt-3 mb-3">
-          <li>ルームネーム: {{ room.name }}</li>
-          <li>ルーム説明: {{ room.description }}</li>
-          <li>使用サービス: {{ room.type }}</li>
-          <li>
-            ルームURL:
-            <NuxtLink :to="`/room/${room.displayId}`">{{
-              protocolAndHostname + '/room/' + room.displayId
-            }}</NuxtLink>
-          </li>
-        </ul>
-      </template>
-    </Container>
-    <!-- Request -->
-    <Container>
-      <template #content> <HeaderText v-bind="requestTitle" /></template>
-    </Container>
-    <!-- Message -->
-    <Container>
-      <template #content> <HeaderText v-bind="messageTitle" /></template>
-    </Container>
+    <div class="flex flex-col md:flex-row gap-10">
+      <!-- Details -->
+      <Container>
+        <template #content>
+          <div class="flex items-end gap-x-3">
+            <HeaderText v-bind="detailTitle" />
+            <NuxtLink
+              :to="`/mc/room/${room.displayId}/settings`"
+              class="text-yellow"
+            >
+              &gt;&gt; ルームを編集する
+            </NuxtLink>
+          </div>
+          <ul class="mt-3 mb-3">
+            <li>ルームネーム: {{ room.name }}</li>
+            <li>ルーム説明: {{ room.description }}</li>
+            <li>使用サービス: {{ room.type }}</li>
+            <li>
+              ルームURL:
+              <NuxtLink :to="`/room/${room.displayId}`">{{
+                protocolAndHostname + '/room/' + room.displayId
+              }}</NuxtLink>
+            </li>
+          </ul>
+        </template>
+      </Container>
+      <!-- Request -->
+      <Container>
+        <template #content> <HeaderText v-bind="requestTitle" /></template>
+      </Container>
+      <!-- Message -->
+      <Container>
+        <template #content> <HeaderText v-bind="messageTitle" /></template>
+      </Container>
+    </div>
   </div>
 </template>
 

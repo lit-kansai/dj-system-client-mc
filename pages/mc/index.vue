@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm md:max-w-7xl m-auto">
+  <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
     <p class="mt-5 mb-5">ホーム</p>
     <!-- Rooms -->
     <div class="flex flex-col md:flex-row gap-10">
@@ -112,6 +112,8 @@ export interface Room {
   name: string
   description: string
   displayId: string
+  type: string
+  playlistId: string
 }
 
 export interface Account {
@@ -133,16 +135,22 @@ export default defineComponent({
         name: 'DJちっち',
         description: 'A日程用',
         displayId: 'dj-chicchi',
+        type: 'applemusic',
+        playlistId: 'dssdsds',
       },
       {
         name: 'DJさわっくま',
         description: 'B日程用',
         displayId: 'dj-sawa-kuma',
+        type: 'applemusic',
+        playlistId: 'dssdsds',
       },
       {
         name: 'DJたいちゃん',
         description: 'スクール大阪日A',
         displayId: 'dj-taichan',
+        type: 'applemusic',
+        playlistId: 'dssdsds',
       },
     ])
     const accounts = ref<Account[]>([

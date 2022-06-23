@@ -77,7 +77,27 @@
       </Container>
       <!-- Message -->
       <Container>
-        <template #content> <HeaderText v-bind="messageTitle" /></template>
+        <template #content>
+          <HeaderText v-bind="letterTitle" />
+          <table class="mt-3 w-full border-collapse">
+            <thead>
+              <tr class="text-left">
+                <th>name</th>
+                <th>message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="letter in letters"
+                :key="letter.id"
+                class="border border-gray-400 hover:bg-neon-blue cursor-pointer"
+              >
+                <td class="pl-2 md:pl-0">{{ letter.radioName }}</td>
+                <td>{{ letter.message }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
       </Container>
     </div>
   </div>
@@ -96,6 +116,12 @@ export interface RequestMusicDetail {
   providerUrl: string
   duration: number
   providedMusicId: string
+}
+
+export interface Letter {
+  id: number
+  radioName: string
+  message: string
 }
 
 export default defineComponent({
@@ -118,8 +144,8 @@ export default defineComponent({
     const requestTitle = ref<HeaderText>({
       text: 'Request',
     })
-    const messageTitle = ref<HeaderText>({
-      text: 'Message',
+    const letterTitle = ref<HeaderText>({
+      text: 'Letter',
     })
     const musics = ref<RequestMusicDetail[]>([
       {
@@ -143,14 +169,27 @@ export default defineComponent({
         providedMusicId: 'm2ed2',
       },
     ])
+    const letters = ref<Letter[]>([
+      {
+        id: 0,
+        radioName: 'がっしー',
+        message: '初めて投稿しました！',
+      },
+      {
+        id: 1,
+        radioName: 'てぃーてぃー',
+        message: 'やっぱりこの曲！',
+      },
+    ])
     return {
       id,
       protocolAndHostname,
       room,
       detailTitle,
       requestTitle,
-      messageTitle,
+      letterTitle,
       musics,
+      letters,
     }
   },
 })

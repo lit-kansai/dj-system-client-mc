@@ -59,6 +59,7 @@
                   v-for="music in musics"
                   :key="music.providedMusicId"
                   class="border border-gray-400 hover:bg-neon-blue cursor-pointer w-full"
+                  @click="redirectOutside(music.providerUrl)"
                 >
                   <td class="w-14">
                     <img
@@ -150,6 +151,9 @@ export default defineComponent({
       () => window.location.protocol + '//' + window.location.hostname
     )
     const id = computed(() => route.value.params.id)
+    const redirectOutside = (url: string) => {
+      window.open(url, '_blank')
+    }
     const room = ref<Room>({
       name: 'DJさわっくま',
       description: 'B日程用',
@@ -206,6 +210,7 @@ export default defineComponent({
     ])
     return {
       id,
+      redirectOutside,
       protocolAndHostname,
       room,
       detailTitle,

@@ -9,77 +9,103 @@
         @update:text="updateSearchWord"
       />
     </div>
-    <Container class="m-8">
+    <Container v-if="loading" class="m-8">
       <template #content>
-        <div class="min-h-screen p-6 m-4 rounded-2xl">
-          <div>
-            <HeaderText text="RESULT" />
-          </div>
-          <div class="flex flex-wrap mx-4 mt-6 gap-6">
-            <Card v-for="(card, index) in cards" v-bind="card" :key="index" />
-          </div>
-        </div>
+        <p class="text-white">loading</p>
       </template>
     </Container>
+    <template v-if="!loading">
+      <Container v-if="currentState === 'musicSelect'" class="m-8">
+        <template #content>
+          <MemberMusicSelect @musicSelected="musicSelected" />
+        </template>
+      </Container>
+      <Container v-if="currentState === 'confirm'" class="m-8">
+        <template #content>
+          <MemberOtayori
+            :music="selectedMusic"
+            @submit="onSubmit"
+            @cancel="cancel"
+          />
+        </template>
+      </Container>
+      <Container v-if="currentState === 'finished'" class="m-8">
+        <template #content>
+          <Complete title="送信完了" subtitle="流れるのをお楽しみに！！" />
+        </template>
+      </Container>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
-  ref,
-  ComputedRef,
   computed,
   useRoute,
-  onMounted,
+  watch,
 } from '@nuxtjs/composition-api'
-import { FetchMusicRepositoryImpl } from '~/core/02-repositories/fetchMusic'
-import { useFetchMusic } from '~/core/03-composables/useMusic'
-import { TextInput } from '~/types/components/textInput'
-import { Card } from '~/types/components/card'
+import {
+  useModal,
+  useSelectedMusic,
+} from '~/types/pages/room/_displayID/result/index'
+import { MusicSelectedPayload } from '~/components/04-containers/MemberMusicSelect.vue'
+import { MemberOtayoriPayload } from '~/components/04-containers/MemberOtayori.vue'
+import {
+  useRequestMusic,
+  UseRequestMusicInputs,
+} from '~/core/03-composables/useRequestMusic'
+import { useTextFieldComponent } from '~/core/03-composables/useTextFieldComponent'
+import { useLoading } from '~/core/03-composables/useLoading'
+import { RequestMusicRepository } from '~/core/02-repositories/requestMusic'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const id = computed(() => route.value.params.displayID)
-    const { searchWord, textInput, updateSearchWord } = useComponents()
-    const { musics, fetchMusic } = useFetchMusic(new FetchMusicRepositoryImpl())
-
-    const cards: ComputedRef<Card[]> = computed(() =>
-      musics.value.map((music) => music.toCardComponentProps)
+    const displayID = computed(() => route.value.params.displayID)
+    const { searchWord, textInput, updateSearchWord } = useTextFieldComponent()
+    const { loading, setLoading } = useLoading()
+    const { selectedMusic, setSelectedMusic } = useSelectedMusic()
+    const { currentState, nextModal, previousModal } = useModal()
+    const { requestMusicResult, requestMusic } = useRequestMusic(
+      new RequestMusicRepository()
     )
+    const musicSelected = (payload: MusicSelectedPayload) => {
+      setSelectedMusic(payload.music)
+      nextModal()
+    }
+    const cancel = () => {
+      previousModal()
+    }
+    const onSubmit = (payload: MemberOtayoriPayload) => {
+      const inputs: UseRequestMusicInputs = {
+        params: {
+          musics: [payload.music.id],
+          radioName: payload.radioName,
+          message: payload.message,
+        },
+        roomId: displayID.value,
+      }
+      nextModal()
+      setLoading(true)
+      requestMusic(inputs)
+    }
 
-    onMounted(() => {
-      fetchMusic()
+    watch(requestMusicResult, () => {
+      setLoading(false)
     })
 
     return {
-      cards,
+      loading,
+      selectedMusic,
       searchWord,
       textInput,
       updateSearchWord,
-      id,
+      musicSelected,
+      currentState,
+      onSubmit,
+      cancel,
     }
   },
 })
-
-const useComponents = () => {
-  const searchWord = ref('')
-  const textInput = ref<TextInput>({
-    text: searchWord,
-    type: 'text',
-    // placeholderになんか入れたいけど横幅足りなくてバグってるので、一旦保留で
-    placeholder: '',
-    spellcheck: false,
-    autocomplete: 'off',
-  })
-  const updateSearchWord = (val: string) => {
-    searchWord.value = val
-  }
-  return {
-    searchWord,
-    textInput,
-    updateSearchWord,
-  }
-}
 </script>

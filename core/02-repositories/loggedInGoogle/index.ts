@@ -8,11 +8,6 @@ export interface ILoggedInGoogleRepository {
 
 export class LoggedinGoogleRepositoryImpl implements ILoggedInGoogleRepository {
   post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel> {
-    const data = new FormData()
-    data.append('code', params.code)
-    data.append('scope', params.scope)
-    data.append('state', params.state)
-    data.append('redirect_url', params.redirectUrl)
-    return $axios.$post<IUserCredentialsModel>('/user/loggedInGoogle', data)
+    return $axios.$post<IUserCredentialsModel>('/user/loggedInGoogle', params)
   }
 }

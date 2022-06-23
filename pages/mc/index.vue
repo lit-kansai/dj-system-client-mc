@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm md:max-w-7xl m-auto">
+  <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
     <p class="mt-5 mb-5">ホーム</p>
     <!-- Rooms -->
     <div class="flex flex-col md:flex-row gap-10">

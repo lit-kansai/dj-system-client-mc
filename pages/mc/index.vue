@@ -112,6 +112,7 @@ export interface Room {
   name: string
   description: string
   displayId: string
+  type: string
 }
 
 export interface Account {
@@ -133,16 +134,19 @@ export default defineComponent({
         name: 'DJちっち',
         description: 'A日程用',
         displayId: 'dj-chicchi',
+        type: 'applemusic',
       },
       {
         name: 'DJさわっくま',
         description: 'B日程用',
         displayId: 'dj-sawa-kuma',
+        type: 'applemusic',
       },
       {
         name: 'DJたいちゃん',
         description: 'スクール大阪日A',
         displayId: 'dj-taichan',
+        type: 'applemusic',
       },
     ])
     const accounts = ref<Account[]>([

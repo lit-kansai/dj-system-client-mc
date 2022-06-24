@@ -62,6 +62,11 @@ module.exports = {
       'neon-pink': generateDropShadowNeon(neonPink),
       'neon-green': generateDropShadowNeon(neonGreen),
     },
+    fill: {
+      'neon-blue': neonBlue,
+      'neon-pink': neonPink,
+      'neon-green': neonGreen,
+    },
     fontFamily: {
       sans: ['"Zen Kaku Gothic Antique"'],
     },

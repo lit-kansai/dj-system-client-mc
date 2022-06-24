@@ -11,7 +11,7 @@
     </div>
     <Container v-if="loading" class="m-8">
       <template #content>
-        <p class="text-white">loading</p>
+        <Loading />
       </template>
     </Container>
     <template v-if="!loading">

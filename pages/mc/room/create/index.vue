@@ -3,21 +3,19 @@
     <p class="mt-5 mb-5">ホーム / ルーム作成</p>
     <Container>
       <template #content>
-        <HeaderText text="Create Room" class="mr-3 mb-10" />
+        <HeaderText text="Create Room" class="mb-5 md:mb-10" />
         <div
-          class="mb-3 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5"
+          class="mb-8 grid grid-cols-1 md:grid-cols-title-and-content items-center gap-2 md:gap-5 md:gap-y-8"
         >
           <p>ルームネーム*</p>
           <TextInput
             text=""
-            class="mb-5"
             placeholder="例)がっしー"
             @update:text="updateName"
           />
           <p>ルーム説明*</p>
           <TextInput
             text=""
-            class="mb-5"
             placeholder="例)2022年夏のイベント用"
             @update:text="updateDescription"
           />
@@ -25,12 +23,10 @@
           <SelectInput
             v-model="musicServiceSelect.selected"
             v-bind="musicServiceSelect"
-            class="mb-5"
           />
           <p>リクエストURL*</p>
           <TextInput
             text=""
-            class="mb-5"
             placeholder="例)gassi"
             @update:text="updateDisplayId"
           />

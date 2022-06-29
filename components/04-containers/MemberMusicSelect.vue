@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen p-6 m-4 rounded-2xl">
+  <div class="min-h-screen rounded-2xl">
     <div>
       <HeaderText text="RESULT" />
     </div>

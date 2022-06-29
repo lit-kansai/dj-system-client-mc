@@ -9,18 +9,18 @@
         @update:text="updateSearchWord"
       />
     </div>
-    <Container v-if="loading" class="m-8">
+    <Container v-if="loading">
       <template #content>
         <Loading />
       </template>
     </Container>
     <template v-if="!loading">
-      <Container v-if="currentState === 'musicSelect'" class="m-8">
+      <Container v-if="currentState === 'musicSelect'">
         <template #content>
           <MemberMusicSelect @musicSelected="musicSelected" />
         </template>
       </Container>
-      <Container v-if="currentState === 'confirm'" class="m-8">
+      <Container v-if="currentState === 'confirm'">
         <template #content>
           <MemberOtayori
             :music="selectedMusic"
@@ -29,7 +29,7 @@
           />
         </template>
       </Container>
-      <Container v-if="currentState === 'finished'" class="m-8">
+      <Container v-if="currentState === 'finished'">
         <template #content>
           <Complete title="送信完了" subtitle="流れるのをお楽しみに！！" />
         </template>

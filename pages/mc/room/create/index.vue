@@ -22,11 +22,10 @@
             @update:text="updateDescription"
           />
           <p>使用サービス*</p>
-          <TextInput
-            text=""
+          <SelectInput
+            v-model="musicServiceSelect.selected"
+            v-bind="musicServiceSelect"
             class="mb-5"
-            placeholder="例)Apple Music"
-            @update:text="updateService"
           />
           <p>リクエストURL*</p>
           <TextInput
@@ -50,8 +49,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from '@vue/composition-api'
-import { computed, useRoute } from '@nuxtjs/composition-api'
+import {
+  computed,
+  useRoute,
+  ref,
+  defineComponent,
+  reactive,
+  toRefs,
+} from '@nuxtjs/composition-api'
+import { SelectInput } from '~/components/01-atoms/SelectInput.vue'
 
 interface State {
   name: string
@@ -70,6 +76,14 @@ export default defineComponent({
         displayId: '',
       })
     )
+    const selectedMusicService = ref('')
+    const musicServiceSelect = ref<SelectInput>({
+      selected: selectedMusicService,
+      options: [
+        { value: 'applemusic', text: 'AppleMusic' },
+        { value: 'spotify', text: 'Spotify' },
+      ],
+    })
     const updateName = (name: string): void => {
       state.name.value = name
     }
@@ -86,6 +100,7 @@ export default defineComponent({
     const id = computed(() => route.value.params.id)
     return {
       state,
+      musicServiceSelect,
       id,
       updateName,
       updateDescription,

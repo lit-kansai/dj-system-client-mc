@@ -1,9 +1,7 @@
 <template>
-  <div class="min-h-screen rounded-2xl">
-    <div>
-      <HeaderText text="RESULT" />
-    </div>
-    <div class="flex flex-wrap mx-4 mt-6 gap-6">
+  <div>
+    <HeaderText text="RESULT" class="mb-6" />
+    <div class="flex flex-wrap gap-6">
       <Card
         v-for="(card, index) in state.cards.value"
         v-bind="card"

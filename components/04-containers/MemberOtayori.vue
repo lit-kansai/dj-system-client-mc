@@ -1,6 +1,6 @@
 <template>
-  <div class="p-5 md:p-10">
-    <div class="flex items-end mb-10">
+  <div>
+    <div class="flex items-end mb-5 md:mb-10">
       <HeaderText text="OTAYORI" class="mr-3" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
@@ -43,7 +43,7 @@ import {
   computed,
   ComputedRef,
 } from '@nuxtjs/composition-api'
-import { RequestMusicOverview } from '~/components/02-molecules/RequestMusicOverview.vue'
+import { MusicOverview } from '~/types/components/music_overview'
 import { IMusicModel } from '~/core/01-models/music'
 
 interface State {
@@ -79,15 +79,13 @@ export default defineComponent({
         message: '',
       })
     )
-    const requestMusicOverview: ComputedRef<RequestMusicOverview> = computed(
-      () => {
-        return {
-          musicTitle: props.music.toCardComponentProps.musicTitle,
-          artistName: props.music.toCardComponentProps.artistName,
-          imageUrl: props.music.toCardComponentProps.imageUrl,
-        }
+    const requestMusicOverview: ComputedRef<MusicOverview> = computed(() => {
+      return {
+        musicTitle: props.music.toMusicOverviewComponentProps.musicTitle,
+        artistName: props.music.toMusicOverviewComponentProps.artistName,
+        imageUrl: props.music.toMusicOverviewComponentProps.imageUrl,
       }
-    )
+    })
     const updateRadioName = (radioName: string): void => {
       state.radioName.value = radioName
     }

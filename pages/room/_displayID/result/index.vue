@@ -1,40 +1,46 @@
 <template>
-  <div class="flex">
-    <div class="min-h-screen p-8 mt-1 border-r-2 border-gray-700">
-      <HeaderText text="DJ Gassi" />
+  <div
+    class="w-full max-w-sm md:max-w-7xl m-auto mt-5 mb-5 md:flex md:gap-x-10"
+  >
+    <div class="mb-5 md:w-60">
+      <HeaderText text="DJ Gassi" class="hidden md:block" />
       <TextInput
         v-model="textInput.text"
         v-bind="textInput"
-        class="mt-3"
+        class="md:mt-3"
         @update:text="updateSearchWord"
       />
     </div>
-    <Container v-if="loading">
-      <template #content>
-        <Loading />
+    <div class="md:w-full">
+      <Container v-if="loading">
+        <template #content>
+          <Loading />
+        </template>
+      </Container>
+      <template v-if="!loading">
+        <Container>
+          <template #content>
+            <div class="p-2 md:p-5">
+              <MemberMusicSelect
+                v-if="currentState === 'musicSelect'"
+                @musicSelected="musicSelected"
+              />
+              <MemberOtayori
+                v-else-if="currentState === 'confirm'"
+                :music="selectedMusic"
+                @submit="onSubmit"
+                @cancel="cancel"
+              />
+              <Complete
+                v-else-if="currentState === 'finished'"
+                title="送信完了"
+                subtitle="流れるのをお楽しみに！！"
+              />
+            </div>
+          </template>
+        </Container>
       </template>
-    </Container>
-    <template v-if="!loading">
-      <Container v-if="currentState === 'musicSelect'">
-        <template #content>
-          <MemberMusicSelect @musicSelected="musicSelected" />
-        </template>
-      </Container>
-      <Container v-if="currentState === 'confirm'">
-        <template #content>
-          <MemberOtayori
-            :music="selectedMusic"
-            @submit="onSubmit"
-            @cancel="cancel"
-          />
-        </template>
-      </Container>
-      <Container v-if="currentState === 'finished'">
-        <template #content>
-          <Complete title="送信完了" subtitle="流れるのをお楽しみに！！" />
-        </template>
-      </Container>
-    </template>
+    </div>
   </div>
 </template>
 

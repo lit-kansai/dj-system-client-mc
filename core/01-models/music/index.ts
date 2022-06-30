@@ -1,5 +1,5 @@
 import * as Helper from './helper'
-import { Card } from '~/types/components/card'
+import { MusicOverview } from '~/types/components/music_overview'
 
 export interface Artist {
   id: string
@@ -20,7 +20,7 @@ export interface IMusicEntity {
 }
 
 export interface IMusicHelper {
-  toCardComponentProps: Card
+  toMusicOverviewComponentProps: MusicOverview
 }
 
 export type IMusicModel = IMusicEntity & IMusicHelper
@@ -60,7 +60,7 @@ export class MusicModel implements IMusicModel {
     return this._duration
   }
 
-  get toCardComponentProps(): Card {
-    return Helper.toCard(this)
+  get toMusicOverviewComponentProps(): MusicOverview {
+    return Helper.toMusicOverview(this)
   }
 }

@@ -1,15 +1,19 @@
 <template>
-  <div class="min-h-screen rounded-2xl">
-    <div>
-      <HeaderText text="RESULT" />
-    </div>
-    <div class="flex flex-wrap mx-4 mt-6 gap-6">
-      <Card
-        v-for="(card, index) in state.cards.value"
-        v-bind="card"
-        :key="index"
-        @click.native="onClickCard(index)"
-      />
+  <div>
+    <HeaderText text="RESULT" class="mb-6" />
+    <div class="grid md:flex md:flex-wrap gap-y-3 md:gap-6 w-full">
+      <div v-for="(card, index) in state.cards.value" :key="index">
+        <Card
+          :props="card"
+          class="hidden md:block"
+          @click.native="onClickCard(index)"
+        />
+        <RequestMusicOverview
+          :props="card"
+          class="w-full md:hidden"
+          @click.native="onClickCard(index)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -22,14 +26,14 @@ import {
   watch,
   onMounted,
 } from '@nuxtjs/composition-api'
-import { Card } from '~/types/components/card'
+import { MusicOverview } from '~/types/components/music_overview'
 import { FetchMusicRepositoryImpl } from '~/core/02-repositories/fetchMusic'
 import { useFetchMusic } from '~/core/03-composables/useMusic'
 import { IMusicModel } from '~/core/01-models/music'
 
 const { musics, fetchMusic } = useFetchMusic(new FetchMusicRepositoryImpl())
 interface State {
-  cards: Array<Card>
+  cards: Array<MusicOverview>
 }
 
 export interface MusicSelectedPayload {
@@ -49,7 +53,7 @@ export default defineComponent({
     )
     watch(musics, (_) => {
       musics.value.map((music) =>
-        state.cards.value.push(music.toCardComponentProps)
+        state.cards.value.push(music.toMusicOverviewComponentProps)
       )
     })
     const onClickCard = (index: number): void => {
@@ -65,7 +69,7 @@ export default defineComponent({
 
       if (musics.value.length) {
         musics.value.map((music) =>
-          state.cards.value.push(music.toCardComponentProps)
+          state.cards.value.push(music.toMusicOverviewComponentProps)
         )
       }
     })

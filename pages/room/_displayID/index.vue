@@ -1,14 +1,14 @@
 <template>
-  <div class="h-full flex justify-center items-center">
-    <div class="w-full max-w-7xl flex justify-between items-center">
-      <RoomLogo v-bind="roomLogo" class="w-[500px]" />
-      <TextInput
-        v-model="textInput.text"
-        v-bind="textInput"
-        class="w-[600px]"
-        @update:text="updateSearchWord"
-      />
-    </div>
+  <div
+    class="w-full h-5/6 max-w-sm md:max-w-7xl m-auto flex flex-col justify-center items-center md:flex-row md:gap-x-10"
+  >
+    <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
+    <TextInput
+      v-model="textInput.text"
+      v-bind="textInput"
+      class="mt-5 md:max-w-lg"
+      @update:text="updateSearchWord"
+    />
   </div>
 </template>
 

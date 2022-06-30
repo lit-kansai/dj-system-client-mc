@@ -1,13 +1,19 @@
 <template>
   <div>
     <HeaderText text="RESULT" class="mb-6" />
-    <div class="flex flex-wrap gap-6">
-      <Card
-        v-for="(card, index) in state.cards.value"
-        :key="index"
-        :props="card"
-        @click.native="onClickCard(index)"
-      />
+    <div class="grid md:flex md:flex-wrap gap-y-3 md:gap-6 w-full">
+      <div v-for="(card, index) in state.cards.value" :key="index">
+        <Card
+          :props="card"
+          class="hidden md:block"
+          @click.native="onClickCard(index)"
+        />
+        <RequestMusicOverview
+          :props="card"
+          class="w-full md:hidden"
+          @click.native="onClickCard(index)"
+        />
+      </div>
     </div>
   </div>
 </template>

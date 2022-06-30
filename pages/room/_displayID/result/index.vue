@@ -21,7 +21,7 @@
       <template v-if="!loading">
         <Container>
           <template #content>
-            <div class="p-5">
+            <div class="p-2 md:p-5">
               <MemberMusicSelect
                 v-if="currentState === 'musicSelect'"
                 @musicSelected="musicSelected"

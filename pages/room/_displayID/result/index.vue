@@ -11,6 +11,7 @@
         @update:text="updateSearchWord"
       />
     </div>
+    <!-- class="p-5 md:p-10" -->
     <div class="md:w-full">
       <Container v-if="loading">
         <template #content>
@@ -18,23 +19,25 @@
         </template>
       </Container>
       <template v-if="!loading">
-        <Container v-if="currentState === 'musicSelect'">
+        <Container>
           <template #content>
-            <MemberMusicSelect @musicSelected="musicSelected" />
-          </template>
-        </Container>
-        <Container v-if="currentState === 'confirm'">
-          <template #content>
-            <MemberOtayori
-              :music="selectedMusic"
-              @submit="onSubmit"
-              @cancel="cancel"
-            />
-          </template>
-        </Container>
-        <Container v-if="currentState === 'finished'">
-          <template #content>
-            <Complete title="送信完了" subtitle="流れるのをお楽しみに！！" />
+            <div class="p-5">
+              <MemberMusicSelect
+                v-if="currentState === 'musicSelect'"
+                @musicSelected="musicSelected"
+              />
+              <MemberOtayori
+                v-else-if="currentState === 'confirm'"
+                :music="selectedMusic"
+                @submit="onSubmit"
+                @cancel="cancel"
+              />
+              <Complete
+                v-else-if="currentState === 'finished'"
+                title="送信完了"
+                subtitle="流れるのをお楽しみに！！"
+              />
+            </div>
           </template>
         </Container>
       </template>

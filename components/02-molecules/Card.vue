@@ -12,9 +12,9 @@
       :src="imageUrl"
       :alt="`${musicTitle} | ${artistName}`"
     />
-    <div class="p-3 text-gray-100">
-      <p class="text-xl truncate">{{ musicTitle }}</p>
-      <p class="mt-1 text-base truncate">{{ artistName }}</p>
+    <div class="p-3">
+      <p class="truncate">{{ musicTitle }}</p>
+      <p class="text-gray-300 truncate">{{ artistName }}</p>
     </div>
   </div>
 </template>

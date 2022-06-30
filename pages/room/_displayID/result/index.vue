@@ -11,7 +11,6 @@
         @update:text="updateSearchWord"
       />
     </div>
-    <!-- class="p-5 md:p-10" -->
     <div class="md:w-full">
       <Container v-if="loading">
         <template #content>

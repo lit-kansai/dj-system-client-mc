@@ -9,30 +9,23 @@
     </div>
     <img
       class="rounded-md"
-      :src="imageUrl"
-      :alt="`${musicTitle} | ${artistName}`"
+      :src="props.imageUrl"
+      :alt="`${props.musicTitle} | ${props.artistName}`"
     />
     <div class="p-3">
-      <p class="truncate">{{ musicTitle }}</p>
-      <p class="text-gray-300 truncate">{{ artistName }}</p>
+      <p class="truncate">{{ props.musicTitle }}</p>
+      <p class="text-gray-300 truncate">{{ props.artistName }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-
-export interface Card {
-  musicTitle: string
-  artistName: string
-  imageUrl: string
-}
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { MusicOverview } from '~/types/components/music_overview'
 
 export default defineComponent({
   props: {
-    musicTitle: { type: String, required: true },
-    artistName: { type: String, required: true },
-    imageUrl: { type: String, required: true },
+    props: { type: Object as PropType<MusicOverview>, required: true },
   },
   setup() {},
 })

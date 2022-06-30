@@ -20,16 +20,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
-
-export interface RequestMusicOverview {
-  musicTitle: string
-  artistName: string
-  imageUrl: string
-}
+import { MusicOverview } from '~/types/components/music_overview'
 
 export default defineComponent({
   props: {
-    props: { type: Object as PropType<RequestMusicOverview>, required: true },
+    props: { type: Object as PropType<MusicOverview>, required: true },
   },
   setup() {},
 })

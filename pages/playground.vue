@@ -36,9 +36,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { RequestMusicOverview } from '~/components/02-molecules/RequestMusicOverview.vue'
+// import { RequestMusicOverview } from '~/components/02-molecules/RequestMusicOverview.vue'
 import { TextInput } from '~/types/components/textInput'
-import { Card } from '~/components/02-molecules/Card.vue'
+// import { Card } from '~/components/02-molecules/Card.vue'
+import { MusicOverview } from '~/types/components/music_overview'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Button } from '~/components/01-atoms/Button.vue'
 import { Modal } from '~/components/01-atoms/Modal.vue'
@@ -47,7 +48,7 @@ import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
 export default defineComponent({
   layout: 'default',
   setup() {
-    const card = ref<Card>({
+    const card = ref<MusicOverview>({
       musicTitle: 'ヒステリックナイトガール',
       artistName: 'PSYQUI',
       imageUrl:
@@ -60,7 +61,7 @@ export default defineComponent({
     const modal = ref<Modal>({
       opened: true,
     })
-    const requestMusicOverview = ref<RequestMusicOverview>({
+    const requestMusicOverview = ref<MusicOverview>({
       musicTitle: 'ヒステリックナイトガール',
       artistName: 'PSYQUI',
       imageUrl:

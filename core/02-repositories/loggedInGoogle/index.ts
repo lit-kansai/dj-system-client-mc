@@ -6,8 +6,11 @@ export interface ILoggedInGoogleRepository {
   post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel>
 }
 
-export class LoggedinGoogleRepositoryImpl implements ILoggedInGoogleRepository {
+export class LoggedinGoogleRepository implements ILoggedInGoogleRepository {
   post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel> {
-    return $axios.$post<IUserCredentialsModel>('/user/loggedInGoogle', params)
+    return $axios.$post<IUserCredentialsModel>('/user/loggedInGoogle', {
+      ...params,
+      convert: true,
+    })
   }
 }

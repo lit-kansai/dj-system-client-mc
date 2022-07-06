@@ -1,15 +1,15 @@
-export interface User {
+export interface IUserModel {
   name: string
   avatarUrl: string
   isAdmin: boolean
 }
 
-export class UserModel implements User {
+export class UserModel implements IUserModel {
   private readonly _name: string
   private readonly _avatarUrl: string
   private readonly _isAdmin: boolean
 
-  constructor(response: User) {
+  constructor(response: IUserModel) {
     this._name = response.name
     this._avatarUrl = response.avatarUrl
     this._isAdmin = response.isAdmin

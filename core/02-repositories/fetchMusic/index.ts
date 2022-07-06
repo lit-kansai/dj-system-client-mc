@@ -6,7 +6,7 @@ export interface IFetchMusicRepository {
   fetch(): Promise<IMusicModel[]>
 }
 
-export class FetchMusicRepositoryImpl implements IFetchMusicRepository {
+export class FetchMusicRepository implements IFetchMusicRepository {
   fetch(): Promise<IMusicModel[]> {
     // debugger
     return new Promise((resolve) => {

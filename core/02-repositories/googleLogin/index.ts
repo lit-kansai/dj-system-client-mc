@@ -5,7 +5,7 @@ export interface IGoogleLoginRepository {
   fetch(redirectURL: string): Promise<IGoogleLoginModel>
 }
 
-export class GoogleLoginRepositoryImpl implements IGoogleLoginRepository {
+export class GoogleLoginRepository implements IGoogleLoginRepository {
   fetch(redirectURL: String): Promise<IGoogleLoginModel> {
     return $axios.$get<IGoogleLoginModel>('/user/login', {
       params: {

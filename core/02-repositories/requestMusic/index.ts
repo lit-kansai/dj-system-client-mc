@@ -6,8 +6,8 @@ export interface IRequestMusicRepository {
 
 export class RequestMusicRepository implements IRequestMusicRepository {
   post(params: UseRequestMusicInputs): Promise<string> {
-    console.log(params)
     return new Promise((resolve) => {
+      console.log(params)
       resolve('success')
     })
   }

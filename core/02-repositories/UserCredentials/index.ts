@@ -6,9 +6,7 @@ export interface IUserCredentialsRepository {
   fetch(): Promise<IUserCredentialsModel>
 }
 
-export class UserCredentialsRepositoryImpl
-  implements IUserCredentialsRepository
-{
+export class UserCredentialsRepository implements IUserCredentialsRepository {
   save(userInfo: IUserCredentialsModel): Promise<String> {
     localStorage.setItem(
       USER_CREDENTIALS_LOCAL_STORAGE_KEY,
@@ -17,6 +15,7 @@ export class UserCredentialsRepositoryImpl
     return new Promise((resolve) => resolve('success'))
   }
 
+  // TODO: エラーハンドリングやりたい
   fetch(): Promise<IUserCredentialsModel> {
     const userInfo = JSON.parse(
       localStorage.getItem(USER_CREDENTIALS_LOCAL_STORAGE_KEY) as string

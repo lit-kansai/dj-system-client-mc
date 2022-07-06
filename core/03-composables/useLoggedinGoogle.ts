@@ -1,5 +1,5 @@
-import { LoggedinGoogleRepositoryImpl } from '~/core/02-repositories/loggedInGoogle'
-import { UserCredentialsRepositoryImpl } from '~/core/02-repositories/UserCredentials'
+import { LoggedinGoogleRepository } from '~/core/02-repositories/loggedInGoogle'
+import { UserCredentialsRepository } from '~/core/02-repositories/UserCredentials'
 import { ILoggedInGoogleParams } from '~/types/params/loggedInGoogleParams'
 
 export const useLoggedInGoogle = (
@@ -7,8 +7,8 @@ export const useLoggedInGoogle = (
 ): {
   loggedInGoogle: Promise<String>
 } => {
-  const loggedInGoogleRepository = new LoggedinGoogleRepositoryImpl()
-  const userCredentialsRepository = new UserCredentialsRepositoryImpl()
+  const loggedInGoogleRepository = new LoggedinGoogleRepository()
+  const userCredentialsRepository = new UserCredentialsRepository()
 
   const loggedInGoogle = loggedInGoogleRepository.post(params).then((res) => {
     return userCredentialsRepository.save(res)

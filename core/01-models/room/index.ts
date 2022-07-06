@@ -1,4 +1,4 @@
-export interface Room {
+export interface IRoomModel {
   urlName: string
   roomName: string
   description: string
@@ -7,7 +7,7 @@ export interface Room {
   updatedAt: string
 }
 
-export class RoomModel implements Room {
+export class RoomModel implements IRoomModel {
   private readonly _urlName: string
   private readonly _roomName: string
   private readonly _description: string
@@ -15,7 +15,7 @@ export class RoomModel implements Room {
   private readonly _createdAt: string
   private readonly _updatedAt: string
 
-  constructor(response: Room) {
+  constructor(response: IRoomModel) {
     this._urlName = response.urlName
     this._roomName = response.roomName
     this._description = response.description

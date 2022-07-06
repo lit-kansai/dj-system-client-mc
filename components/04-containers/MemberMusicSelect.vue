@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderText text="RESULT" class="mb-6" />
-    <div class="grid md:flex md:flex-wrap gap-y-3 md:gap-6 w-full">
+    <div class="w-full grid md:flex md:flex-wrap gap-y-3 md:gap-6">
       <div v-for="(card, index) in state.cards.value" :key="index">
         <Card
           :props="card"
@@ -27,11 +27,11 @@ import {
   onMounted,
 } from '@nuxtjs/composition-api'
 import { MusicOverview } from '~/types/components/music_overview'
-import { FetchMusicRepositoryImpl } from '~/core/02-repositories/fetchMusic'
+import { FetchMusicRepository } from '~/core/02-repositories/fetchMusic'
 import { useFetchMusic } from '~/core/03-composables/useMusic'
 import { IMusicModel } from '~/core/01-models/music'
 
-const { musics, fetchMusic } = useFetchMusic(new FetchMusicRepositoryImpl())
+const { musics, fetchMusic } = useFetchMusic(new FetchMusicRepository())
 interface State {
   cards: Array<MusicOverview>
 }

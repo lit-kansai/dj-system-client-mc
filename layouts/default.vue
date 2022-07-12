@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen min-h-screen">
+  <div class="relative flex flex-col h-screen min-h-screen">
     <Header v-bind="header">
       <template #right>
         <p class="text-2xl">powered by DJ GASSI</p>

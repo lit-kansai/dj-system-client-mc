@@ -27,4 +27,8 @@ export default function ({ $axios }: Context) {
     response.data = CamelConverter.convert(response.data)
     return response
   })
+
+  $axios.onResponseError((error) => {
+    throw error
+  })
 }

@@ -5,20 +5,20 @@ import { IGetRoomRepository } from '../02-repositories/getRoom'
 import { IGetRoomParams } from '~/types/params/getRoom'
 
 export const useGetRoom = (repository: IGetRoomRepository) => {
-  const response = ref<undefined | IGetRoomModel>(undefined)
-  const error = ref<undefined | AxiosError>(undefined)
+  const getRoomResponse = ref<undefined | IGetRoomModel>(undefined)
+  const getRoomError = ref<undefined | AxiosError>(undefined)
   const getRoom = (params: IGetRoomParams): void => {
     repository
       .get(params)
-      .then((res) => (response.value = res))
+      .then((res) => (getRoomResponse.value = res))
       .catch((err: AxiosError) => {
-        error.value = err
+        getRoomError.value = err
       })
   }
 
   return {
-    response,
-    error,
+    getRoomResponse,
+    getRoomError,
     getRoom,
   }
 }

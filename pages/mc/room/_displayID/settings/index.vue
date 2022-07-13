@@ -49,8 +49,11 @@ import {
   reactive,
   watch,
   useRouter,
+  onBeforeMount,
 } from '@nuxtjs/composition-api'
+import { GetRoomRepository } from '~/core/02-repositories/getRoom'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
+import { useGetRoom } from '~/core/03-composables/useGetRoom'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/userUpdateRoom'
 
@@ -66,6 +69,9 @@ export default defineComponent({
     const router = useRouter()
     const { response, error, updateRoom } = useUpdateRoom(
       new UpdateRoomRepository()
+    )
+    const { getRoomResponse, getRoomError, getRoom } = useGetRoom(
+      new GetRoomRepository()
     )
     const { loading, setLoading } = useLoading()
     const state = toRefs(
@@ -108,6 +114,22 @@ export default defineComponent({
       setLoading(false)
       alert('an error occurred')
     })
+    onBeforeMount(() => {
+      setLoading(false)
+      getRoom({ displayId: route.value.params.id })
+    })
+    watch(getRoomResponse, () => {
+      setLoading(false)
+      state.id.value = getRoomResponse.value?.id as number
+      state.displayId.value = getRoomResponse.value?.displayId as string
+      state.name.value = getRoomResponse.value?.name as string
+      state.description.value = getRoomResponse.value?.description as string
+    })
+    watch(getRoomError, () => {
+      setLoading(false)
+      alert(`an error occurred: ${JSON.stringify(error)}`)
+    })
+
     return {
       state,
       displayId,

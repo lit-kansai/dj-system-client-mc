@@ -1,11 +1,12 @@
 <template>
-  <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
+  <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
+    <LoadingOverlay v-if="loading" />
     <p class="mt-5 mb-5">ホーム / ルーム作成</p>
     <Container>
       <template #content>
         <HeaderText text="Create Room" class="mb-5 md:mb-10" />
         <div
-          class="mb-8 grid grid-cols-1 md:grid-cols-title-and-content items-center gap-2 md:gap-5 md:gap-y-8"
+          class="items-center mb-8 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5 md:gap-y-8"
         >
           <p>ルームネーム*</p>
           <TextInput
@@ -46,14 +47,17 @@
 
 <script lang="ts">
 import {
-  computed,
-  useRoute,
   ref,
   defineComponent,
   reactive,
   toRefs,
+  useRouter,
 } from '@nuxtjs/composition-api'
+import { watch } from '@vue/composition-api'
 import { SelectInput } from '~/components/01-atoms/SelectInput.vue'
+import { CreateRoomRepository } from '~/core/02-repositories/createRoom'
+import { useCreateRoom } from '~/core/03-composables/useCreateRoom'
+import { useLoading } from '~/core/03-composables/useLoading'
 
 interface State {
   name: string
@@ -64,6 +68,11 @@ interface State {
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
+    const { response, error, createRoom } = useCreateRoom(
+      new CreateRoomRepository()
+    )
+    const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
         name: '',
@@ -92,16 +101,35 @@ export default defineComponent({
     const updateDisplayId = (displayId: string): void => {
       state.displayId.value = displayId
     }
-    const route = useRoute()
-    const id = computed(() => route.value.params.id)
+    const submit = () => {
+      setLoading(true)
+      createRoom({
+        urlName: state.displayId.value,
+        roomName: state.name.value,
+        description: state.description.value,
+      })
+    }
+    const cancel = () => {
+      router.push('/mc')
+    }
+    watch(response, () => {
+      setLoading(false)
+      alert('Successfully created a room')
+      router.push('/mc')
+    })
+    watch(error, () => {
+      setLoading(false)
+      alert('an error occurred')
+    })
     return {
-      state,
       musicServiceSelect,
-      id,
+      loading,
       updateName,
       updateDescription,
       updateService,
       updateDisplayId,
+      submit,
+      cancel,
     }
   },
 })

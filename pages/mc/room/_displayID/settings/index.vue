@@ -1,6 +1,7 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
-    <p class="mt-5 mb-5">ホーム / {{ room.name }} / 設定</p>
+    <LoadingOverlay v-if="loading" />
+    <p class="mt-5 mb-5">ホーム / {{ state.name.value }} / 設定</p>
     <Container>
       <template #content>
         <HeaderText text="Setting Room" class="mb-5 md:mb-10" />
@@ -32,7 +33,7 @@
             text="戻る"
             @click.native="cancel"
           />
-          <Button text="ルームを作成する" />
+          <Button text="保存する" @click.native="submit" />
         </div>
       </template>
     </Container>
@@ -46,37 +47,76 @@ import {
   useRoute,
   toRefs,
   reactive,
+  watch,
+  useRouter,
 } from '@nuxtjs/composition-api'
-import { Room } from '~/pages/mc/index.vue'
+import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
+import { useLoading } from '~/core/03-composables/useLoading'
+import { useUpdateRoom } from '~/core/03-composables/userUpdateRoom'
+
+interface State {
+  id: number
+  displayId: string
+  name: string
+  description: string
+}
 
 export default defineComponent({
   setup() {
-    const room = toRefs(
-      reactive<Room>({
+    const router = useRouter()
+    const { response, error, updateRoom } = useUpdateRoom(
+      new UpdateRoomRepository()
+    )
+    const { loading, setLoading } = useLoading()
+    const state = toRefs(
+      reactive<State>({
+        id: -1,
+        displayId: '',
         name: '',
         description: '',
-        displayId: '',
-        type: '',
-        playlistId: '',
       })
     )
     const route = useRoute()
-    const id = computed(() => route.value.params.id)
+    const displayId = computed(() => route.value.params.id)
     const updateName = (name: string): void => {
-      room.name.value = name
+      state.name.value = name
     }
     const updateDescription = (description: string): void => {
-      room.description.value = description
+      state.description.value = description
     }
     const updateDisplayId = (displayId: string): void => {
-      room.displayId.value = displayId
+      state.displayId.value = displayId
     }
+    const submit = () => {
+      setLoading(true)
+      updateRoom({
+        roomId: state.id.value,
+        urlName: state.displayId.value,
+        roomName: state.name.value,
+        description: state.description.value,
+      })
+    }
+    const cancel = () => {
+      router.push(`/mc/${state.displayId.value}`)
+    }
+    watch(response, () => {
+      setLoading(false)
+      alert('Successfully created a room')
+      router.push(`/mc/${state.displayId.value}`)
+    })
+    watch(error, () => {
+      setLoading(false)
+      alert('an error occurred')
+    })
     return {
-      room,
-      id,
+      state,
+      displayId,
       updateName,
       updateDescription,
       updateDisplayId,
+      submit,
+      cancel,
+      loading,
     }
   },
 })

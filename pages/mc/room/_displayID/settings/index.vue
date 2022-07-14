@@ -127,7 +127,7 @@ export default defineComponent({
     })
     watch(getRoomError, () => {
       setLoading(false)
-      alert(`an error occurred: ${JSON.stringify(getRoomError)}`)
+      alert(`an error occurred: ${JSON.stringify(getRoomError.value)}`)
     })
 
     return {

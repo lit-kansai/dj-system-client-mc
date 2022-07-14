@@ -58,7 +58,7 @@ import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
 interface State {
-  id: number
+  id: number | undefined
   displayId: string
   name: string
   description: string
@@ -76,7 +76,7 @@ export default defineComponent({
     const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
-        id: -1,
+        id: undefined,
         displayId: '',
         name: '',
         description: '',
@@ -96,7 +96,7 @@ export default defineComponent({
     const submit = () => {
       setLoading(true)
       updateRoom({
-        roomId: state.id.value,
+        roomId: state.id.value as number,
         urlName: state.displayId.value,
         roomName: state.name.value,
         description: state.description.value,

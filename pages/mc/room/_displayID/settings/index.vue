@@ -67,7 +67,7 @@ interface State {
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const { response, error, updateRoom } = useUpdateRoom(
+    const { updateRoomResponse, updateRoomError, updateRoom } = useUpdateRoom(
       new UpdateRoomRepository()
     )
     const { getRoomResponse, getRoomError, getRoom } = useGetRoom(
@@ -105,12 +105,12 @@ export default defineComponent({
     const cancel = () => {
       router.push(`/mc/${state.displayId.value}`)
     }
-    watch(response, () => {
+    watch(updateRoomResponse, () => {
       setLoading(false)
       alert('Successfully created a room')
       router.push(`/mc/${state.displayId.value}`)
     })
-    watch(error, () => {
+    watch(updateRoomError, () => {
       setLoading(false)
       alert('an error occurred')
     })
@@ -127,7 +127,7 @@ export default defineComponent({
     })
     watch(getRoomError, () => {
       setLoading(false)
-      alert(`an error occurred: ${JSON.stringify(error)}`)
+      alert(`an error occurred: ${JSON.stringify(getRoomError)}`)
     })
 
     return {

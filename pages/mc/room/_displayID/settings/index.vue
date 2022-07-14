@@ -55,7 +55,7 @@ import { GetRoomRepository } from '~/core/02-repositories/getRoom'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
 import { useGetRoom } from '~/core/03-composables/useGetRoom'
 import { useLoading } from '~/core/03-composables/useLoading'
-import { useUpdateRoom } from '~/core/03-composables/userUpdateRoom'
+import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
 interface State {
   id: number

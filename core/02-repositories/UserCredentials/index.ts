@@ -3,7 +3,7 @@ import { USER_CREDENTIALS_LOCAL_STORAGE_KEY } from '~/utils/constants'
 
 export interface IUserCredentialsRepository {
   save(userInfo: IUserCredentialsModel): Promise<String>
-  fetch(): Promise<IUserCredentialsModel>
+  fetch(): Promise<IUserCredentialsModel | null>
 }
 
 export class UserCredentialsRepository implements IUserCredentialsRepository {
@@ -16,10 +16,16 @@ export class UserCredentialsRepository implements IUserCredentialsRepository {
   }
 
   // TODO: エラーハンドリングやりたい
-  fetch(): Promise<IUserCredentialsModel> {
-    const userInfo = JSON.parse(
-      localStorage.getItem(USER_CREDENTIALS_LOCAL_STORAGE_KEY) as string
-    ) as IUserCredentialsModel
-    return new Promise((resolve) => resolve(userInfo))
+  fetch(): Promise<IUserCredentialsModel | null> {
+    return new Promise((resolve) => {
+      const _userInfo = localStorage.getItem(USER_CREDENTIALS_LOCAL_STORAGE_KEY)
+      if (!_userInfo) {
+        resolve(null)
+      }
+      if (_userInfo) {
+        const userInfo = JSON.parse(_userInfo) as IUserCredentialsModel
+        resolve(userInfo)
+      }
+    })
   }
 }

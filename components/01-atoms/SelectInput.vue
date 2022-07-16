@@ -17,14 +17,15 @@
 
 <script lang="ts">
 import { Ref, defineComponent, computed } from '@nuxtjs/composition-api'
+import { ProviderName } from '~/types/data/providerName'
 
 export interface SelectInputOption {
-  value: string
+  value: ProviderName
   text: string
 }
 
 export interface SelectInput {
-  selected: Ref<string>
+  selected: Ref<ProviderName>
   options: Array<SelectInputOption>
 }
 

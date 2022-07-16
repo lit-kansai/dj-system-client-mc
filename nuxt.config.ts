@@ -7,7 +7,7 @@ const environmentSettings = require(`./environments/${environment}.ts`)
 const config: NuxtConfig = {
   telemetry: true,
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',

@@ -52,7 +52,9 @@ const onEnterGoogleLoginCallbackPage = (query: GoogleLoginCallbackQuery) => {
   const { redirect } = $nuxt
   const params: ILoggedInGoogleParams = {
     ...query,
-    redirectUrl: process.env.REDIRECT_URL ?? '',
+    redirectUrl:
+      process.env.REDIRECT_URL ??
+      'https://dj-system.lit-kansai-mentors.com/api/google/callback',
   }
   const { loggedInGoogle } = useLoggedInGoogle(params)
   loggedInGoogle.then((_) => redirect('/mc?message=loginSuccess'))

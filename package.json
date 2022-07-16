@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=\"development\" nuxt",
-    "build": "cross-env NODE_ENV=\"production\" nuxt build",
+    "build": "cross-env NODE_ENV=\"production\" nuxt generate",
     "start": "cross-env NODE_ENV=\"production\" nuxt start",
     "generate": "nuxt generate",
     "hygen:model": "hygen core 01-models",

@@ -8,7 +8,7 @@ export const useLocalStorageUserCredentials = (
     return repository.save(userInfo)
   }
 
-  const fetch = (): Promise<IUserCredentialsModel> => {
+  const fetch = (): Promise<IUserCredentialsModel | null> => {
     return repository.fetch()
   }
 

@@ -16,8 +16,11 @@ export default function ({ $axios }: Context) {
     const { fetch } = useLocalStorageUserCredentials(
       new UserCredentialsRepository()
     )
-    const { apiToken } = await fetch()
-    $axios.setHeader('api-token', apiToken)
+    const userInfo = await fetch()
+    if (userInfo) {
+      const { apiToken } = userInfo
+      $axios.setHeader('api-token', apiToken)
+    }
     $axios.setHeader('Content-Type', 'application/json')
     return request
   })

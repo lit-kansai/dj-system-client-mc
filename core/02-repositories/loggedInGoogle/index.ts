@@ -8,7 +8,7 @@ export interface ILoggedInGoogleRepository {
 
 export class LoggedinGoogleRepository implements ILoggedInGoogleRepository {
   post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel> {
-    return $axios.$post<IUserCredentialsModel>('/user/loggedInGoogle', {
+    return $axios.$post<IUserCredentialsModel>('mc/auth/signin/callback', {
       ...params,
       convert: true,
     })

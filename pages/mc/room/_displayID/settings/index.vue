@@ -58,7 +58,7 @@ import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
 interface State {
-  id: number | undefined
+  roomId: number | undefined
   displayId: string
   name: string
   description: string
@@ -76,14 +76,14 @@ export default defineComponent({
     const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
-        id: undefined,
+        roomId: undefined,
         displayId: '',
         name: '',
         description: '',
       })
     )
     const route = useRoute()
-    const displayId = computed(() => route.value.params.id)
+    const displayId = computed(() => route.value.params.displayID)
     const updateName = (name: string): void => {
       state.name.value = name
     }
@@ -96,7 +96,7 @@ export default defineComponent({
     const submit = () => {
       setLoading(true)
       updateRoom({
-        roomId: state.id.value as number,
+        roomId: state.roomId.value as number,
         urlName: state.displayId.value,
         roomName: state.name.value,
         description: state.description.value,
@@ -120,7 +120,7 @@ export default defineComponent({
     })
     watch(getRoomResponse, () => {
       setLoading(false)
-      state.id.value = getRoomResponse.value?.id as number
+      state.roomId.value = getRoomResponse.value?.id as number
       state.displayId.value = getRoomResponse.value?.displayId as string
       state.name.value = getRoomResponse.value?.name as string
       state.description.value = getRoomResponse.value?.description as string

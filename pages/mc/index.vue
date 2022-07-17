@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
+  <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
     <p class="mt-5 mb-5">ホーム</p>
     <!-- Rooms -->
     <div class="flex flex-col md:flex-row gap-10">
@@ -16,10 +16,11 @@
             "Room"ごとに曲のリクエストを募集することができます。
           </p>
           <!-- Table -->
-          <table class="mt-3 w-full table-fixed border-collapse">
-            <thead class="hidden md:table-header-group text-left">
+          <table class="relative w-full mt-3 border-collapse table-fixed">
+            <LoadingOverlay v-if="fetchRoomsLoading" />
+            <thead class="hidden text-left md:table-header-group">
               <tr class="border border-gray-400">
-                <th class="pl-3 pt-2 pb-2">ルーム名</th>
+                <th class="pt-2 pb-2 pl-3">ルーム名</th>
                 <th>ルーム説明</th>
                 <th>共有URL</th>
                 <th class="w-1/6"></th>
@@ -29,13 +30,13 @@
               <tr
                 v-for="room in rooms"
                 :key="room.displayId"
-                class="border border-gray-400 hover:bg-neon-blue cursor-pointer"
+                class="border border-gray-400 cursor-pointer hover:bg-neon-blue"
                 @click="routerPush(room.displayId)"
               >
-                <td class="pt-2 pl-3 pb-3 hidden md:table-cell">
+                <td class="hidden pt-2 pb-3 pl-3 md:table-cell">
                   {{ room.name }}
                 </td>
-                <td class="pt-2 pl-3 pb-3 md:pl-0">
+                <td class="pt-2 pb-3 pl-3 md:pl-0">
                   {{ room.description }}
                   <div class="text-sm md:hidden">
                     {{ room.name }}
@@ -55,7 +56,7 @@
                     </button>
                   </div>
                 </td>
-                <td class="text-center pr-3 text-right">＞</td>
+                <td class="pr-3 text-center text-right">＞</td>
               </tr>
             </tbody>
           </table>
@@ -66,7 +67,7 @@
         <template #content>
           <HeaderText v-bind="accountHeaderText" />
           <p class="mt-3">各サービスのアカウントと連携します。</p>
-          <table class="mt-3 w-full table-auto border-collapse">
+          <table class="w-full mt-3 border-collapse table-auto">
             <thead>
               <tr class="hidden">
                 <th class="w-2/3"></th>
@@ -79,18 +80,18 @@
                 :key="account.name"
                 class="border border-gray-400"
               >
-                <td class="pt-2 pl-3 pb-2 flex items-center gap-x-3">
+                <td class="flex items-center pt-2 pb-2 pl-3 gap-x-3">
                   <img
                     :src="require('@/assets/img/' + account.name + '_Icon.svg')"
                     class="w-9"
                   />
                   {{ account.name }}
                 </td>
-                <td class="text-center text-center">
+                <td class="text-center">
                   <button v-if="account.isConnected" class="pt-2 pb-2">
                     連携を解除
                   </button>
-                  <button v-else class="text-yellow pt-2 pb-2">
+                  <button v-else class="pt-2 pb-2 text-yellow">
                     &gt;&gt; 連携する
                   </button>
                 </td>
@@ -105,8 +106,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { useRouter } from '@nuxtjs/composition-api'
+import { onMounted, useRouter, watch } from '@nuxtjs/composition-api'
 import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
+import { FetchRoomsRepository } from '~/core/02-repositories/fetchRooms'
+import { useFetchRooms } from '~/core/03-composables/useFetchRooms'
+import { useLoading } from '~/core/03-composables/useLoading'
+import LoadingOverlay from '~/components/02-molecules/LoadingOverlay.vue'
 
 export interface Room {
   name: string
@@ -122,7 +127,13 @@ export interface Account {
 }
 
 export default defineComponent({
+  components: { LoadingOverlay },
   setup() {
+    const { fetchRoomsResponse, fetchRoomsError, fetchRooms } = useFetchRooms(
+      new FetchRoomsRepository()
+    )
+    const { loading: fetchRoomsLoading, setLoading: setFetchRoomsLoading } =
+      useLoading()
     const router = useRouter()
     const roomHeaderText = ref<HeaderText>({
       text: 'Rooms',
@@ -130,29 +141,7 @@ export default defineComponent({
     const accountHeaderText = ref<HeaderText>({
       text: 'Account Link',
     })
-    const rooms = ref<Room[]>([
-      {
-        name: 'DJちっち',
-        description: 'A日程用',
-        displayId: 'dj-chicchi',
-        type: 'applemusic',
-        playlistId: 'dssdsds',
-      },
-      {
-        name: 'DJさわっくま',
-        description: 'B日程用',
-        displayId: 'dj-sawa-kuma',
-        type: 'applemusic',
-        playlistId: 'dssdsds',
-      },
-      {
-        name: 'DJたいちゃん',
-        description: 'スクール大阪日A',
-        displayId: 'dj-taichan',
-        type: 'applemusic',
-        playlistId: 'dssdsds',
-      },
-    ])
+    const rooms = ref<Room[]>([])
     const accounts = ref<Account[]>([
       {
         name: 'Spotify',
@@ -166,7 +155,33 @@ export default defineComponent({
     const routerPush = (displayId: String) => {
       router.push(`/mc/room/${displayId}`)
     }
-    return { roomHeaderText, accountHeaderText, accounts, rooms, routerPush }
+    watch(fetchRoomsResponse, (value) => {
+      setFetchRoomsLoading(false)
+      value.map((room) =>
+        rooms.value.push({
+          name: room.name,
+          description: room.description,
+          displayId: room.displayId,
+          type: 'applemusic',
+          playlistId: String(room.playlistId),
+        })
+      )
+    })
+    watch(fetchRoomsError, (error) => {
+      alert(`ルームの取得に失敗しました。${JSON.stringify(error?.message)}`)
+    })
+    onMounted(() => {
+      setFetchRoomsLoading(true)
+      fetchRooms()
+    })
+    return {
+      fetchRoomsLoading,
+      roomHeaderText,
+      accountHeaderText,
+      accounts,
+      rooms,
+      routerPush,
+    }
   },
 })
 </script>

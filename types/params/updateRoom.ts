@@ -1,5 +1,5 @@
 export interface IUpdateRoomParams {
-  roomId: number
+  roomId: string
   urlName: string
   roomName: string
   description: string

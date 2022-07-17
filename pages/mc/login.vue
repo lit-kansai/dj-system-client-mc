@@ -32,7 +32,7 @@ export default defineComponent({
   setup() {
     const { headerText, loginButton } = useComponentComposables()
     const onLoginButtonClick = () => {
-      useGoogleLogin().then((res) => window.open(res.redirectUrl))
+      useGoogleLogin().then((res) => window.location.assign(res.redirectUrl))
     }
     return { headerText, loginButton, onLoginButtonClick }
   },

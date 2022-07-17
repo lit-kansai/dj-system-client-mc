@@ -22,8 +22,9 @@
           />
           <p>使用サービス*</p>
           <SelectInput
-            v-model="musicServiceSelect.selected"
-            v-bind="musicServiceSelect"
+            v-model="musicProviderSelect.selected"
+            v-bind="musicProviderSelect"
+            @update:select="updateProvider"
           />
           <p>リクエストURL*</p>
           <TextInput
@@ -52,17 +53,19 @@ import {
   reactive,
   toRefs,
   useRouter,
+  Ref,
 } from '@nuxtjs/composition-api'
 import { watch } from '@vue/composition-api'
 import { SelectInput } from '~/components/01-atoms/SelectInput.vue'
 import { CreateRoomRepository } from '~/core/02-repositories/createRoom'
 import { useCreateRoom } from '~/core/03-composables/useCreateRoom'
 import { useLoading } from '~/core/03-composables/useLoading'
+import { ProviderName } from '~/types/data/providerName'
 
 interface State {
   name: string
   description: string
-  service: string
+  provider: ProviderName
   displayId: string
 }
 
@@ -77,14 +80,15 @@ export default defineComponent({
       reactive<State>({
         name: '',
         description: '',
-        service: '',
+        provider: '',
         displayId: '',
       })
     )
-    const selectedMusicService = ref('')
-    const musicServiceSelect = ref<SelectInput>({
-      selected: selectedMusicService,
+    const selectedMusicProvider: Ref<ProviderName> = ref('')
+    const musicProviderSelect = ref<SelectInput>({
+      selected: selectedMusicProvider,
       options: [
+        { value: '', text: '選択しない' },
         { value: 'applemusic', text: 'AppleMusic' },
         { value: 'spotify', text: 'Spotify' },
       ],
@@ -95,8 +99,8 @@ export default defineComponent({
     const updateDescription = (description: string): void => {
       state.description.value = description
     }
-    const updateService = (service: string): void => {
-      state.service.value = service
+    const updateProvider = (provider: ProviderName): void => {
+      state.provider.value = provider
     }
     const updateDisplayId = (displayId: string): void => {
       state.displayId.value = displayId
@@ -107,6 +111,7 @@ export default defineComponent({
         urlName: state.displayId.value,
         roomName: state.name.value,
         description: state.description.value,
+        provider: state.provider.value,
       })
     }
     const cancel = () => {
@@ -117,16 +122,16 @@ export default defineComponent({
       alert('Successfully created a room')
       router.push('/mc')
     })
-    watch(error, () => {
+    watch(error, (error) => {
       setLoading(false)
-      alert('an error occurred')
+      alert(`ルームの取得に失敗しました。${JSON.stringify(error)}`)
     })
     return {
-      musicServiceSelect,
+      musicProviderSelect,
       loading,
       updateName,
       updateDescription,
-      updateService,
+      updateProvider,
       updateDisplayId,
       submit,
       cancel,

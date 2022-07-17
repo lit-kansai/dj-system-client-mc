@@ -1,43 +1,57 @@
 export interface IRoomModel {
-  urlName: string
-  roomName: string
+  id: number
+  ownerUserId: number
+  displayId: string
+  name: string
+  playlistId: number | null
   description: string
-  users: string[]
   createdAt: string
   updatedAt: string
 }
 
 export class RoomModel implements IRoomModel {
-  private readonly _urlName: string
-  private readonly _roomName: string
+  private readonly _id: number
+  private readonly _ownerUserId: number
+  private readonly _displayId: string
+  private readonly _name: string
+  private readonly _playlistId: number | null
   private readonly _description: string
-  private readonly _users: string[]
   private readonly _createdAt: string
   private readonly _updatedAt: string
 
   constructor(response: IRoomModel) {
-    this._urlName = response.urlName
-    this._roomName = response.roomName
+    this._id = response.id
+    this._ownerUserId = response.ownerUserId
+    this._displayId = response.displayId
+    this._name = response.name
+    this._playlistId = response.playlistId
     this._description = response.description
-    this._users = response.users
     this._createdAt = response.createdAt
     this._updatedAt = response.updatedAt
   }
 
-  get urlName(): string {
-    return this._urlName
+  get id(): number {
+    return this._id
   }
 
-  get roomName(): string {
-    return this._roomName
+  get ownerUserId(): number {
+    return this._ownerUserId
+  }
+
+  get displayId(): string {
+    return this._displayId
+  }
+
+  get playlistId(): number | null {
+    return this._playlistId
+  }
+
+  get name(): string {
+    return this._name
   }
 
   get description(): string {
     return this._description
-  }
-
-  get users(): string[] {
-    return this._users
   }
 
   get createdAt(): string {

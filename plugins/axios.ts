@@ -1,14 +1,14 @@
 import { Context } from '@nuxt/types'
-import { CamelConverter } from '~/utils/camelToSnake'
+import { CamelToSnake } from '~/utils/camelToSnake'
 import { initializeAxios } from '~/utils/api'
-import { SnakeConverter } from '~/utils/snakeToCamel'
+import { SnakeToCamel } from '~/utils/snakeToCamel'
 import { useLocalStorageUserCredentials } from '~/core/03-composables/useLocalStorageUserCredentials'
 import { UserCredentialsRepository } from '~/core/02-repositories/UserCredentials'
 
 export default function ({ $axios }: Context) {
   $axios.onRequest(async (request) => {
     if (request.data && request.data?.convert) {
-      const data = SnakeConverter.convert(request.data)
+      const data = SnakeToCamel.convert(request.data)
       delete data.convert
       request.data = data
     }
@@ -16,15 +16,18 @@ export default function ({ $axios }: Context) {
     const { fetch } = useLocalStorageUserCredentials(
       new UserCredentialsRepository()
     )
-    const { apiToken } = await fetch()
-    $axios.setHeader('api-token', apiToken)
+    const userInfo = await fetch()
+    if (userInfo) {
+      const { apiToken } = userInfo
+      $axios.setHeader('api-token', apiToken)
+    }
     $axios.setHeader('Content-Type', 'application/json')
     return request
   })
 
   initializeAxios($axios)
   $axios.onResponse((response) => {
-    response.data = CamelConverter.convert(response.data)
+    response.data = CamelToSnake.convert(response.data)
     return response
   })
 

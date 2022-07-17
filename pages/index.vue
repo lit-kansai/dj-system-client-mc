@@ -13,7 +13,7 @@ import { useGoogleLogin } from '~/core/03-composables/useGoogleLogin'
 export default defineComponent({
   setup() {
     const onLoginButtonClick = () => {
-      useGoogleLogin().then((res) => window.open(res.redirectUrl))
+      useGoogleLogin().then((res) => window.location.assign(res.redirectUrl))
     }
     return { onLoginButtonClick }
   },

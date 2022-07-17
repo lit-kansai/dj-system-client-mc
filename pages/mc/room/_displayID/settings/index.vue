@@ -58,8 +58,8 @@ import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
 interface State {
-  displayId: string
-  name: string
+  urlName: string
+  roomName: string
   description: string
 }
 
@@ -76,37 +76,38 @@ export default defineComponent({
     const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
-        displayId: '',
-        name: '',
+        urlName: '',
+        roomName: '',
         description: '',
       })
     )
     const holdRoomId = computed(() => route.value.params.displayID)
-    const updateName = (name: string): void => {
-      state.name.value = name
+    const updateUrlName = (displayId: string): void => {
+      state.urlName.value = displayId
+    }
+    const updateRoomName = (name: string): void => {
+      state.roomName.value = name
     }
     const updateDescription = (description: string): void => {
       state.description.value = description
-    }
-    const updateDisplayId = (displayId: string): void => {
-      state.displayId.value = displayId
     }
     const submit = () => {
       setLoading(true)
       updateRoom({
         roomId: holdRoomId.value,
-        urlName: state.displayId.value,
-        roomName: state.name.value,
+        urlName: state.urlName.value,
+        roomName: state.roomName.value,
         description: state.description.value,
       })
     }
     const cancel = () => {
-      router.push(`/mc/${state.displayId.value}`)
+      router.push(`/mc/${holdRoomId.value}`)
     }
     watch(updateRoomResponse, () => {
       setLoading(false)
       alert('Successfully created a room')
-      router.push(`/mc/${state.displayId.value}`)
+      state.urlName.value = updateRoomResponse.value?.displayId as string
+      router.push(`/mc/${state.urlName.value}`)
     })
     watch(updateRoomError, () => {
       setLoading(false)
@@ -118,8 +119,8 @@ export default defineComponent({
     })
     watch(fetchRoomResponse, () => {
       setLoading(false)
-      state.displayId.value = fetchRoomResponse.value?.displayId as string
-      state.name.value = fetchRoomResponse.value?.name as string
+      state.urlName.value = fetchRoomResponse.value?.displayId as string
+      state.roomName.value = fetchRoomResponse.value?.name as string
       state.description.value = fetchRoomResponse.value?.description as string
     })
     watch(fetchRoomError, () => {
@@ -130,9 +131,9 @@ export default defineComponent({
     return {
       state,
       holdRoomId,
-      updateName,
+      updateUrlName,
+      updateRoomName,
       updateDescription,
-      updateDisplayId,
       submit,
       cancel,
       loading,

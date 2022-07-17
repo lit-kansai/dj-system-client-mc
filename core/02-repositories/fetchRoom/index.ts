@@ -8,9 +8,9 @@ export interface IFetchRoomRepository {
 
 export class FetchRoomRepository implements IFetchRoomRepository {
   async get(params: IFetchRoomParams): Promise<IFetchRoomModel> {
-    const displayId = params.displayId
+    const roomId = params.roomId
     const result = await $axios
-      .$get(`/room/${displayId}`, { params })
+      .$get(`/mc/room/${roomId}`, { params })
       .then((res: IFetchRoomModel) => {
         return res
       })

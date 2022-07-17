@@ -11,7 +11,7 @@ export interface Letter {
   message: string
 }
 
-export interface IGetRoomModel {
+export interface IFetchRoomModel {
   id: number
   ownerUserId: number
   displayId: string
@@ -22,7 +22,7 @@ export interface IGetRoomModel {
   letters: Letter[]
 }
 
-export class GetRoomModel implements IGetRoomModel {
+export class FetchRoomModel implements IFetchRoomModel {
   private readonly _id: number
   private readonly _ownerUserId: number
   private readonly _displayId: string
@@ -31,7 +31,7 @@ export class GetRoomModel implements IGetRoomModel {
   private readonly _playlistId: string
   private readonly _users: User[]
   private readonly _letters: Letter[]
-  constructor(response: IGetRoomModel) {
+  constructor(response: IFetchRoomModel) {
     this._id = response.id
     this._ownerUserId = response.ownerUserId
     this._displayId = response.displayId

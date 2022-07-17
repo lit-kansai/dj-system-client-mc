@@ -51,9 +51,9 @@ import {
   useRouter,
   onBeforeMount,
 } from '@nuxtjs/composition-api'
-import { GetRoomRepository } from '~/core/02-repositories/getRoom'
+import { FetchRoomRepository } from '~/core/02-repositories/fetchRoom'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
-import { useGetRoom } from '~/core/03-composables/useGetRoom'
+import { useFetchRoom } from '~/core/03-composables/useFetchRoom'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
@@ -70,8 +70,8 @@ export default defineComponent({
     const { updateRoomResponse, updateRoomError, updateRoom } = useUpdateRoom(
       new UpdateRoomRepository()
     )
-    const { getRoomResponse, getRoomError, getRoom } = useGetRoom(
-      new GetRoomRepository()
+    const { fetchRoomResponse, fetchRoomError, fetchRoom } = useFetchRoom(
+      new FetchRoomRepository()
     )
     const { loading, setLoading } = useLoading()
     const state = toRefs(
@@ -116,18 +116,18 @@ export default defineComponent({
     })
     onBeforeMount(() => {
       setLoading(false)
-      getRoom({ displayId: route.value.params.id })
+      fetchRoom({ displayId: route.value.params.id })
     })
-    watch(getRoomResponse, () => {
+    watch(fetchRoomResponse, () => {
       setLoading(false)
-      state.roomId.value = getRoomResponse.value?.id as number
-      state.displayId.value = getRoomResponse.value?.displayId as string
-      state.name.value = getRoomResponse.value?.name as string
-      state.description.value = getRoomResponse.value?.description as string
+      state.roomId.value = fetchRoomResponse.value?.id as number
+      state.displayId.value = fetchRoomResponse.value?.displayId as string
+      state.name.value = fetchRoomResponse.value?.name as string
+      state.description.value = fetchRoomResponse.value?.description as string
     })
-    watch(getRoomError, () => {
+    watch(fetchRoomError, () => {
       setLoading(false)
-      alert(`an error occurred: ${JSON.stringify(getRoomError.value)}`)
+      alert(`an error occurred: ${JSON.stringify(fetchRoomError.value)}`)
     })
 
     return {

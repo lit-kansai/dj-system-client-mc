@@ -12,6 +12,7 @@ import { $nuxt } from '~/utils/nuxtInstance'
 export default function (context: Context) {
   const { route } = context
   const { path, query } = route
+  console.log(path)
 
   if (path === GOOGLE_LOGIN_PAGE_PATH) {
     return onEnterGoogleLoginPage()

@@ -58,7 +58,6 @@ import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
 interface State {
-  roomId: number | undefined
   displayId: string
   name: string
   description: string
@@ -67,6 +66,7 @@ interface State {
 export default defineComponent({
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const { updateRoomResponse, updateRoomError, updateRoom } = useUpdateRoom(
       new UpdateRoomRepository()
     )
@@ -76,14 +76,12 @@ export default defineComponent({
     const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
-        roomId: undefined,
         displayId: '',
         name: '',
         description: '',
       })
     )
-    const route = useRoute()
-    const displayId = computed(() => route.value.params.displayID)
+    const holdRoomId = computed(() => route.value.params.displayID)
     const updateName = (name: string): void => {
       state.name.value = name
     }
@@ -96,7 +94,7 @@ export default defineComponent({
     const submit = () => {
       setLoading(true)
       updateRoom({
-        roomId: state.roomId.value as number,
+        roomId: holdRoomId.value,
         urlName: state.displayId.value,
         roomName: state.name.value,
         description: state.description.value,
@@ -116,11 +114,10 @@ export default defineComponent({
     })
     onBeforeMount(() => {
       setLoading(false)
-      fetchRoom({ displayId: route.value.params.id })
+      fetchRoom({ roomId: holdRoomId.value })
     })
     watch(fetchRoomResponse, () => {
       setLoading(false)
-      state.roomId.value = fetchRoomResponse.value?.id as number
       state.displayId.value = fetchRoomResponse.value?.displayId as string
       state.name.value = fetchRoomResponse.value?.name as string
       state.description.value = fetchRoomResponse.value?.description as string
@@ -132,7 +129,7 @@ export default defineComponent({
 
     return {
       state,
-      displayId,
+      holdRoomId,
       updateName,
       updateDescription,
       updateDisplayId,

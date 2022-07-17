@@ -12,25 +12,32 @@ import { $nuxt } from '~/utils/nuxtInstance'
 export default function (context: Context) {
   const { route } = context
   const { path, query } = route
-  console.log(path)
 
-  if (path === GOOGLE_LOGIN_PAGE_PATH) {
+  if (isGoogleLoginPage(path)) {
     return onEnterGoogleLoginPage()
   }
 
-  if (isLoginRequired(path)) {
+  if (isLoginRequiredPage(path)) {
     return onEnterLoginRequiredPage()
   }
 
-  if (path === API_GOOGLE_CALLBACK_PATH) {
+  if (isGoogleAPICallbackPage(path)) {
     return new Promise(() => {
       onEnterGoogleLoginCallbackPage(query as GoogleLoginCallbackQuery)
     })
   }
 }
 
-const isLoginRequired = (path: string): boolean => {
+const isLoginRequiredPage = (path: string): boolean => {
   return path.includes('mc') || path.includes('admin')
+}
+
+const isGoogleLoginPage = (path: string): boolean => {
+  return path.includes(GOOGLE_LOGIN_PAGE_PATH)
+}
+
+const isGoogleAPICallbackPage = (path: string): boolean => {
+  return path.includes(API_GOOGLE_CALLBACK_PATH)
 }
 
 const onEnterGoogleLoginPage = () => {

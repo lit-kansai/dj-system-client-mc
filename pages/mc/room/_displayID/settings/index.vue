@@ -1,6 +1,8 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
-    <p class="mt-5 mb-5">ホーム / {{ room.name }} / 設定</p>
+    <p class="mb-5">
+      <NuxtLink to="/mc">ホーム</NuxtLink> / {{ room.name }} / 設定
+    </p>
     <Container>
       <template #content>
         <HeaderText text="Setting Room" class="mb-5 md:mb-10" />

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>/admin/music/apple-music-login</h1>
-    <NuxtLink to="/top">top</NuxtLink>
+    <NuxtLink to="/mc">ホーム</NuxtLink>
   </div>
 </template>
 

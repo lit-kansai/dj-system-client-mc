@@ -9,8 +9,8 @@
       </div>
       <slot name="right"></slot>
     </div>
-    <div class="mb-4 border-b-2 border-neon-pink shadow-neon-pink"></div>
-    <div class="border-b-2 border-neon-blue shadow-neon-blue"></div>
+    <div class="mb-2.5 border border-neon-pink shadow-neon-pink"></div>
+    <div class="border border-neon-blue shadow-neon-blue"></div>
   </div>
 </template>
 

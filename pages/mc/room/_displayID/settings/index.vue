@@ -51,9 +51,9 @@ import {
   useRouter,
   onBeforeMount,
 } from '@nuxtjs/composition-api'
-import { FetchRoomRepository } from '~/core/02-repositories/fetchRoom'
+import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
-import { useFetchRoom } from '~/core/03-composables/useFetchRoom'
+import { useFetchRoomDetail } from '~/core/03-composables/useFetchRoomDetail'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
 
@@ -70,8 +70,8 @@ export default defineComponent({
     const { updateRoomResponse, updateRoomError, updateRoom } = useUpdateRoom(
       new UpdateRoomRepository()
     )
-    const { fetchRoomResponse, fetchRoomError, fetchRoom } = useFetchRoom(
-      new FetchRoomRepository()
+    const { fetchRoomResponse, fetchRoomError, fetchRoom } = useFetchRoomDetail(
+      new FetchRoomDetailRepository()
     )
     const { loading, setLoading } = useLoading()
     const state = toRefs(

@@ -1,6 +1,8 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
-    <p class="mb-5"><NuxtLink to="/mc">ホーム</NuxtLink> / {{ room.name }}</p>
+    <p class="mb-5">
+      <NuxtLink to="/mc">ホーム</NuxtLink> / {{ state.roomName.value }}
+    </p>
     <div class="flex flex-col gap-10">
       <!-- Details -->
       <div class="flex flex-col md:flex-row gap-10">
@@ -8,22 +10,22 @@
           <Container>
             <template #content>
               <div class="flex items-end gap-x-3">
-                <HeaderText v-bind="detailTitle" />
+                <HeaderText text="Detail" />
                 <NuxtLink
-                  :to="`/mc/room/${room.displayId}/settings`"
+                  :to="`/mc/room/${roomId.value}/settings`"
                   class="text-yellow"
                 >
                   &gt;&gt; ルームを編集する
                 </NuxtLink>
               </div>
               <ul class="mt-3 mb-3">
-                <li>ルームネーム: {{ room.name }}</li>
-                <li>ルーム説明: {{ room.description }}</li>
-                <li>使用サービス: {{ room.type }}</li>
+                <li>ルームネーム: {{ state.roomName.value }}</li>
+                <li>ルーム説明: {{ state.description.value }}</li>
+                <li>使用サービス: {{ state.provider.value }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink :to="`/room/${room.displayId}`">{{
-                    protocolAndHostname + '/room/' + room.displayId
+                  <NuxtLink :to="`/room/${roomId.value}`">{{
+                    protocolAndHostname + '/room/' + roomId.value
                   }}</NuxtLink>
                 </li>
               </ul>
@@ -34,8 +36,12 @@
         <Container>
           <template #content>
             <div class="flex items-end gap-x-3">
-              <HeaderText v-bind="requestTitle" />
-              <a :href="room.playlistId" target="_blank" class="text-yellow">
+              <HeaderText text="Request" />
+              <a
+                :href="state.playlistId.value"
+                target="_blank"
+                class="text-yellow"
+              >
                 &gt;&gt; プレイリストを見る
               </a>
             </div>
@@ -54,7 +60,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="music in musics"
+                  v-for="music in state.musics.value"
                   :key="music.providedMusicId"
                   class="border border-gray-400 hover:bg-neon-blue cursor-pointer w-full"
                   @click="redirectOutside(music.providerUrl)"
@@ -94,7 +100,7 @@
       <!-- Message -->
       <Container>
         <template #content>
-          <HeaderText v-bind="letterTitle" />
+          <HeaderText text="Letter" />
           <table class="mt-3 w-full border-collapse">
             <thead>
               <tr class="text-left">
@@ -104,9 +110,9 @@
             </thead>
             <tbody>
               <tr
-                v-for="letter in letters"
+                v-for="letter in state.letters.value"
                 :key="letter.id"
-                class="border border-gray-400 hover:bg-neon-blue cursor-pointer"
+                class="border border-gray-400 hover:bg-neon-blue"
               >
                 <td class="pl-2 pt-2 pb-2">{{ letter.radioName }}</td>
                 <td>{{ letter.message }}</td>
@@ -120,12 +126,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-import { computed, useRoute } from '@nuxtjs/composition-api'
-import { Room } from '~/pages/mc/index.vue'
-import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
+import {
+  defineComponent,
+  toRefs,
+  reactive,
+  computed,
+  useRoute,
+  ref,
+  onBeforeMount,
+} from '@nuxtjs/composition-api'
 
-export interface RequestMusicDetail {
+interface RequestMusicDetail {
   musicTitle: string
   albumName: string
   artistName: string
@@ -136,10 +147,18 @@ export interface RequestMusicDetail {
   radioNames: string[]
 }
 
-export interface Letter {
-  id: number
+interface Letter {
   radioName: string
   message: string
+}
+
+interface State {
+  roomName: string
+  description: string
+  provider: string | null
+  playlistId: string | null
+  musics: Array<RequestMusicDetail>
+  letters: Array<Letter>
 }
 
 export default defineComponent({
@@ -148,74 +167,62 @@ export default defineComponent({
     const protocolAndHostname = computed(
       () => window.location.protocol + '//' + window.location.hostname
     )
-    const id = computed(() => route.value.params.id)
+    const roomId = ref('')
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
     }
-    const room = ref<Room>({
-      name: 'DJさわっくま',
-      description: 'B日程用',
-      displayId: 'dj-sawa-kuma',
-      type: 'applemusic',
-      playlistId: 'dj2402d',
+    onBeforeMount(() => {
+      roomId.value = route.value.params.displayID
     })
-    const detailTitle = ref<HeaderText>({
-      text: 'Detail',
-    })
-    const requestTitle = ref<HeaderText>({
-      text: 'Request',
-    })
-    const letterTitle = ref<HeaderText>({
-      text: 'Letter',
-    })
-    const musics = ref<RequestMusicDetail[]>([
-      {
-        musicTitle: 'ヒステリックナイトガール',
-        albumName: 'Styley!',
-        artistName: 'PSUQUI',
-        imageUrl:
-          'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
-        providerUrl:
-          'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
-        duration: 220,
-        providedMusicId: 'm2ed2',
-        radioNames: ['がっしー', 'てぃーてぃー'],
-      },
-      {
-        musicTitle: 'ヒステリックナイトガール',
-        artistName: 'PSUQUI',
-        albumName: 'Styley!',
-        imageUrl:
-          'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
-        providerUrl:
-          'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
-        duration: 220,
-        providedMusicId: 'm2ed2',
-        radioNames: ['がっしー'],
-      },
-    ])
-    const letters = ref<Letter[]>([
-      {
-        id: 0,
-        radioName: 'がっしー',
-        message: '初めて投稿しました！',
-      },
-      {
-        id: 1,
-        radioName: 'てぃーてぃー',
-        message: 'やっぱりこの曲！',
-      },
-    ])
+    const state = toRefs(
+      reactive<State>({
+        roomName: 'DJさわっくま',
+        description: 'B日程用',
+        provider: 'applemusic',
+        playlistId: '',
+        musics: [
+          {
+            musicTitle: 'ヒステリックナイトガール',
+            albumName: 'Styley!',
+            artistName: 'PSUQUI',
+            imageUrl:
+              'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
+            providerUrl:
+              'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
+            duration: 220,
+            providedMusicId: 'm2ed2',
+            radioNames: ['がっしー', 'てぃーてぃー'],
+          },
+          {
+            musicTitle: 'ヒステリックナイトガール',
+            artistName: 'PSUQUI',
+            albumName: 'Styley!',
+            imageUrl:
+              'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
+            providerUrl:
+              'https://i.scdn.co/image/ab67616d00001e021a8bba168d85553d9b2d47a9',
+            duration: 220,
+            providedMusicId: 'm2edsasa2',
+            radioNames: ['がっしー'],
+          },
+        ],
+        letters: [
+          {
+            radioName: 'がっしー',
+            message: '初めて投稿しました！',
+          },
+          {
+            radioName: 'てぃーてぃー',
+            message: 'やっぱりこの曲！',
+          },
+        ],
+      })
+    )
     return {
-      id,
+      state,
+      roomId,
       redirectOutside,
       protocolAndHostname,
-      room,
-      detailTitle,
-      requestTitle,
-      letterTitle,
-      musics,
-      letters,
     }
   },
 })

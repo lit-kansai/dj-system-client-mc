@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <div class="flex items-center px-5 py-3">
-      <div class="flex items-center flex-grow">
-        <Logo />
-        <p class="pl-1 text-2xl">
+  <div class="w-full max-w-sm m-auto md:max-w-7xl">
+    <div class="flex items-center justify-between py-4 md:py-6">
+      <div class="flex">
+        <logo />
+        <p class="ml-2 text-2xl">
           {{ title }}
         </p>
       </div>
       <slot name="right"></slot>
     </div>
-    <div class="mb-2.5 border border-neon-pink shadow-neon-pink"></div>
-    <div class="border border-neon-blue shadow-neon-blue"></div>
   </div>
 </template>
 

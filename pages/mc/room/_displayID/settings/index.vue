@@ -10,19 +10,19 @@
         >
           <p>ルームネーム*</p>
           <TextInput
-            text=""
+            :text="state.roomName.value"
             placeholder="例)がっしー"
             @update:text="updateRoomName"
           />
           <p>ルーム説明*</p>
           <TextInput
-            text=""
+            :text="state.description.value"
             placeholder="例)2022年夏のイベント用"
             @update:text="updateDescription"
           />
           <p>リクエストURL*</p>
           <TextInput
-            text=""
+            :text="state.urlName.value"
             placeholder="例)gassi"
             @update:text="updateUrlName"
           />
@@ -105,9 +105,9 @@ export default defineComponent({
     }
     watch(updateRoomResponse, () => {
       setLoading(false)
-      alert('Successfully created a room')
+      alert('Successfully update a room')
       state.urlName.value = updateRoomResponse.value?.displayId as string
-      router.push(`/mc/${state.urlName.value}`)
+      router.push(`/mc/room/${state.urlName.value}`)
     })
     watch(updateRoomError, () => {
       setLoading(false)

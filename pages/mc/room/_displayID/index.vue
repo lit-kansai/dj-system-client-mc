@@ -1,5 +1,6 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
+    <LoadingOverlay v-if="loading" />
     <p class="mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ state.roomName.value }}
     </p>
@@ -133,6 +134,7 @@ import {
   computed,
   useRoute,
 } from '@nuxtjs/composition-api'
+import { useLoading } from '~/core/03-composables/useLoading'
 
 interface RequestMusicDetail {
   musicTitle: string
@@ -169,6 +171,7 @@ export default defineComponent({
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
     }
+    const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
         roomName: 'DJさわっくま',
@@ -218,6 +221,8 @@ export default defineComponent({
       roomId,
       redirectOutside,
       protocolAndHostname,
+      loading,
+      setLoading,
     }
   },
 })

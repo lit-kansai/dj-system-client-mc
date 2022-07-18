@@ -22,7 +22,7 @@
               <ul class="mt-3 mb-3">
                 <li>ルームネーム: {{ state.roomName.value }}</li>
                 <li>ルーム説明: {{ state.description.value }}</li>
-                <li>使用サービス: {{ state.provider.value }}</li>
+                <li>使用サービス: {{ state.provider.value || '未設定' }}</li>
                 <li>
                   ルームURL:
                   <NuxtLink :to="`/room/${roomId}`" class="underline">{{
@@ -133,8 +133,12 @@ import {
   reactive,
   computed,
   useRoute,
+  onBeforeMount,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useLoading } from '~/core/03-composables/useLoading'
+import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
+import { useFetchRoomDetail } from '~/core/03-composables/useFetchRoomDetail'
 
 interface RequestMusicDetail {
   musicTitle: string
@@ -172,6 +176,9 @@ export default defineComponent({
       window.open(url, '_blank')
     }
     const { loading, setLoading } = useLoading()
+    const { fetchRoomResponse, fetchRoomError, fetchRoom } = useFetchRoomDetail(
+      new FetchRoomDetailRepository()
+    )
     const state = toRefs(
       reactive<State>({
         roomName: 'DJさわっくま',
@@ -216,6 +223,21 @@ export default defineComponent({
         ],
       })
     )
+    onBeforeMount(() => {
+      setLoading(true)
+      fetchRoom({ roomId: roomId.value })
+    })
+    watch(fetchRoomResponse, () => {
+      setLoading(false)
+      state.roomName.value = fetchRoomResponse.value?.name as string
+      state.description.value = fetchRoomResponse.value?.description as string
+      state.provider.value = fetchRoomResponse.value?.provider as string
+      state.letters.value = fetchRoomResponse.value?.letters as Letter[]
+    })
+    watch(fetchRoomError, () => {
+      setLoading(false)
+      alert(`an error occurred: ${JSON.stringify(fetchRoomError.value)}`)
+    })
     return {
       state,
       roomId,

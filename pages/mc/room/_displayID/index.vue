@@ -24,7 +24,7 @@
                 <li>使用サービス: {{ state.provider.value }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink :to="`/room/${roomId}`">{{
+                  <NuxtLink :to="`/room/${roomId}`" class="underline">{{
                     protocolAndHostname + '/room/' + roomId
                   }}</NuxtLink>
                 </li>

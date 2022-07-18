@@ -12,7 +12,7 @@
           <TextInput
             text=""
             placeholder="例)がっしー"
-            @update:text="updateName"
+            @update:text="updateRoomName"
           />
           <p>ルーム説明*</p>
           <TextInput
@@ -24,7 +24,7 @@
           <TextInput
             text=""
             placeholder="例)gassi"
-            @update:text="updateDisplayId"
+            @update:text="updateUrlName"
           />
         </div>
         <div class="flex justify-center mb-3">

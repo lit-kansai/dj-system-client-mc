@@ -2,7 +2,7 @@
   <div class="relative flex flex-col h-screen min-h-screen">
     <Header v-bind="header">
       <template #right>
-        <p class="text-2xl">powered by DJ GASSI</p>
+        <p class="hidden md:block">powered by DJ GASSI</p>
       </template>
     </Header>
     <div class="flex-grow">

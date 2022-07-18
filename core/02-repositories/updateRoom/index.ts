@@ -10,7 +10,7 @@ export class UpdateRoomRepository implements IUpdateRoomRepository {
   async put(params: IUpdateRoomParams): Promise<IUpdateRoomModel> {
     const roomId = params.roomId
     const result = await $axios
-      .$post(`/mc/room/${roomId}`, {
+      .$put(`/mc/room/${roomId}`, {
         ...params,
         convert: true,
       })

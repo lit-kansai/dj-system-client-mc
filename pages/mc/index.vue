@@ -91,7 +91,11 @@
                   <button v-if="account.isConnected" class="pt-2 pb-2">
                     連携を解除
                   </button>
-                  <button v-else class="pt-2 pb-2 text-yellow">
+                  <button
+                    v-else
+                    class="pt-2 pb-2 text-yellow"
+                    @click="connectSpotify"
+                  >
                     &gt;&gt; 連携する
                   </button>
                 </td>
@@ -112,6 +116,8 @@ import { FetchRoomsRepository } from '~/core/02-repositories/fetchRooms'
 import { useFetchRooms } from '~/core/03-composables/useFetchRooms'
 import { useLoading } from '~/core/03-composables/useLoading'
 import LoadingOverlay from '~/components/02-molecules/LoadingOverlay.vue'
+import { useSpotifyLogin } from '~/core/03-composables/useSpotifyLogin'
+import { SpotifyLoginRepository } from '~/core/02-repositories/spotifyLogin'
 
 export interface Room {
   name: string
@@ -129,6 +135,7 @@ export interface Account {
 export default defineComponent({
   components: { LoadingOverlay },
   setup() {
+    const { loginSpotify } = useSpotifyLogin(new SpotifyLoginRepository())
     const { fetchRoomsResponse, fetchRoomsError, fetchRooms } = useFetchRooms(
       new FetchRoomsRepository()
     )
@@ -155,6 +162,10 @@ export default defineComponent({
     const routerPush = (displayId: String) => {
       router.push(`/mc/room/${displayId}`)
     }
+    const connectSpotify = () => {
+      console.log('connectSpotify')
+      loginSpotify()
+    }
     watch(fetchRoomsResponse, (value) => {
       setFetchRoomsLoading(false)
       value.map((room) =>
@@ -175,6 +186,7 @@ export default defineComponent({
       fetchRooms()
     })
     return {
+      connectSpotify,
       fetchRoomsLoading,
       roomHeaderText,
       accountHeaderText,

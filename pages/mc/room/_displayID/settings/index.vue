@@ -101,7 +101,7 @@ export default defineComponent({
       })
     }
     const cancel = () => {
-      router.push(`/mc/${holdRoomId.value}`)
+      router.push(`/mc/room/${holdRoomId.value}`)
     }
     watch(updateRoomResponse, () => {
       setLoading(false)

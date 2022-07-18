@@ -181,9 +181,9 @@ export default defineComponent({
     )
     const state = toRefs(
       reactive<State>({
-        roomName: 'DJさわっくま',
-        description: 'B日程用',
-        provider: 'applemusic',
+        roomName: '',
+        description: '',
+        provider: '',
         playlistId: '',
         musics: [
           {
@@ -211,16 +211,7 @@ export default defineComponent({
             radioNames: ['がっしー'],
           },
         ],
-        letters: [
-          {
-            radioName: 'がっしー',
-            message: '初めて投稿しました！',
-          },
-          {
-            radioName: 'てぃーてぃー',
-            message: 'やっぱりこの曲！',
-          },
-        ],
+        letters: [],
       })
     )
     onBeforeMount(() => {

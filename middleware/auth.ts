@@ -61,7 +61,7 @@ const onEnterGoogleLoginCallbackPage = (query: GoogleLoginCallbackQuery) => {
   const params: ILoggedInGoogleParams = {
     ...query,
     redirectUrl:
-      process.env.REDIRECT_URL ??
+      process.env.GOOGLE_LOGIN_REDIRECT_URL ??
       'https://dj-system.lit-kansai-mentors.com/api/google/callback',
   }
   const { loggedInGoogle } = useLoggedInGoogle(params)

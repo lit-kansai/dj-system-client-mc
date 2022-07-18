@@ -1,7 +1,9 @@
 <template>
   <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
     <LoadingOverlay v-if="loading" />
-    <p class="mt-5 mb-5">ホーム / {{ state.roomName.value }} / 設定</p>
+    <p class="mt-5 mb-5">
+      <NuxtLink to="/mc">ホーム</NuxtLink> / {{ state.roomName.value }} / 設定
+    </p>
     <Container>
       <template #content>
         <HeaderText text="Setting Room" class="mb-5 md:mb-10" />

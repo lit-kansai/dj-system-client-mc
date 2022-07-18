@@ -1,7 +1,7 @@
 <template>
   <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
     <LoadingOverlay v-if="loading" />
-    <p class="mt-5 mb-5">ホーム / ルーム作成</p>
+    <p class="mb-5"><NuxtLink to="/mc">ホーム</NuxtLink> / ルーム作成</p>
     <Container>
       <template #content>
         <HeaderText text="Create Room" class="mb-5 md:mb-10" />

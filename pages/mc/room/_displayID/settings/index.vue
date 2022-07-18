@@ -114,7 +114,7 @@ export default defineComponent({
       alert('an error occurred')
     })
     onBeforeMount(() => {
-      setLoading(false)
+      setLoading(true)
       fetchRoom({ roomId: holdRoomId.value })
     })
     watch(fetchRoomResponse, () => {

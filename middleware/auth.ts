@@ -2,12 +2,16 @@ import { Context } from '@nuxt/types'
 import {
   GOOGLE_LOGIN_PAGE_PATH,
   API_GOOGLE_CALLBACK_PATH,
+  API_SPOTIFY_CALLBACK_PATH,
 } from '~/utils/constants'
 import { ILoggedInGoogleParams } from '~/types/params/loggedInGoogleParams'
 import { GoogleLoginCallbackQuery } from '~/types/query/googleLoginCallbackQuery'
 import { useLoggedInGoogle } from '~/core/03-composables/useLoggedinGoogle'
 import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
 import { $nuxt } from '~/utils/nuxtInstance'
+import { RegisterSpotifyTokenParams } from '~/types/params/registerSpotifyTokenParams'
+import { useRegisterSpotifyToken } from '~/core/03-composables/useRegisterSpotifyToken'
+import { RegisterSpotifyTokenRepository } from '~/core/02-repositories/registerSpotifyToken'
 
 export default function (context: Context) {
   const { route } = context
@@ -26,6 +30,19 @@ export default function (context: Context) {
       onEnterGoogleLoginCallbackPage(query as GoogleLoginCallbackQuery)
     })
   }
+
+  if (isSpotifyAPICallbackPage(path)) {
+    return new Promise(() => {
+      const spotifyLoginCallbackQuery = query as Record<
+        'code' | 'state',
+        string
+      >
+      onEnterSpotifyLoginCallbackPage({
+        code: spotifyLoginCallbackQuery.code,
+        redirectUrl: process.env.SPOTIFY_LOGIN_REDIRECT_URL as string,
+      })
+    })
+  }
 }
 
 const isLoginRequiredPage = (path: string): boolean => {
@@ -38,6 +55,10 @@ const isGoogleLoginPage = (path: string): boolean => {
 
 const isGoogleAPICallbackPage = (path: string): boolean => {
   return path.includes(API_GOOGLE_CALLBACK_PATH)
+}
+
+const isSpotifyAPICallbackPage = (path: string): boolean => {
+  return path.includes(API_SPOTIFY_CALLBACK_PATH)
 }
 
 const onEnterGoogleLoginPage = () => {
@@ -66,4 +87,17 @@ const onEnterGoogleLoginCallbackPage = (query: GoogleLoginCallbackQuery) => {
   }
   const { loggedInGoogle } = useLoggedInGoogle(params)
   loggedInGoogle.then((_) => redirect('/mc?message=loginSuccess'))
+}
+const onEnterSpotifyLoginCallbackPage = (query: RegisterSpotifyTokenParams) => {
+  const { redirect } = $nuxt
+  const { registerSpotifyToken } = useRegisterSpotifyToken(
+    new RegisterSpotifyTokenRepository()
+  )
+  registerSpotifyToken(query).then((result) => {
+    if (result.ok) {
+      redirect('/mc?message=SpotifyConnectSuccess')
+    } else {
+      alert('An error occurred')
+    }
+  })
 }

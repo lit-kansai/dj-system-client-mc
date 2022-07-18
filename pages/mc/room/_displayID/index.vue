@@ -12,7 +12,7 @@
               <div class="flex items-end gap-x-3">
                 <HeaderText text="Detail" />
                 <NuxtLink
-                  :to="`/mc/room/${roomId.value}/settings`"
+                  :to="`/mc/room/${roomId}/settings`"
                   class="text-yellow"
                 >
                   &gt;&gt; ルームを編集する
@@ -24,8 +24,8 @@
                 <li>使用サービス: {{ state.provider.value }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink :to="`/room/${roomId.value}`">{{
-                    protocolAndHostname + '/room/' + roomId.value
+                  <NuxtLink :to="`/room/${roomId}`">{{
+                    protocolAndHostname + '/room/' + roomId
                   }}</NuxtLink>
                 </li>
               </ul>
@@ -132,8 +132,6 @@ import {
   reactive,
   computed,
   useRoute,
-  ref,
-  onBeforeMount,
 } from '@nuxtjs/composition-api'
 
 interface RequestMusicDetail {
@@ -167,13 +165,10 @@ export default defineComponent({
     const protocolAndHostname = computed(
       () => window.location.protocol + '//' + window.location.hostname
     )
-    const roomId = ref('')
+    const roomId = computed(() => route.value.params.displayID)
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
     }
-    onBeforeMount(() => {
-      roomId.value = route.value.params.displayID
-    })
     const state = toRefs(
       reactive<State>({
         roomName: 'DJさわっくま',

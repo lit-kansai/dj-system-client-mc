@@ -15,7 +15,7 @@
         class="border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl"
         @click.stop=""
       >
-        <div class="bg-gray-800 rounded-2xl p-4 md:p-10">
+        <div class="bg-gray-800 rounded-2xl">
           <slot name="content"> </slot>
         </div>
       </div>

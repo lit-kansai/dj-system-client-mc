@@ -11,7 +11,7 @@
       <p class="text-lg truncate">
         {{ props.musicTitle }}
       </p>
-      <p class="pl-1 truncate">
+      <p class="truncate">
         {{ props.artistName }}
       </p>
     </div>

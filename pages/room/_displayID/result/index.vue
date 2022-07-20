@@ -2,7 +2,7 @@
   <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl md:flex md:gap-x-10">
     <Modal v-bind="modalState" @close="onCloseModal">
       <template #content>
-        <div class="relative p-2 md:p-5">
+        <div class="relative">
           <LoadingOverlay v-if="requestMusicLoading" />
           <MemberOtayori
             v-if="currentState === 'confirm'"

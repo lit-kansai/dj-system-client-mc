@@ -8,7 +8,10 @@
       class="mb-10 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5"
     >
       <p>リクエスト曲</p>
-      <RequestMusicOverview :props="requestMusicOverview" class="mb-5" />
+      <RequestMusicOverview
+        :props="requestMusicOverview"
+        class="mb-5 border-neon-green shadow-card-neon-green"
+      />
       <p>ラジオネーム（任意）</p>
       <TextInput
         text=""

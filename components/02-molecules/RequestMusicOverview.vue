@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex p-3 border rounded-md border-neon-green shadow-card-neon-green"
-  >
+  <div class="flex p-3 border rounded-md border border-gray-800">
     <img
       :src="props.imageUrl"
       :alt="`${props.musicTitle} | ${props.artistName}`"

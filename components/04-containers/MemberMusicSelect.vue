@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full grid md:flex md:flex-wrap gap-y-3 md:gap-6">
+    <div class="w-full grid gap-y-3 md:gap-6 md:grid-cols-6">
       <div v-if="!state.cards.value.length" class="w-full text-center">
         検索結果が見つかりませんでした
       </div>

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="w-full max-w-sm m-auto mt-5 mb-5 md:max-w-7xl md:flex md:gap-x-10"
-  >
+  <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl md:flex md:gap-x-10">
     <Modal v-bind="modalState" @close="onCloseModal">
       <template #content>
         <div class="relative p-2 md:p-5">
@@ -27,11 +25,10 @@
         <TextInput
           v-model="textInput.text"
           v-bind="textInput"
-          class="md:mt-3"
           @update:text="updateSearchWord"
           @keypress.enter.native="onPressEnter"
         />
-        <div class="mt-5">
+        <div class="mt-6">
           <p class="text-xl">リクエストしたい曲を選択しよう！</p>
           <MemberMusicSelect
             class="mt-4"

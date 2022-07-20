@@ -10,9 +10,9 @@ export interface UseRequestMusicInputs {
 export const useRequestMusic = (repository: IRequestMusicRepository) => {
   const requestMusicResult: Ref<string | undefined> = ref(undefined)
   const requestMusic = (inputs: UseRequestMusicInputs) => {
-    repository
-      .post(inputs)
-      .then((result) => (requestMusicResult.value = result))
+    repository.post(inputs).then((result) => {
+      requestMusicResult.value = result
+    })
   }
 
   return { requestMusicResult, requestMusic }

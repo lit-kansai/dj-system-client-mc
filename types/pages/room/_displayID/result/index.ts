@@ -1,28 +1,22 @@
 import { ref } from '@nuxtjs/composition-api'
 import { IMusicModel, MusicModel } from '~/core/01-models/music'
 
-export const ModalState = ['musicSelect', 'confirm', 'finished'] as const
-export const useModal = () => {
-  const currentState = ref<typeof ModalState[number]>('musicSelect')
+export const ModalState = ['confirm', 'finished'] as const
+export const useModalState = () => {
+  const currentState = ref<typeof ModalState[number]>('confirm')
   const nextModal = () => {
     switch (currentState.value) {
-      case 'musicSelect':
-        currentState.value = 'confirm'
-        break
       case 'confirm':
         currentState.value = 'finished'
         break
       case 'finished':
-        currentState.value = 'musicSelect'
+        currentState.value = 'confirm'
         break
     }
   }
   const previousModal = () => {
     switch (currentState.value) {
-      case 'musicSelect':
-        break
       case 'confirm':
-        currentState.value = 'musicSelect'
         break
       case 'finished':
         currentState.value = 'confirm'
@@ -37,7 +31,7 @@ export const useSelectedMusic = () => {
   const selectedMusic = ref<IMusicModel>(
     new MusicModel({
       id: '',
-      artists: [{ id: '', name: '' }],
+      artists: '',
       album: { name: '', jacketUrl: '' },
       name: '',
       duration: 0,

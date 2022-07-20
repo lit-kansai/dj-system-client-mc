@@ -24,11 +24,6 @@
       />
     </div>
     <div class="flex justify-center mb-1">
-      <Button
-        class="mr-3 bg-gray-400 hover:bg-gray-500"
-        text="戻る"
-        @click.native="cancel"
-      />
       <Button text="リクエストを送信" @click.native="submit" />
     </div>
   </div>

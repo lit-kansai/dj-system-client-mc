@@ -13,7 +13,7 @@ export interface Album {
 
 export interface IMusicEntity {
   id: string
-  artists: Artist[]
+  artists: string
   album: Album
   name: string
   duration: number
@@ -27,7 +27,7 @@ export type IMusicModel = IMusicEntity & IMusicHelper
 
 export class MusicModel implements IMusicModel {
   private readonly _id: string
-  private readonly _artists: Artist[]
+  private readonly _artists: string
   private readonly _album: Album
   private readonly _name: string
   private readonly _duration: number
@@ -44,7 +44,7 @@ export class MusicModel implements IMusicModel {
     return this._id
   }
 
-  get artists(): Artist[] {
+  get artists(): string {
     return this._artists
   }
 

@@ -1,18 +1,14 @@
 <template>
   <div>
-    <Modal v-bind="modal" @close="closeModal">
-      <template #content>
-        <MemberOtayori />
-        <!-- <Complete title="送信完了" subtitle="流れるのをお楽しみに!" /> -->
-      </template>
-    </Modal>
+    <RoomLogo class="w-20 h-20" v-bind="roomLogo" />
+    <!-- <MemberOtayori /> -->
+    <!-- <Complete title="送信完了" subtitle="流れるのをお楽しみに!" /> -->
     <div class="flex p-11">
-      <button @click="openModal">openModal</button>
       <RoomLogo v-bind="roomLogo" />
-      <Card v-bind="card" />
+      <!-- <Card v-bind="card" /> -->
     </div>
     <div class="p-11">
-      <RequestMusicOverview v-bind="requestMusicOverview" />
+      <!-- <RequestMusicOverview v-bind="requestMusicOverview" /> -->
       <TextInput
         v-model="textInput.text"
         v-bind="textInput"
@@ -42,7 +38,6 @@ import { TextInput } from '~/types/components/textInput'
 import { MusicOverview } from '~/types/components/music_overview'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Button } from '~/components/01-atoms/Button.vue'
-import { Modal } from '~/components/01-atoms/Modal.vue'
 import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
 
 export default defineComponent({
@@ -57,9 +52,6 @@ export default defineComponent({
     const roomLogo = ref<RoomLogo>({
       roomName: 'ルーム名',
       imageUrl: '',
-    })
-    const modal = ref<Modal>({
-      opened: true,
     })
     const requestMusicOverview = ref<MusicOverview>({
       musicTitle: 'ヒステリックナイトガール',
@@ -86,19 +78,11 @@ export default defineComponent({
       type: 'search',
       text: '',
     })
-    const openModal = () => {
-      console.log(modal)
-      modal.value.opened = !modal.value.opened
-    }
-    const closeModal = () => {
-      modal.value.opened = false
-    }
     const headerText = ref<HeaderText>({
       text: 'DJ GASSI',
     })
     return {
       card,
-      modal,
       roomLogo,
       requestMusicOverview,
       textInput,
@@ -106,8 +90,6 @@ export default defineComponent({
       updateSearchWord,
       textButton,
       searchButton,
-      openModal,
-      closeModal,
       headerText,
     }
   },

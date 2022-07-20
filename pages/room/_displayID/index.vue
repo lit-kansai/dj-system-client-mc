@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-5/6 max-w-sm md:max-w-7xl m-auto flex flex-col justify-center items-center md:flex-row md:gap-x-10"
+    class="flex flex-col items-center justify-center w-full max-w-sm m-auto h-5/6 md:max-w-7xl md:flex-row md:gap-x-10"
   >
     <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
     <TextInput
@@ -8,7 +8,9 @@
       v-bind="textInput"
       class="mt-5 md:max-w-lg"
       @update:text="updateSearchWord"
+      @keypress.enter.native="submit"
     />
+    <Button class="mt-5" text="検索する" @click.native="submit" />
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import {
   ref,
   computed,
   useRoute,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { TextInput } from '~/types/components/textInput'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
@@ -26,6 +29,7 @@ export default defineComponent({
   layout: 'default',
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const id = computed(() => route.value.params.displayID)
     const roomLogo = ref<RoomLogo>({
       roomName: 'ルーム名',
@@ -39,10 +43,16 @@ export default defineComponent({
       spellcheck: false,
       autocomplete: 'off',
     })
-    const updateSearchWord = (val: string) => {
-      searchWord.value = val
+    const updateSearchWord = (word: string) => {
+      searchWord.value = word
     }
-    return { id, roomLogo, searchWord, textInput, updateSearchWord }
+    const submit = () => {
+      router.push({
+        path: `/room/${id.value}/result`,
+        query: { searchWord: searchWord.value },
+      })
+    }
+    return { id, roomLogo, searchWord, submit, textInput, updateSearchWord }
   },
 })
 </script>

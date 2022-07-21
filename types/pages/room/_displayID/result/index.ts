@@ -32,7 +32,8 @@ export const useSelectedMusic = () => {
     new MusicModel({
       id: '',
       artists: '',
-      album: { name: '', jacketUrl: '' },
+      thumbnail: '',
+      album: '',
       name: '',
       duration: 0,
     })

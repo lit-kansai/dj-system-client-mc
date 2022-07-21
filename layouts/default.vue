@@ -2,9 +2,8 @@
   <div class="relative flex flex-col h-screen min-h-screen">
     <Header :title="state.headerText.value">
       <template #right>
-        <p v-if="!state.isShowUserButton.value" class="hidden md:block">
-          powered by DJ GASSI
-        </p>
+        <ProfileButton v-if="state.isShowProfileButton.value" />
+        <p v-else class="hidden md:block">powered by DJ GASSI</p>
       </template>
     </Header>
     <div class="flex-grow">
@@ -24,7 +23,7 @@ import {
 
 interface State {
   headerText: string
-  isShowUserButton: boolean
+  isShowProfileButton: boolean
 }
 
 export default defineComponent({
@@ -33,7 +32,7 @@ export default defineComponent({
     const state = toRefs(
       reactive<State>({
         headerText: 'DJ Gassi',
-        isShowUserButton: false,
+        isShowProfileButton: false,
       })
     )
     onBeforeMount(() => {
@@ -42,9 +41,9 @@ export default defineComponent({
 
       if (mcPageRegex.test(currentPath)) {
         state.headerText.value = 'DJ Gassi Console'
-        state.isShowUserButton.value = true
+        state.isShowProfileButton.value = true
       } else {
-        state.isShowUserButton.value = false
+        state.isShowProfileButton.value = false
       }
     })
     return {

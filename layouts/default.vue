@@ -54,6 +54,7 @@ export default defineComponent({
         state.isShowProfileButton.value = true
         state.haeder.value.title = 'DJ Gassi Console'
         state.haeder.value.redirectUrl = '/mc'
+        // TODO: MCの個人情報を取得する
       } else {
         state.isShowProfileButton.value = false
         // TODO: メンバーページの場合のタイトルとホームのアドレスを設定

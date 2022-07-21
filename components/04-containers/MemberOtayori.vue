@@ -1,18 +1,21 @@
 <template>
-  <div>
+  <div class="p-4 md:p-10">
     <div class="flex items-end mb-5 md:mb-10">
       <HeaderText text="OTAYORI" class="mr-3" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
     <div
-      class="mb-10 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5"
+      class="mb-10 grid grid-cols-1 items-center md:grid-cols-title-and-content gap-2 md:gap-x-5 md:gap-y-10"
     >
       <p>リクエスト曲</p>
-      <RequestMusicOverview :props="requestMusicOverview" class="mb-5" />
+      <RequestMusicOverview
+        :props="requestMusicOverview"
+        class="mb-5 md:mb-0 border-neon-green shadow-card-neon-green"
+      />
       <p>ラジオネーム（任意）</p>
       <TextInput
         text=""
-        class="mb-5"
+        class="mb-5 md:mb-0"
         placeholder="例)がっしー"
         @update:text="updateRadioName"
       />

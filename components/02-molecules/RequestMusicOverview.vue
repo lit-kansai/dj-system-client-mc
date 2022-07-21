@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex p-3 border rounded-md border-neon-green shadow-card-neon-green"
-  >
+  <div class="flex p-3 border rounded-md border border-gray-800">
     <img
       :src="props.imageUrl"
       :alt="`${props.musicTitle} | ${props.artistName}`"
@@ -11,7 +9,7 @@
       <p class="text-lg truncate">
         {{ props.musicTitle }}
       </p>
-      <p class="pl-1 truncate">
+      <p class="truncate">
         {{ props.artistName }}
       </p>
     </div>

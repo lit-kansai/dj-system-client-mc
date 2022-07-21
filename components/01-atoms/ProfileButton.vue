@@ -19,23 +19,29 @@
         </svg>
       </div>
     </button>
-    <div
-      :class="isOpen ? 'block' : 'hidden'"
-      class="absolute z-10 right-0 mt-2 bg-gray-800 w-80 rounded-2xl border-2 border-neon-blue shadow-modal-neon-blue"
-    >
-      <div class="flex flex-col p-5">
-        <div class="flex items-center">
-          <img
-            :src="imageUrl"
-            class="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover"
-          />
-          <div class="pl-3">
-            <p class="font-bold">{{ userName }}</p>
-            <p>{{ email }}</p>
+    <div :class="isOpen ? 'block' : 'hidden'" class="absolute right-0 z-10">
+      <div
+        v-if="isOpen"
+        class="fixed top-0 bottom-0 left-0 right-0 z-10"
+        @click="close()"
+      />
+      <div
+        class="mt-2 bg-gray-800 w-80 rounded-2xl border-2 border-neon-blue shadow-modal-neon-blue z-20"
+      >
+        <div class="flex flex-col p-5">
+          <div class="flex items-center">
+            <img
+              :src="imageUrl"
+              class="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover"
+            />
+            <div class="pl-3">
+              <p class="font-bold">{{ userName }}</p>
+              <p>{{ email }}</p>
+            </div>
           </div>
+          <div class="border-t border-gray-400 mt-4 mb-4" />
+          <button class="text-left">Logout</button>
         </div>
-        <div class="border-t border-gray-400 mt-4 mb-4" />
-        <button class="text-left">Logout</button>
       </div>
     </div>
   </div>
@@ -61,9 +67,13 @@ export default defineComponent({
     const clickProfileButton = () => {
       isOpen.value = !isOpen.value
     }
+    const close = () => {
+      isOpen.value = false
+    }
     return {
       isOpen,
       clickProfileButton,
+      close,
     }
   },
 })

@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex flex-col h-screen min-h-screen">
-    <Header :title="state.headerText.value">
+    <Header v-bind="state.haeder.value">
       <template #right>
         <ProfileButton
           v-if="state.isShowProfileButton.value"
@@ -24,9 +24,10 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import { ProfileButton } from '~/components/01-atoms/ProfileButton.vue'
+import { Header } from '~/components/03-organisms/Header.vue'
 
 interface State {
-  headerText: string
+  haeder: Header
   isShowProfileButton: boolean
   profile: ProfileButton
 }
@@ -36,7 +37,7 @@ export default defineComponent({
     const route = useRoute()
     const state = toRefs(
       reactive<State>({
-        headerText: 'DJ Gassi',
+        haeder: { title: 'DJ Gassi', redirectUrl: '' },
         isShowProfileButton: false,
         profile: {
           imageUrl: 'https://guide.line.me/ja/dogday_01.jpg',
@@ -50,10 +51,12 @@ export default defineComponent({
       const mcPageRegex = /^(\/mc.*)/
 
       if (mcPageRegex.test(currentPath)) {
-        state.headerText.value = 'DJ Gassi Console'
         state.isShowProfileButton.value = true
+        state.haeder.value.title = 'DJ Gassi Console'
+        state.haeder.value.redirectUrl = '/mc'
       } else {
         state.isShowProfileButton.value = false
+        // TODO: メンバーページの場合のタイトルとホームのアドレスを設定
       }
     })
     return {

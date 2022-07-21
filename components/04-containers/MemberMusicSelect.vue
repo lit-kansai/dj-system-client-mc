@@ -1,9 +1,9 @@
 <template>
   <div>
+    <div v-if="!state.cards.value.length" class="w-full text-center">
+      検索結果が見つかりませんでした
+    </div>
     <div class="w-full grid gap-y-3 md:gap-6 md:grid-cols-6">
-      <div v-if="!state.cards.value.length" class="w-full text-center">
-        検索結果が見つかりませんでした
-      </div>
       <template v-if="state.cards.value">
         <div v-for="(card, index) in state.cards.value" :key="index">
           <Card

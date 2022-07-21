@@ -5,7 +5,7 @@ export const toMusicOverview = (model: IMusicModel): MusicOverview => {
   const musicOverview: MusicOverview = {
     musicTitle: model.name,
     artistName: model.artists,
-    imageUrl: model.album.jacketUrl,
+    imageUrl: model.thumbnail,
   }
   return musicOverview
 }

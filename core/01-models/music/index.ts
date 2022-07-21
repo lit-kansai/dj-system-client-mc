@@ -1,20 +1,11 @@
 import * as Helper from './helper'
 import { MusicOverview } from '~/types/components/music_overview'
 
-export interface Artist {
-  id: string
-  name: string
-}
-
-export interface Album {
-  name: string
-  jacketUrl: string
-}
-
 export interface IMusicEntity {
   id: string
   artists: string
-  album: Album
+  album: string
+  thumbnail: string
   name: string
   duration: number
 }
@@ -28,7 +19,8 @@ export type IMusicModel = IMusicEntity & IMusicHelper
 export class MusicModel implements IMusicModel {
   private readonly _id: string
   private readonly _artists: string
-  private readonly _album: Album
+  private readonly _album: string
+  private readonly _thumbnail: string
   private readonly _name: string
   private readonly _duration: number
 
@@ -36,6 +28,7 @@ export class MusicModel implements IMusicModel {
     this._id = response.id
     this._artists = response.artists
     this._album = response.album
+    this._thumbnail = response.thumbnail
     this._name = response.name
     this._duration = response.duration
   }
@@ -48,7 +41,11 @@ export class MusicModel implements IMusicModel {
     return this._artists
   }
 
-  get album(): Album {
+  get thumbnail(): string {
+    return this._thumbnail
+  }
+
+  get album(): string {
     return this._album
   }
 

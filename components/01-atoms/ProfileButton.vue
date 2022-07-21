@@ -19,14 +19,14 @@
         </svg>
       </div>
     </button>
-    <div :class="isOpen ? 'block' : 'hidden'" class="absolute right-0 z-10">
+    <div
+      v-if="isOpen"
+      class="fixed top-0 bottom-0 left-0 right-0"
+      @click="close()"
+    />
+    <div v-if="isOpen" class="absolute right-0 z-10">
       <div
-        v-if="isOpen"
-        class="fixed top-0 bottom-0 left-0 right-0 z-10"
-        @click="close()"
-      />
-      <div
-        class="mt-2 bg-gray-800 w-80 rounded-2xl border-2 border-neon-blue shadow-modal-neon-blue z-20"
+        class="mt-2 bg-gray-800 w-80 rounded-2xl border-2 border-neon-blue shadow-modal-neon-blue z-30"
       >
         <div class="flex flex-col p-5">
           <div class="flex items-center">
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="border-t border-gray-400 mt-4 mb-4" />
-          <button class="text-left">Logout</button>
+          <button class="text-left cursor-pointer">Logout</button>
         </div>
       </div>
     </div>

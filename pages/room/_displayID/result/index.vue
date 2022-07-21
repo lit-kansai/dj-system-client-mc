@@ -127,7 +127,7 @@ export default defineComponent({
       previousModal()
     }
     watch(musics, (_musics) => {
-      displayMusics.value = musics.value
+      displayMusics.value = musics.value ?? []
       setLoading(false)
     })
     watch(requestMusicResult, () => {

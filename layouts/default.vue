@@ -2,7 +2,10 @@
   <div class="relative flex flex-col h-screen min-h-screen">
     <Header :title="state.headerText.value">
       <template #right>
-        <ProfileButton v-if="state.isShowProfileButton.value" />
+        <ProfileButton
+          v-if="state.isShowProfileButton.value"
+          v-bind="state.profile.value"
+        />
         <p v-else class="hidden md:block">powered by DJ GASSI</p>
       </template>
     </Header>
@@ -20,10 +23,12 @@ import {
   toRefs,
   useRoute,
 } from '@nuxtjs/composition-api'
+import { ProfileButton } from '~/components/01-atoms/ProfileButton.vue'
 
 interface State {
   headerText: string
   isShowProfileButton: boolean
+  profile: ProfileButton
 }
 
 export default defineComponent({
@@ -33,6 +38,11 @@ export default defineComponent({
       reactive<State>({
         headerText: 'DJ Gassi',
         isShowProfileButton: false,
+        profile: {
+          imageUrl: 'https://guide.line.me/ja/dogday_01.jpg',
+          userName: 'Dog',
+          email: 'dog@sample.com',
+        },
       })
     )
     onBeforeMount(() => {

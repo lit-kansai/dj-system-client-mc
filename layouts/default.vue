@@ -1,8 +1,10 @@
 <template>
   <div class="relative flex flex-col h-screen min-h-screen">
-    <Header v-bind="header">
+    <Header :title="state.headerText.value">
       <template #right>
-        <p class="hidden md:block">powered by DJ GASSI</p>
+        <p v-if="!state.isShowUserButton.value" class="hidden md:block">
+          powered by DJ GASSI
+        </p>
       </template>
     </Header>
     <div class="flex-grow">
@@ -12,16 +14,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-import { Header } from '~/components/03-organisms/Header.vue'
+import {
+  defineComponent,
+  onBeforeMount,
+  reactive,
+  toRefs,
+  useRoute,
+} from '@nuxtjs/composition-api'
+
+interface State {
+  headerText: string
+  isShowUserButton: boolean
+}
 
 export default defineComponent({
   setup() {
-    const header = ref<Header>({
-      title: 'DJ Gassi',
+    const route = useRoute()
+    const state = toRefs(
+      reactive<State>({
+        headerText: 'DJ Gassi',
+        isShowUserButton: false,
+      })
+    )
+    onBeforeMount(() => {
+      const currentPath = route.value.path
+      const mcPageRegex = /^(\/mc.*)/
+
+      if (mcPageRegex.test(currentPath)) {
+        state.headerText.value = 'DJ Gassi Console'
+        state.isShowUserButton.value = true
+      } else {
+        state.isShowUserButton.value = false
+      }
     })
     return {
-      header,
+      state,
     }
   },
 })

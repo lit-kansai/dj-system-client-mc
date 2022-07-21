@@ -49,6 +49,7 @@ export default defineComponent({
       mounted,
     } = useFetchRoomOverview(new FetchRoomOverviewRepository())
     const displayID = computed(() => useRoute().value.params.displayID)
+    const router = useRouter()
     const { text, textInput, updateSearchWord } = useTextField({
       type: 'text',
       placeholder: '曲名・アーティスト名を入力',
@@ -60,7 +61,6 @@ export default defineComponent({
       imageUrl: '',
     })
     const submit = () => {
-      const router = useRouter()
       router.push({
         path: `/room/${displayID.value}/result`,
         query: { searchWord: text.value },

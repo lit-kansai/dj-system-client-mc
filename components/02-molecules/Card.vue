@@ -9,7 +9,7 @@
     </div>
     <div class="p-3">
       <img
-        class="rounded-md mb-2"
+        class="mb-2 rounded-md"
         :src="props.imageUrl"
         :alt="`${props.musicTitle} | ${props.artistName}`"
       />

@@ -168,6 +168,9 @@ export default defineComponent({
     }
     watch(fetchRoomsResponse, (value) => {
       setFetchRoomsLoading(false)
+      if (!value) {
+        return
+      }
       value.map((room) =>
         rooms.value.push({
           name: room.name,

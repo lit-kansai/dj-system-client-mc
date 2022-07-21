@@ -1,11 +1,11 @@
 import { Ref, ref } from '@vue/composition-api'
 import { IMusicModel } from '~/core/01-models/music'
-import { IFetchMusicRepository } from '~/core/02-repositories/fetchMusic'
-import { IFetchMusicParams } from '~/types/params/fetchMusicParams'
+import { IFetchMusicsRepository } from '~/core/02-repositories/fetchMusics'
+import { IFetchMusicsParams } from '~/types/params/fetchMusicsParams'
 
-export const useFetchMusic = (repository: IFetchMusicRepository) => {
+export const useFetchMusics = (repository: IFetchMusicsRepository) => {
   const musics: Ref<IMusicModel[]> = ref([])
-  const fetchMusic = (params: IFetchMusicParams) => {
+  const fetchMusics = (params: IFetchMusicsParams) => {
     repository.fetch(params).then((response: IMusicModel[]) => {
       if (musics.value.length) {
         musics.value = []
@@ -16,6 +16,6 @@ export const useFetchMusic = (repository: IFetchMusicRepository) => {
 
   return {
     musics,
-    fetchMusic,
+    fetchMusics,
   }
 }

@@ -40,6 +40,7 @@
         </div>
       </div>
     </div>
+    <Background />
   </div>
 </template>
 

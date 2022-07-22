@@ -19,9 +19,9 @@
           @keypress.enter.native="submit"
         />
         <Button class="mt-5" text="検索する" @click.native="submit" />
-        <Background />
       </template>
     </div>
+    <Background />
   </div>
 </template>
 

@@ -117,6 +117,9 @@ module.exports = {
         'fade-in-up': 'fade-in-up 0.3s ease-out',
         'fade-out-up': 'fade-out-up 0.3s ease-out',
       },
+      zIndex: {
+        '-1': '-1',
+      },
     },
   },
   variants: {

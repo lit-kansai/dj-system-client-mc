@@ -2,7 +2,7 @@
   <div v-if="loading">
     <LoadingOverlay />
   </div>
-  <div v-else>
+  <div v-else class="h-full">
     <div
       class="flex flex-col items-center justify-center w-full max-w-sm m-auto h-5/6 md:max-w-7xl md:flex-row md:gap-x-10"
     >
@@ -19,6 +19,7 @@
           @keypress.enter.native="submit"
         />
         <Button class="mt-5" text="検索する" @click.native="submit" />
+        <Background />
       </template>
     </div>
   </div>

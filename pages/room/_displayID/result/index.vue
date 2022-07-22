@@ -84,12 +84,13 @@ export default defineComponent({
     const { currentState, nextModal, previousModal } = useModalState()
     const { modalState, openModal, closeModal } = useModal()
     const { loading, setLoading } = useLoading()
-    const { loading: requestMusicLoading, setLoading: setRequestMusicLoading } =
-      useLoading()
     const { selectedMusic, setSelectedMusic } = useSelectedMusic()
-    const { requestMusicResult, requestMusic } = useRequestMusic(
-      new RequestMusicRepository()
-    )
+    const {
+      requestMusicResult,
+      requestMusicError,
+      requestMusic,
+      requestMusicLoading,
+    } = useRequestMusic(new RequestMusicRepository())
     const musicSelected = (payload: MusicSelectedPayload) => {
       setSelectedMusic(payload.music)
       openModal()
@@ -103,7 +104,6 @@ export default defineComponent({
         },
         roomId: displayID.value,
       }
-      setRequestMusicLoading(true)
       requestMusic(inputs)
     }
     const onPressEnter = () => {
@@ -132,8 +132,10 @@ export default defineComponent({
       setLoading(false)
     })
     watch(requestMusicResult, () => {
-      setRequestMusicLoading(false)
       nextModal()
+    })
+    watch(requestMusicError, (error) => {
+      alert(`ルームの取得に失敗しました。${JSON.stringify(error)}`)
     })
     return {
       modalState,

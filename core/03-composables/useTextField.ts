@@ -6,6 +6,7 @@ interface IUseTextField {
   placeholder: string
   spellcheck: false
   autocomplete: string
+  isShowSearchIcon: boolean
 }
 
 export const useTextField = (props: IUseTextField) => {

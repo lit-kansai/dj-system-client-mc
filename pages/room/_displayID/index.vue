@@ -56,6 +56,7 @@ export default defineComponent({
       placeholder: '曲名・アーティスト名を入力',
       spellcheck: false,
       autocomplete: 'off',
+      isShowSearchIcon: false,
     })
     const roomLogo = ref<RoomLogo>({
       roomName: '',

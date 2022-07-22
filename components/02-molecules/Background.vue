@@ -1,5 +1,8 @@
 <template>
-  <div id="canvas" class="h-screen w-screen absolute -z-1 inset-0"></div>
+  <div
+    id="canvas"
+    class="top-0 right-0 h-screen w-screen fixed -z-1 inset-0"
+  ></div>
 </template>
 
 <script lang="ts">

@@ -53,7 +53,7 @@ export default defineComponent({
         }
       }
       p.draw = () => {
-        p.background(0)
+        p.background(4, 11, 21)
 
         p.drawingContext.shadowBlur = 100
         p.drawingContext.shadowColor = p.color(255, 0, 255)

@@ -1,12 +1,20 @@
 <template>
-  <input
-    v-model="textComputed"
-    :type="type"
-    :placeholder="placeholder"
-    :spellcheck="spellcheck"
-    :autocomplete="autocomplete"
-    class="w-full px-3 py-4 text-gray-200 bg-gray-800 border-2 rounded-lg appearance-none transition ease-in duration-100 border-neon-blue focus:shadow-text-input-neon-blue focus:outline-none"
-  />
+  <div class="relative">
+    <fa
+      v-if="isShowSearchIcon"
+      icon="search"
+      class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4"
+    />
+    <input
+      v-model="textComputed"
+      :type="type"
+      :placeholder="placeholder"
+      :spellcheck="spellcheck"
+      :autocomplete="autocomplete"
+      class="w-full px-3 py-4 text-gray-200 bg-gray-800 border-2 rounded-lg appearance-none transition ease-in duration-100 border-neon-blue focus:shadow-text-input-neon-blue focus:outline-none"
+      :class="isShowSearchIcon ? 'pl-11' : ''"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,6 +28,7 @@ export default defineComponent({
     placeholder: { type: String, default: '' },
     spellcheck: { type: Boolean, default: false },
     autocomplete: { type: String, default: 'off' },
+    isShowSearchIcon: { type: Boolean, default: false },
   },
   emits: ['update:text'],
   setup(props: TextInput, { emit }: any) {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <fa icon="search" />
     <RoomLogo class="w-20 h-20" v-bind="roomLogo" />
     <!-- <MemberOtayori /> -->
     <!-- <Complete title="送信完了" subtitle="流れるのをお楽しみに!" /> -->

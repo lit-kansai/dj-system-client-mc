@@ -11,7 +11,7 @@ export interface UseRequestMusicInputs {
 
 export const useRequestMusic = (repository: IRequestMusicRepository) => {
   const { loading: requestMusicLoading, setLoading } = useLoading()
-  const requestMusicResult: Ref<boolean | undefined> = ref(undefined)
+  const requestMusicResult: Ref<{ ok: boolean } | undefined> = ref(undefined)
   const requestMusicError: Ref<AxiosError | Error | undefined> = ref(undefined)
 
   const requestMusic = (inputs: UseRequestMusicInputs) => {
@@ -19,7 +19,8 @@ export const useRequestMusic = (repository: IRequestMusicRepository) => {
     repository
       .post(inputs)
       .then((result) => {
-        requestMusicResult.value = result.ok
+        console.log('result.ok', result.ok)
+        requestMusicResult.value = result
       })
       .catch((error) => {
         requestMusicError.value = error
@@ -27,6 +28,7 @@ export const useRequestMusic = (repository: IRequestMusicRepository) => {
   }
 
   watch(requestMusicResult, () => {
+    console.log(requestMusicResult.value)
     setLoading(false)
   })
 

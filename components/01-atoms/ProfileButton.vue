@@ -40,7 +40,9 @@
             </div>
           </div>
           <div class="border-t border-gray-400 mt-4 mb-4" />
-          <button class="text-left cursor-pointer">Logout</button>
+          <button class="text-left cursor-pointer" @click="logout">
+            Logout
+          </button>
         </div>
       </div>
     </div>
@@ -48,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRouter } from '@nuxtjs/composition-api'
 
 export interface ProfileButton {
   imageUrl: string
@@ -63,6 +65,7 @@ export default defineComponent({
     email: { type: String, required: true },
   },
   setup() {
+    const router = useRouter()
     const isOpen = ref(false)
     const clickProfileButton = () => {
       isOpen.value = !isOpen.value
@@ -70,10 +73,17 @@ export default defineComponent({
     const close = () => {
       isOpen.value = false
     }
+    const logout = () => {
+      isOpen.value = false
+      localStorage.clear()
+      router.push('/mc/login')
+    }
     return {
+      router,
       isOpen,
       clickProfileButton,
       close,
+      logout,
     }
   },
 })

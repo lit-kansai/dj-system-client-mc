@@ -13,7 +13,7 @@
           />
           <RequestMusicOverview
             :props="card"
-            class="w-full md:hidden"
+            class="w-screen md:hidden"
             @click.native="onClickCard(index)"
           />
         </div>

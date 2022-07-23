@@ -9,6 +9,7 @@ export const useTextFieldComponent = () => {
     placeholder: '',
     spellcheck: false,
     autocomplete: 'off',
+    isShowSearchIcon: true,
   })
   const updateSearchWord = (text: string) => {
     searchWord.value = text

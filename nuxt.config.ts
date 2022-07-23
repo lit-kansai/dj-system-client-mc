@@ -30,13 +30,14 @@ const config: NuxtConfig = {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@fortawesome/fontawesome-svg-core/styles.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/composition-api',
     '@/plugins/axios',
     '@/plugins/nuxtInstance',
+    '@/plugins/fontawesome',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -74,7 +75,13 @@ const config: NuxtConfig = {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/vue-fontawesome',
+    ],
+  },
   alias: {
     '@': path.resolve(__dirname),
     '~': path.resolve(__dirname),

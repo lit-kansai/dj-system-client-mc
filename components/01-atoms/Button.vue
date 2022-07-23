@@ -1,12 +1,12 @@
 <template>
   <button
-    class="p-3 cursor-pointer rounded-md bg-yellow filter hover:bg-whiteYellow"
+    class="p-3 cursor-pointer rounded-md bg-yellow filter hover:bg-whiteYellow min-w-[60px] min-h-[60px]"
   >
     <div v-if="type == 'text'">
       <p class="text-2xl">{{ text }}</p>
     </div>
-    <div v-else-if="type == 'search'" width="180px" height="80px">
-      <img src="~assets/img/search.svg" class="w-20 h-6" />
+    <div v-else-if="type == 'search'" class="">
+      <fa icon="search" class="text-2xl" />
     </div>
   </button>
 </template>

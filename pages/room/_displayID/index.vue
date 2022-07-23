@@ -11,7 +11,7 @@
       </div>
       <template v-else>
         <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
-        <div class="flex w-full mt-7">
+        <div class="flex w-full mt-7 max-w-lg">
           <TextInput
             v-model="textInput.text"
             v-bind="textInput"

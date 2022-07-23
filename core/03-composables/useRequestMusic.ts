@@ -1,11 +1,11 @@
-import { ref, Ref, watch, readonly } from '@nuxtjs/composition-api'
+import { ref, Ref, readonly } from '@nuxtjs/composition-api'
 import { AxiosError } from 'axios'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { IRequestMusicRepository } from '~/core/02-repositories/requestMusic'
-import { RequestMusicParams } from '~/types/params/requestMusic'
+import { IRequestMusicParams } from '~/types/params/requestMusic'
 
 export interface UseRequestMusicInputs {
-  params: RequestMusicParams
+  params: IRequestMusicParams
   roomId: string
 }
 
@@ -19,22 +19,14 @@ export const useRequestMusic = (repository: IRequestMusicRepository) => {
     repository
       .post(inputs)
       .then((result) => {
-        console.log('result.ok', result.ok)
+        setLoading(false)
         requestMusicResult.value = result
       })
       .catch((error) => {
+        setLoading(false)
         requestMusicError.value = error
       })
   }
-
-  watch(requestMusicResult, () => {
-    console.log(requestMusicResult.value)
-    setLoading(false)
-  })
-
-  watch(requestMusicError, () => {
-    setLoading(false)
-  })
 
   return {
     requestMusicLoading: readonly(requestMusicLoading),

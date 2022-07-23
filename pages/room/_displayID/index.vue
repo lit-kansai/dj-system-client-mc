@@ -11,14 +11,16 @@
       </div>
       <template v-else>
         <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
-        <TextInput
-          v-model="textInput.text"
-          v-bind="textInput"
-          class="mt-5 md:max-w-lg"
-          @update:text="updateSearchWord"
-          @keypress.enter.native="submit"
-        />
-        <Button class="mt-5" text="検索する" @click.native="submit" />
+        <div class="flex w-full mt-7">
+          <TextInput
+            v-model="textInput.text"
+            v-bind="textInput"
+            class="w-full md:max-w-lg"
+            @update:text="updateSearchWord"
+            @keypress.enter.native="submit"
+          />
+          <Button class="ml-1.5" type="search" @click.native="submit" />
+        </div>
       </template>
     </div>
     <Background />

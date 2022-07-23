@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center content-center">
     <img :src="url" :alt="`${roomName} Logo`" class="w-4/5" />
-    <p class="mt-5 text-4xl">{{ roomName }}</p>
+    <p class="hidden md:block mt-5 text-4xl">{{ roomName }}</p>
   </div>
 </template>
 

@@ -25,6 +25,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { ProfileButton } from '~/components/01-atoms/ProfileButton.vue'
 import { Header } from '~/components/03-organisms/Header.vue'
+import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
 
 interface State {
   haeder: Header
@@ -46,18 +47,22 @@ export default defineComponent({
         },
       })
     )
+    const { hasUserCredentials } = useUserCredentials()
     onBeforeMount(() => {
       const currentPath = route.value.path
       const mcPageRegex = /^(\/mc.*)/
 
       if (mcPageRegex.test(currentPath)) {
-        state.isShowProfileButton.value = true
         state.haeder.value.title = 'DJ Gassi Console'
         state.haeder.value.redirectUrl = '/mc'
         // TODO: MCの個人情報を取得する
       } else {
-        state.isShowProfileButton.value = false
         // TODO: メンバーページの場合のタイトルとホームのアドレスを設定
+      }
+      if (mcPageRegex.test(currentPath) && hasUserCredentials()) {
+        state.isShowProfileButton.value = true
+      } else {
+        state.isShowProfileButton.value = false
       }
     })
     return {

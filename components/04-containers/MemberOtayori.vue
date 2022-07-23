@@ -5,7 +5,7 @@
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
     <div
-      class="mb-10 grid grid-cols-1 items-center md:grid-cols-title-and-content gap-2 md:gap-x-5 md:gap-y-10"
+      class="items-center mb-10 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-x-5 md:gap-y-10"
     >
       <p>リクエスト曲</p>
       <RequestMusicOverview
@@ -40,17 +40,18 @@ import {
   PropType,
   computed,
   ComputedRef,
+  inject,
 } from '@nuxtjs/composition-api'
 import { MusicOverview } from '~/types/components/music_overview'
 import { IMusicModel } from '~/core/01-models/music'
+import {
+  previousModalInjectionKey,
+  submitMusicInjectionKey,
+  SubmitMusicType,
+  PreviousModalType,
+} from '~/core/03-composables/useRequestMusicModal'
 
 interface State {
-  radioName: string
-  message: string
-}
-
-export interface MemberOtayoriPayload {
-  music: IMusicModel
   radioName: string
   message: string
 }
@@ -62,15 +63,9 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: {
-    cancel() {
-      return true
-    },
-    submit(payload: MemberOtayoriPayload) {
-      return true || payload
-    },
-  },
-  setup(props, { emit }) {
+  setup(props) {
+    const submitMusic = inject(submitMusicInjectionKey) as SubmitMusicType
+    const previousModal = inject(previousModalInjectionKey) as PreviousModalType
     const state = toRefs(
       reactive<State>({
         radioName: '',
@@ -91,15 +86,14 @@ export default defineComponent({
       state.message.value = message
     }
     const submit = () => {
-      const payload: MemberOtayoriPayload = {
-        radioName: state.radioName.value,
+      submitMusic({
         message: state.message.value,
+        radioName: state.radioName.value,
         music: props.music,
-      }
-      emit('submit', payload)
+      })
     }
     const cancel = () => {
-      emit('cancel')
+      previousModal()
     }
     return {
       state,

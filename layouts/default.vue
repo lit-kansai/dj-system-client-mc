@@ -2,10 +2,7 @@
   <div class="relative flex flex-col h-screen min-h-screen">
     <Header v-bind="state.haeder.value">
       <template #right>
-        <ProfileButton
-          v-if="state.isShowProfileButton.value"
-          v-bind="state.profile.value"
-        />
+        <ProfileButton v-if="state.isShowProfileButton.value" />
         <p v-else class="hidden md:block">powered by DJ GASSI</p>
       </template>
     </Header>
@@ -24,14 +21,12 @@ import {
   useRoute,
   watch,
 } from '@nuxtjs/composition-api'
-import { ProfileButton } from '~/components/01-atoms/ProfileButton.vue'
 import { Header } from '~/components/03-organisms/Header.vue'
 import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
 
 interface State {
   haeder: Header
   isShowProfileButton: boolean
-  profile: ProfileButton
 }
 
 export default defineComponent({
@@ -43,11 +38,6 @@ export default defineComponent({
       reactive<State>({
         haeder: { title: 'DJ Gassi', redirectUrl: '' },
         isShowProfileButton: false,
-        profile: {
-          imageUrl: 'https://guide.line.me/ja/dogday_01.jpg',
-          userName: 'Dog',
-          email: 'dog@sample.com',
-        },
       })
     )
     const { hasUserCredentials } = useUserCredentials()

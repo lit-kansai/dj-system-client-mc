@@ -29,37 +29,32 @@ import {
   reactive,
   onMounted,
   PropType,
+  inject,
 } from '@nuxtjs/composition-api'
 import { MusicOverview } from '~/types/components/music_overview'
 import { IMusicModel } from '~/core/01-models/music'
+import {
+  SelectMusicType,
+  selectMusicInjectionKey,
+} from '~/core/03-composables/useRequestMusicModal'
 
 interface State {
   cards: Array<MusicOverview>
 }
 
-export interface MusicSelectedPayload {
-  music: IMusicModel
-}
 export default defineComponent({
   props: {
     musics: { type: Array as PropType<IMusicModel[]>, required: true },
   },
-  emits: {
-    musicSelcted(payload: MusicSelectedPayload) {
-      return true || payload
-    },
-  },
-  setup(props, { emit }) {
+  setup(props) {
+    const selectMusic = inject(selectMusicInjectionKey) as SelectMusicType
     const state = toRefs(
       reactive<State>({
         cards: [],
       })
     )
     const onClickCard = (index: number): void => {
-      const payload: MusicSelectedPayload = {
-        music: props.musics[index],
-      }
-      emit('musicSelected', payload)
+      selectMusic({ music: props.musics[index] })
     }
     onMounted(() => {
       props.musics.map((music) =>

@@ -74,6 +74,7 @@ export default defineComponent({
       isOpen.value = false
     }
     const logout = () => {
+      isOpen.value = false
       localStorage.clear()
       router.push('/mc/login')
     }

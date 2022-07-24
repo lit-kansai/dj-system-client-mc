@@ -2,12 +2,13 @@
   <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
     <p class="mb-5"><NuxtLink to="/mc">ホーム</NuxtLink></p>
     <!-- Rooms -->
-    <div class="flex flex-col md:flex-row gap-10">
+    <div class="relative flex flex-col md:flex-row gap-10">
+      <LoadingOverlay v-if="loading" />
       <Container>
         <template #content>
           <!-- Header -->
           <div class="flex items-end gap-x-3">
-            <HeaderText v-bind="roomHeaderText" />
+            <HeaderText text="Rooms" />
             <NuxtLink to="/mc/room/create" class="text-yellow">
               &gt;&gt; ルームを作成する
             </NuxtLink>
@@ -17,7 +18,6 @@
           </p>
           <!-- Table -->
           <table class="relative w-full mt-3 border-collapse table-fixed">
-            <LoadingOverlay v-if="fetchRoomsLoading" />
             <thead class="hidden text-left md:table-header-group">
               <tr class="border border-gray-400">
                 <th class="pt-2 pb-2 pl-3">ルーム名</th>
@@ -26,7 +26,7 @@
                 <th class="w-1/6"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody v-if="!loading">
               <tr
                 v-for="room in rooms"
                 :key="room.displayId"
@@ -65,7 +65,7 @@
       <!-- account -->
       <Container class="max-w-md">
         <template #content>
-          <HeaderText v-bind="accountHeaderText" />
+          <HeaderText text="Account Link" />
           <p class="mt-3">各サービスのアカウントと連携します。</p>
           <table class="w-full mt-3 border-collapse table-auto">
             <thead>
@@ -74,21 +74,21 @@
                 <th class="w-1/3"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody v-if="!loading">
               <tr
-                v-for="account in accounts"
-                :key="account.name"
+                v-for="status in userProviderStatus"
+                :key="status.name"
                 class="border border-gray-400"
               >
                 <td class="flex items-center pt-2 pb-2 pl-3 gap-x-3">
                   <img
-                    :src="require('@/assets/img/' + account.name + '_Icon.svg')"
+                    :src="require('@/assets/img/' + status.name + '_Icon.svg')"
                     class="w-9"
                   />
-                  {{ account.name }}
+                  {{ status.name }}
                 </td>
                 <td class="text-center">
-                  <button v-if="account.isConnected" class="pt-2 pb-2">
+                  <button v-if="status.isConnected" class="pt-2 pb-2">
                     連携を解除
                   </button>
                   <button
@@ -109,91 +109,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-import { onMounted, useRouter, watch } from '@nuxtjs/composition-api'
-import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
+import {
+  defineComponent,
+  onMounted,
+  useRouter,
+  watch,
+} from '@nuxtjs/composition-api'
 import { FetchRoomsRepository } from '~/core/02-repositories/fetchRooms'
-import { useFetchRooms } from '~/core/03-composables/useFetchRooms'
-import { useLoading } from '~/core/03-composables/useLoading'
-import LoadingOverlay from '~/components/02-molecules/LoadingOverlay.vue'
-import { useSpotifyLogin } from '~/core/03-composables/useSpotifyLogin'
 import { SpotifyLoginRepository } from '~/core/02-repositories/spotifyLogin'
-
-export interface Room {
-  name: string
-  description: string
-  displayId: string
-  type: string
-  playlistId: string
-}
-
-export interface Account {
-  name: string
-  isConnected: boolean
-}
+import { useAccountDetail } from '~/core/03-composables/useAccountDetail'
+import { FetchUserProfileRepository } from '~/core/02-repositories/fetchUserProfile'
 
 export default defineComponent({
-  components: { LoadingOverlay },
   setup() {
-    const { loginSpotify } = useSpotifyLogin(new SpotifyLoginRepository())
-    const { fetchRoomsResponse, fetchRoomsError, fetchRooms } = useFetchRooms(
-      new FetchRoomsRepository()
+    const {
+      userProviderStatus,
+      loading,
+      rooms,
+      accountDetailError,
+      fetchRooms,
+      loginSpotify,
+    } = useAccountDetail(
+      new FetchRoomsRepository(),
+      new FetchUserProfileRepository(),
+      new SpotifyLoginRepository()
     )
-    const { loading: fetchRoomsLoading, setLoading: setFetchRoomsLoading } =
-      useLoading()
     const router = useRouter()
-    const roomHeaderText = ref<HeaderText>({
-      text: 'Rooms',
-    })
-    const accountHeaderText = ref<HeaderText>({
-      text: 'Account Link',
-    })
-    const rooms = ref<Room[]>([])
-    const accounts = ref<Account[]>([
-      {
-        name: 'Spotify',
-        isConnected: false,
-      },
-      {
-        name: 'AppleMusic',
-        isConnected: true,
-      },
-    ])
     const routerPush = (displayId: String) => {
       router.push(`/mc/room/${displayId}`)
     }
     const connectSpotify = () => {
-      console.log('connectSpotify')
       loginSpotify()
     }
-    watch(fetchRoomsResponse, (value) => {
-      setFetchRoomsLoading(false)
-      if (!value) {
-        return
-      }
-      value.map((room) =>
-        rooms.value.push({
-          name: room.name,
-          description: room.description,
-          displayId: room.displayId,
-          type: 'applemusic',
-          playlistId: String(room.playlistId),
-        })
-      )
-    })
-    watch(fetchRoomsError, (error) => {
+    watch(accountDetailError, (error) => {
       alert(`ルームの取得に失敗しました。${JSON.stringify(error?.message)}`)
     })
     onMounted(() => {
-      setFetchRoomsLoading(true)
       fetchRooms()
     })
     return {
+      userProviderStatus,
+      loading,
       connectSpotify,
-      fetchRoomsLoading,
-      roomHeaderText,
-      accountHeaderText,
-      accounts,
       rooms,
       routerPush,
     }

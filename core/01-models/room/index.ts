@@ -3,8 +3,9 @@ export interface IRoomModel {
   ownerUserId: number
   displayId: string
   name: string
-  playlistId: number | null
+  playlistId: string
   description: string
+  provider: string
   createdAt: string
   updatedAt: string
 }
@@ -14,8 +15,9 @@ export class RoomModel implements IRoomModel {
   private readonly _ownerUserId: number
   private readonly _displayId: string
   private readonly _name: string
-  private readonly _playlistId: number | null
+  private readonly _playlistId: string
   private readonly _description: string
+  private readonly _provider: string
   private readonly _createdAt: string
   private readonly _updatedAt: string
 
@@ -26,6 +28,7 @@ export class RoomModel implements IRoomModel {
     this._name = response.name
     this._playlistId = response.playlistId
     this._description = response.description
+    this._provider = response.provider
     this._createdAt = response.createdAt
     this._updatedAt = response.updatedAt
   }
@@ -42,7 +45,7 @@ export class RoomModel implements IRoomModel {
     return this._displayId
   }
 
-  get playlistId(): number | null {
+  get playlistId(): string {
     return this._playlistId
   }
 
@@ -52,6 +55,10 @@ export class RoomModel implements IRoomModel {
 
   get description(): string {
     return this._description
+  }
+
+  get provider(): string {
+    return this._provider
   }
 
   get createdAt(): string {

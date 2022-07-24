@@ -39,9 +39,9 @@
             <div class="flex items-end gap-x-3">
               <HeaderText text="Request" />
               <a
-                :href="roomDetail.playlistId"
                 target="_blank"
-                class="text-yellow"
+                class="cursor-pointer text-yellow"
+                @click="redirectOutside(externalPlaylistURL)"
               >
                 &gt;&gt; プレイリストを見る
               </a>
@@ -113,7 +113,7 @@
               <tr
                 v-for="letter in letters"
                 :key="letter.id"
-                class="border border-gray-400 cursor-pointer hover:bg-neon-blue"
+                class="border border-gray-400 hover:bg-neon-blue"
               >
                 <td class="pt-2 pb-2 pl-2">{{ letter.radioName }}</td>
                 <td>{{ letter.message }}</td>
@@ -170,6 +170,9 @@ export default defineComponent({
       new FetchRoomDetailRepository(),
       new FetchRoomPlaylistRepository()
     )
+    const externalPlaylistURL = computed(
+      () => `https://open.spotify.com/playlist/${roomDetail.value.playlistId}`
+    )
     watch(fetchRoomDetailError, (error) => {
       alert(`ルーム情報の取得に失敗しました。${JSON.stringify(error?.message)}`)
     })
@@ -185,6 +188,7 @@ export default defineComponent({
       roomDetail,
       playlist,
       letters,
+      externalPlaylistURL,
     }
   },
 })

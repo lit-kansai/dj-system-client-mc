@@ -1,24 +1,17 @@
 <template>
   <div class="flex items-center justify-center h-full">
-    <div>
-      <Container>
-        <template #content>
-          <div class="min-w-[540px] min-h-[300px] w-[80vh] h-[45vh] p-6">
-            <HeaderText v-bind="headerText" />
-            <div class="flex flex-col items-center justify-center h-[90%]">
-              <p class="text-xl">
-                Googleをアカウント使ってログインしてください
-              </p>
-              <Button
-                class="mt-4"
-                v-bind="loginButton"
-                @click.native="onLoginButtonClick"
-              />
-            </div>
-          </div>
-        </template>
-      </Container>
-    </div>
+    <Container class="w-[95%] max-w-sm md:max-w-lg h-auto">
+      <template #content>
+        <HeaderText v-bind="headerText" />
+        <p class="text-gray-200 mt-3 text-sm">
+          DJ
+          Gassiは「会場に参加者のリクエスト曲を流したい!」そんな思いを叶えるサービスです。ログインしてMCになりましょう。
+        </p>
+        <div class="flex justify-center my-4">
+          <LoginWithGoogle @click.native="onLoginButtonClick" />
+        </div>
+      </template>
+    </Container>
   </div>
 </template>
 
@@ -39,7 +32,7 @@ export default defineComponent({
 })
 const useComponentComposables = () => {
   const headerText = ref<HeaderText>({
-    text: 'LOGIN',
+    text: 'DJ Gassi',
   })
   const loginButton = ref<Button>({
     type: 'text',

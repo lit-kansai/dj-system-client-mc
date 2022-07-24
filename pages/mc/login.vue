@@ -9,10 +9,10 @@
               <p class="text-xl">
                 Googleをアカウント使ってログインしてください
               </p>
-              <Button
-                class="mt-4"
-                v-bind="loginButton"
-                @click.native="onLoginButtonClick"
+              <img
+                src="~/assets/img/btn_google_signin_light_normal_web@2x.png"
+                class="mt-4 h-16 cursor-pointer"
+                @click="onLoginButtonClick"
               />
             </div>
           </div>

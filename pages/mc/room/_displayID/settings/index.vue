@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full max-w-sm md:max-w-7xl m-auto mb-5">
-    <LoadingOverlay v-if="loading" />
+  <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
+    <LoadingOverlay v-if="useRoomSettingsLoading" />
     <p class="mt-5 mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ state.roomName.value }} / 設定
     </p>
@@ -8,23 +8,23 @@
       <template #content>
         <HeaderText text="Setting Room" class="mb-5 md:mb-10" />
         <div
-          class="mb-8 grid grid-cols-1 md:grid-cols-title-and-content items-center gap-2 md:gap-5 md:gap-y-8"
+          class="items-center mb-8 grid grid-cols-1 md:grid-cols-title-and-content gap-2 md:gap-5 md:gap-y-8"
         >
           <p>ルームネーム*</p>
           <TextInput
-            :text="state.roomName.value"
+            :text="roomDetail.name"
             placeholder="例)がっしー"
             @update:text="updateRoomName"
           />
           <p>ルーム説明*</p>
           <TextInput
-            :text="state.description.value"
+            :text="roomDetail.description"
             placeholder="例)2022年夏のイベント用"
             @update:text="updateDescription"
           />
           <p>リクエストURL*</p>
           <TextInput
-            :text="state.urlName.value"
+            :text="roomDetail.displayId"
             placeholder="例)gassi"
             @update:text="updateUrlName"
           />
@@ -49,15 +49,13 @@ import {
   useRoute,
   toRefs,
   reactive,
-  watch,
   useRouter,
-  onBeforeMount,
+  onMounted,
+  watch,
 } from '@nuxtjs/composition-api'
 import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
-import { useFetchRoomDetail } from '~/core/03-composables/useFetchRoomDetail'
-import { useLoading } from '~/core/03-composables/useLoading'
-import { useUpdateRoom } from '~/core/03-composables/useUpdateRoom'
+import { useRoomSettings } from '~/core/03-composables/useRoomSettings'
 
 interface State {
   urlName: string
@@ -69,13 +67,16 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const { updateRoomResponse, updateRoomError, updateRoom } = useUpdateRoom(
+    const {
+      useRoomSettingsLoading,
+      updateRoomDetail,
+      roomDetail,
+      fetchRoomDetail,
+      fetchRoomSettingsError,
+    } = useRoomSettings(
+      new FetchRoomDetailRepository(),
       new UpdateRoomRepository()
     )
-    const { fetchRoomResponse, fetchRoomError, fetchRoom } = useFetchRoomDetail(
-      new FetchRoomDetailRepository()
-    )
-    const { loading, setLoading } = useLoading()
     const state = toRefs(
       reactive<State>({
         urlName: '',
@@ -83,7 +84,7 @@ export default defineComponent({
         description: '',
       })
     )
-    const holdRoomId = computed(() => route.value.params.displayID)
+    const displayID = computed(() => route.value.params.displayID)
     const updateUrlName = (displayId: string): void => {
       state.urlName.value = displayId
     }
@@ -93,52 +94,43 @@ export default defineComponent({
     const updateDescription = (description: string): void => {
       state.description.value = description
     }
-    const submit = () => {
-      setLoading(true)
-      updateRoom({
-        roomId: holdRoomId.value,
-        urlName: state.urlName.value,
-        roomName: state.roomName.value,
-        description: state.description.value,
-      })
+    const submit = async () => {
+      try {
+        await updateRoomDetail({
+          roomId: displayID.value,
+          urlName: state.urlName.value,
+          roomName: state.roomName.value,
+          description: state.description.value,
+        })
+        alert('アップデート出来ました！')
+        router.push(`/mc/room/${state.urlName.value}`)
+      } catch (error) {}
     }
     const cancel = () => {
-      router.push(`/mc/room/${holdRoomId.value}`)
+      router.push(`/mc/room/${displayID.value}`)
     }
-    watch(updateRoomResponse, () => {
-      setLoading(false)
-      alert('Successfully update a room')
-      state.urlName.value = updateRoomResponse.value?.displayId as string
-      router.push(`/mc/room/${state.urlName.value}`)
+    onMounted(async () => {
+      try {
+        await fetchRoomDetail({ roomId: displayID.value })
+        updateUrlName(roomDetail.value.displayId)
+        updateRoomName(roomDetail.value.name)
+        updateDescription(roomDetail.value.description)
+      } catch {}
     })
-    watch(updateRoomError, () => {
-      setLoading(false)
-      alert('an error occurred')
-    })
-    onBeforeMount(() => {
-      setLoading(true)
-      fetchRoom({ roomId: holdRoomId.value })
-    })
-    watch(fetchRoomResponse, () => {
-      setLoading(false)
-      state.urlName.value = fetchRoomResponse.value?.displayId as string
-      state.roomName.value = fetchRoomResponse.value?.name as string
-      state.description.value = fetchRoomResponse.value?.description as string
-    })
-    watch(fetchRoomError, () => {
-      setLoading(false)
-      alert(`an error occurred: ${JSON.stringify(fetchRoomError.value)}`)
+
+    watch(fetchRoomSettingsError, (error) => {
+      alert(`ルームの取得に失敗しました。${JSON.stringify(error)}`)
     })
 
     return {
       state,
-      holdRoomId,
+      roomDetail,
       updateUrlName,
       updateRoomName,
       updateDescription,
       submit,
       cancel,
-      loading,
+      useRoomSettingsLoading,
     }
   },
 })

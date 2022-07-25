@@ -1,5 +1,5 @@
 <template>
-  <div class="p-10 flex items-center justify-center">
+  <div class="md:p-4 flex items-center justify-center">
     <div>
       <img src="~assets/img/default_room_logo.png" class="md:h-80 m-auto" />
       <h1

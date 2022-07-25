@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 md:p-10">
+  <div class="md:p-4">
     <div class="flex items-end mb-5 md:mb-10">
       <HeaderText text="OTAYORI" class="mr-3" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>

@@ -3,6 +3,7 @@
     <div v-if="!state.cards.value.length" class="text-center">
       検索結果が見つかりませんでした
     </div>
+    <p v-else class="text-xl mb-3">リクエストしたい曲を選択しよう！</p>
     <div class="grid gap-y-3 md:gap-6 md:grid-cols-5">
       <template v-if="state.cards.value">
         <div v-for="(card, index) in state.cards.value" :key="index">

@@ -7,13 +7,13 @@
     >
       <p class="text-9xl font-extralight">+</p>
     </div>
-    <div class="p-3">
+    <div class="m-3">
       <img
         class="mb-2 rounded-md"
         :src="props.imageUrl"
         :alt="`${props.musicTitle} | ${props.artistName}`"
       />
-      <div class="">
+      <div>
         <p class="truncate">{{ props.musicTitle }}</p>
         <p class="text-gray-300 truncate">{{ props.artistName }}</p>
       </div>

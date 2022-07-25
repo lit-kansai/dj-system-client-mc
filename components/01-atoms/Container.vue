@@ -4,9 +4,10 @@
   >
     <div
       class="bg-gray-800 border-2 border-neon-pink shadow-modal-neon-pink rounded-2xl h-full"
+      @click.stop=""
     >
-      <div class="p-4 md:p-6">
-        <slot name="content"></slot>
+      <div class="pt-3 px-4 pb-4 md:pt-5 md:px-6 md:pb-6">
+        <slot name="content" />
       </div>
     </div>
   </div>

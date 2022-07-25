@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute inset-x-0 top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-60"
+    class="fixed inset-0 z-10 flex items-center justify-center w-screen h-screen bg-black bg-opacity-60"
   >
     <div class="flex items-center mb-20">
       <Loading />

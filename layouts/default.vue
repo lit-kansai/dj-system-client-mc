@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex flex-col h-screen min-h-screen">
-    <Header v-bind="state.haeder.value">
+    <Header v-bind="state.header.value">
       <template #right>
         <ProfileButton v-if="state.isShowProfileButton.value" />
         <p v-else class="hidden md:block">powered by DJ GASSI</p>
@@ -20,12 +20,15 @@ import {
   toRefs,
   useRoute,
   watch,
+  computed,
 } from '@nuxtjs/composition-api'
 import { Header } from '~/components/03-organisms/Header.vue'
+import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
+import { useFetchRoomOverview } from '~/core/03-composables/useFetchRoomOverview'
 import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
 
 interface State {
-  haeder: Header
+  header: Header
   isShowProfileButton: boolean
 }
 
@@ -36,11 +39,13 @@ export default defineComponent({
     const currentPath = route.value.path
     const state = toRefs(
       reactive<State>({
-        haeder: { title: 'DJ Gassi', redirectUrl: '' },
+        header: { title: 'DJ Gassi', redirectUrl: '' },
         isShowProfileButton: false,
       })
     )
     const { hasUserCredentials } = useUserCredentials()
+    const { fetchRoomOverviewResponse, fetchRoomOverview } =
+      useFetchRoomOverview(new FetchRoomOverviewRepository())
     const checkShowProfile = () => {
       if (mcPageRegex.test(currentPath) && hasUserCredentials()) {
         state.isShowProfileButton.value = true
@@ -50,11 +55,13 @@ export default defineComponent({
     }
     onBeforeMount(() => {
       if (mcPageRegex.test(currentPath)) {
-        state.haeder.value.title = 'DJ Gassi Console'
-        state.haeder.value.redirectUrl = '/mc'
+        state.header.value.title = 'DJ Gassi Console'
+        state.header.value.redirectUrl = '/mc'
         // TODO: MCの個人情報を取得する
       } else {
         // TODO: メンバーページの場合のタイトルとホームのアドレスを設定
+        const displayID = computed(() => route.value.params.displayID)
+        fetchRoomOverview({ roomId: displayID.value })
       }
       checkShowProfile()
     })
@@ -64,6 +71,12 @@ export default defineComponent({
         checkShowProfile()
       }
     )
+    watch(fetchRoomOverviewResponse, (response) => {
+      if (response) {
+        state.header.value.title = response.name
+        state.header.value.redirectUrl = `room/${response.id}`
+      }
+    })
     return {
       state,
     }

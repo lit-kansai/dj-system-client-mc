@@ -23,6 +23,7 @@ import {
   useRoute,
   watch,
   computed,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { Header } from '~/components/03-organisms/Header.vue'
 import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
@@ -37,11 +38,12 @@ interface State {
 export default defineComponent({
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const mcPageRegex = /^(\/mc.*)/
     const currentPath = route.value.path
     const state = toRefs(
       reactive<State>({
-        header: { title: 'DJ Gassi', redirectUrl: '' },
+        header: { title: '', redirectUrl: '' },
         isShowProfileButton: false,
       })
     )
@@ -55,13 +57,15 @@ export default defineComponent({
         state.isShowProfileButton.value = false
       }
     }
+    const clickHeaderTitle = () => {
+      router.push(state.header.value.redirectUrl)
+    }
     onBeforeMount(() => {
       if (mcPageRegex.test(currentPath)) {
         state.header.value.title = 'DJ Gassi Console'
         state.header.value.redirectUrl = '/mc'
         // TODO: MCの個人情報を取得する
       } else {
-        // TODO: メンバーページの場合のタイトルとホームのアドレスを設定
         const displayID = computed(() => route.value.params.displayID)
         fetchRoomOverview({ roomId: displayID.value })
       }
@@ -76,11 +80,12 @@ export default defineComponent({
     watch(fetchRoomOverviewResponse, (response) => {
       if (response) {
         state.header.value.title = response.name
-        state.header.value.redirectUrl = `room/${response.id}`
+        state.header.value.redirectUrl = `/room/${response.id}`
       }
     })
     return {
       state,
+      clickHeaderTitle,
     }
   },
 })

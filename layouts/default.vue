@@ -1,14 +1,16 @@
 <template>
-  <div class="w-full max-w-screen-lg mx-auto my-0 h-screen">
-    <div class="relative flex flex-col h-full">
-      <Header v-bind="state.header.value">
-        <template #right>
-          <ProfileButton v-if="state.isShowProfileButton.value" />
-          <p v-else class="hidden md:block">powered by DJ GASSI</p>
-        </template>
-      </Header>
-      <div class="flex-grow">
-        <nuxt />
+  <div class="w-screen h-screen px-4">
+    <div class="w-full max-w-screen-lg mx-auto my-0 h-full">
+      <div class="relative flex flex-col h-full">
+        <Header v-bind="state.header.value">
+          <template #right>
+            <ProfileButton v-if="state.isShowProfileButton.value" />
+            <p v-else class="hidden md:block">powered by DJ GASSI</p>
+          </template>
+        </Header>
+        <div class="flex-grow">
+          <nuxt />
+        </div>
       </div>
     </div>
   </div>

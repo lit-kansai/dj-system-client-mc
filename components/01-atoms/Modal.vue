@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="opened"
-    class="fixed overflow-y-auto top-0 bottom-0 left-0 right-0 z-20 bg-black animate-fade-in-down transform bg-opacity-40 pt-10 pb-10"
+    class="overflow-y-auto fixed inset-0 py-10 z-20 bg-black bg-opacity-40 animate-fade-in-down transform"
     @click="close()"
   >
     <div class="flex items-center justify-center">

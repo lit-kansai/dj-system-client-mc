@@ -60,6 +60,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { FetchUserProfileRepository } from '~/core/02-repositories/fetchUserProfile'
 import { useFetchUserProfile } from '~/core/03-composables/useFetchUserProfile'
+import { USER_CREDENTIALS_LOCAL_STORAGE_KEY } from '~/utils/constants'
 
 interface State {
   imageUrl: string
@@ -92,7 +93,7 @@ export default defineComponent({
     }
     const logout = () => {
       state.isOpen.value = false
-      localStorage.clear()
+      localStorage.removeItem(USER_CREDENTIALS_LOCAL_STORAGE_KEY)
       router.push('/mc/login')
     }
     onBeforeMount(() => {
@@ -101,7 +102,7 @@ export default defineComponent({
     watch(fetchUserProfileResponse, (value) => {
       state.imageUrl.value = value?.icon as string
       state.userName.value = value?.name as string
-      state.email.value = ''
+      state.email.value = (value?.email as string) ?? ''
     })
     watch(fetchUserProfileError, (error) => {
       alert(

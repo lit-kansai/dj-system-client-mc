@@ -102,7 +102,7 @@ export default defineComponent({
     watch(fetchUserProfileResponse, (value) => {
       state.imageUrl.value = value?.icon as string
       state.userName.value = value?.name as string
-      state.email.value = ''
+      state.email.value = (value?.email as string) ?? ''
     })
     watch(fetchUserProfileError, (error) => {
       alert(

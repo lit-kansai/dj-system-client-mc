@@ -1,17 +1,19 @@
 <template>
-  <div class="flex items-center justify-center h-full">
-    <Container class="w-[95%] max-w-sm md:max-w-lg h-auto">
-      <template #content>
-        <HeaderText v-bind="headerText" />
-        <p class="text-gray-200 mt-3 text-sm">
-          DJ
-          Gassiは「会場に参加者のリクエスト曲を流したい!」そんな思いを叶えるサービスです。ログインしてMCになりましょう。
-        </p>
-        <div class="flex justify-center my-4">
-          <LoginWithGoogle @click.native="onLoginButtonClick" />
-        </div>
-      </template>
-    </Container>
+  <div class="fixed inset-0 h-screen">
+    <div class="flex items-center justify-center h-full">
+      <Container class="w-[95%] h-auto max-w-sm md:max-w-lg">
+        <template #content>
+          <HeaderText v-bind="headerText" />
+          <p class="text-gray-200 mt-3">
+            DJ
+            Gassiは「会場に参加者のリクエスト曲を流したい!」そんな思いを叶えるサービスです。ログインしてMCになりましょう。
+          </p>
+          <div class="flex justify-center my-4">
+            <LoginWithGoogle @click.native="onLoginButtonClick" />
+          </div>
+        </template>
+      </Container>
+    </div>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full max-w-screen-lg mx-auto my-0 h-screen">
-    <div class="relative flex flex-col">
+    <div class="relative flex flex-col h-full">
       <Header v-bind="state.header.value">
         <template #right>
           <ProfileButton v-if="state.isShowProfileButton.value" />

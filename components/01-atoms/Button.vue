@@ -1,8 +1,13 @@
 <template>
   <button
-    class="p-3 cursor-pointer rounded-md bg-pink filter hover:bg-pink min-w-[60px] min-h-[60px]"
+    class="p-3 cursor-pointer rounded-md bg-pink filter min-w-[60px] min-h-[60px]"
+    :class="
+      type == 'text'
+        ? 'duration-300 shadow-text-button-neon-pink hover:shadow-text-button-hover-neon-pink '
+        : ''
+    "
   >
-    <div v-if="type == 'text'">
+    <div v-if="type == 'text'" class="p-2">
       <p class="text-2xl">{{ text }}</p>
     </div>
     <div v-else-if="type == 'search'" class="">

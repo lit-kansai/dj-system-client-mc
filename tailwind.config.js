@@ -7,7 +7,7 @@ const generateNeon = (color) => {
   return `0 0 0rem #fff, 0 0 .2rem #fff, 0 0 2rem ${color}, 0 0 0.8rem ${color}, 0 0 2.8rem ${color}, inset 0 0 1.3rem ${color};`
 }
 const generateDropShadowNeon = (color) => {
-  return `0 0 5px ${color}`
+  return `0 0 2px ${color}`
 }
 
 const generateModalNeon = (color) => {
@@ -53,6 +53,8 @@ module.exports = {
       'neon-blue': generateNeon(neonBlue),
       'neon-pink': generateNeon(neonPink),
       'neon-green': generateNeon(neonGreen),
+      'text-button-neon-pink': '0 0 0.8rem #DD6BDA',
+      'text-button-hover-neon-pink': '0 0 1.4rem #DD6BDA',
       'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
       'modal-neon-pink': generateModalNeon(neonPink),
       'modal-neon-blue': generateModalNeon(neonBlue),

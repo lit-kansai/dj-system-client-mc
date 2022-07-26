@@ -16,6 +16,7 @@ const generateModalNeon = (color) => {
 const neonBlue = '#3E65F4'
 const neonPink = '#DD6BDA'
 const neonGreen = '#C8FF7E'
+const blue = '#3E65F4'
 const yellow = '#FFD768'
 const pink = '#F66FF2'
 const whiteYellow = '#FFE08B'
@@ -38,11 +39,15 @@ module.exports = {
       'neon-blue': neonBlue,
       'neon-pink': neonPink,
       'neon-green': neonGreen,
+      blue,
       yellow,
       pink,
       whiteYellow,
       'dark-blue': darkBlue,
     },
+    borderColor: (theme) => ({
+      ...theme('colors'),
+    }),
     backgroundColor: (theme) => ({
       ...theme('colors'),
       'neon-blue': neonBlue,
@@ -53,6 +58,7 @@ module.exports = {
       'neon-blue': generateNeon(neonBlue),
       'neon-pink': generateNeon(neonPink),
       'neon-green': generateNeon(neonGreen),
+      'close-button-neon-blue': `0 0 0rem #fff, 0 0 .2rem #fff, 0 0 2rem ${neonBlue}, inset 0 0 1.3rem ${neonBlue};`,
       'text-button-neon-pink': '0 0 0.8rem #DD6BDA',
       'text-button-hover-neon-pink': '0 0 1.4rem #DD6BDA',
       'card-neon-pink': '0 0 0.1rem #fff, 0 0 1.4rem #DD6BDA',

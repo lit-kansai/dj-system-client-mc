@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[200px] cursor-pointer relative rounded-md border border-gray-800 hover:border-white hover:border-neon-green hover:shadow-card-neon-green"
+    class="max-w-[200px] cursor-pointer relative rounded-md border border-gray-800 hover:border-white hover:border-neon-pink hover:shadow-card-neon-pink"
   >
     <div
       class="absolute flex items-center justify-center w-full h-full bg-gray-800 opacity-0 hover:opacity-80 transition-opacity rounded-md"

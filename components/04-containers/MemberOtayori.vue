@@ -1,7 +1,7 @@
 <template>
   <div class="md:p-4">
     <div class="flex items-end mb-5 md:mb-10">
-      <HeaderText text="OTAYORI" class="mr-3" />
+      <HeaderText text="OTAYORI" class="mr-3 mt-2 md:mt-0" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
     <div
@@ -26,7 +26,7 @@
         @update:text="updateMessage"
       />
     </div>
-    <div class="flex justify-center mb-1">
+    <div class="flex justify-center mb-7 md:mb-1">
       <Button text="リクエストを送信" @click.native="submit" />
     </div>
   </div>

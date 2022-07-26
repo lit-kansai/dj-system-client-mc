@@ -10,7 +10,7 @@
       <p>リクエスト曲</p>
       <RequestMusicOverview
         :props="requestMusicOverview"
-        class="mb-5 md:mb-0 border-neon-green shadow-card-neon-green"
+        class="mb-5 md:mb-0 shadow-card-neon-pink"
       />
       <p>ラジオネーム（任意）</p>
       <TextInput

@@ -1,6 +1,6 @@
 <template>
   <button
-    class="p-3 cursor-pointer rounded-md bg-yellow filter hover:bg-whiteYellow min-w-[60px] min-h-[60px]"
+    class="p-3 cursor-pointer rounded-md bg-pink filter hover:bg-pink min-w-[60px] min-h-[60px]"
   >
     <div v-if="type == 'text'">
       <p class="text-2xl">{{ text }}</p>

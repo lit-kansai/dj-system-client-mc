@@ -14,7 +14,7 @@
           />
           <RequestMusicOverview
             :props="card"
-            class="md:hidden"
+            class="border-gray-800 md:hidden"
             @click.native="onClickCard(index)"
           />
         </div>

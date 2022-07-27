@@ -19,7 +19,6 @@ const neonGreen = '#C8FF7E'
 const blue = '#3E65F4'
 const yellow = '#FFD768'
 const pink = '#F66FF2'
-const whiteYellow = '#FFE08B'
 const darkBlue = '#040B15'
 
 module.exports = {
@@ -42,7 +41,6 @@ module.exports = {
       blue,
       yellow,
       pink,
-      whiteYellow,
       'dark-blue': darkBlue,
     },
     borderColor: (theme) => ({
@@ -59,14 +57,13 @@ module.exports = {
       'neon-pink': generateNeon(neonPink),
       'neon-green': generateNeon(neonGreen),
       'close-button-neon-blue': `0 0 0rem #fff, 0 0 .2rem #fff, 0 0 2rem ${neonBlue}, inset 0 0 1.3rem ${neonBlue};`,
-      'text-button-neon-pink': '0 0 0.8rem #DD6BDA',
-      'text-button-hover-neon-pink': '0 0 1.4rem #DD6BDA',
-      'card-neon-pink': '0 0 0.1rem #fff, 0 0 1.4rem #DD6BDA',
-      'card-neon-green': '0 0 0.2rem #fff, 0 0 0.8rem #c8ff7e',
+      'text-button-neon-pink': `0 0 0.8rem ${neonPink}`,
+      'text-button-hover-neon-pink': `0 0 1.4rem ${neonPink}`,
+      'card-neon-pink': `0 0 0.1rem #fff, 0 0 1.4rem ${neonPink}`,
+      'card-neon-green': `0 0 0.2rem #fff, 0 0 0.8rem ${neonGreen}`,
       'modal-neon-pink': generateModalNeon(neonPink),
       'modal-neon-blue': generateModalNeon(neonBlue),
-      'text-input-neon-blue':
-        '0 0 0.8rem #3E65F4, 0 0 0.4rem #3E65F4, inset 0 0 0.3rem #3E65F4',
+      'text-input-neon-blue': `0 0 0.8rem ${blue}, 0 0 0.4rem ${blue}, inset 0 0 0.3rem ${blue}`,
     },
     dropShadow: {
       'neon-blue': generateDropShadowNeon(neonBlue),

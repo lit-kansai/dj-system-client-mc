@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex p-2 text-gray-200 bg-gray-800 border-2 rounded-full opacity-100 border-yellow hover:opacity-60"
+    class="flex p-2 text-gray-200 bg-gray-800 border-2 rounded-full opacity-100 border-blue shadow-close-button-neon-blue hover:opacity-60"
   >
     <svg
       class="w-6 h-6 fill"

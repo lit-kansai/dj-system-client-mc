@@ -1,7 +1,7 @@
 <template>
   <div class="md:p-4">
     <div class="flex items-end mb-5 md:mb-10">
-      <HeaderText text="OTAYORI" class="mr-3" />
+      <HeaderText text="OTAYORI" class="mr-3 mt-2 md:mt-0" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
     <div
@@ -10,7 +10,7 @@
       <p>リクエスト曲</p>
       <RequestMusicOverview
         :props="requestMusicOverview"
-        class="mb-5 md:mb-0 border-neon-green shadow-card-neon-green"
+        class="border-neon-pink mb-5 md:mb-0 shadow-card-neon-pink"
       />
       <p>ラジオネーム（任意）</p>
       <TextInput
@@ -26,7 +26,7 @@
         @update:text="updateMessage"
       />
     </div>
-    <div class="flex justify-center mb-1">
+    <div class="flex justify-center mb-7 md:mb-1">
       <Button text="リクエストを送信" @click.native="submit" />
     </div>
   </div>

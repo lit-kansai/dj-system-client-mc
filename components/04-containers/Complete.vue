@@ -3,7 +3,7 @@
     <div>
       <img src="~assets/img/default_room_logo.png" class="md:h-80 m-auto" />
       <h1
-        class="text-neon-green drop-shadow-neon-green text-4xl mb-3 text-center"
+        class="text-neon-pink drop-shadow-neon-pink text-4xl mb-3 text-center"
       >
         {{ title }}
       </h1>

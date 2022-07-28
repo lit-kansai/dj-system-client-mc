@@ -55,7 +55,6 @@
                   <th>Artist</th>
                   <th>Album</th>
                   <th>Time</th>
-                  <th>RadioName</th>
                   <th>Link</th>
                 </tr>
               </thead>
@@ -81,9 +80,6 @@
                   <td class="hidden md:table-cell">{{ music.artists }}</td>
                   <td class="hidden md:table-cell">{{ music.album }}</td>
                   <td class="hidden md:table-cell">{{ music.duration }}</td>
-                  <td class="hidden w-1/6 text-sm md:table-cell">
-                    {{ 'がっしー' }}
-                  </td>
                   <td>
                     <a :href="music.thumbnail" target="_blank">
                       <img

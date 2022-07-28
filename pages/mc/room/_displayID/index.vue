@@ -79,7 +79,9 @@
                   </td>
                   <td class="hidden md:table-cell">{{ music.artists }}</td>
                   <td class="hidden md:table-cell">{{ music.album }}</td>
-                  <td class="hidden md:table-cell">{{ music.duration }}</td>
+                  <td class="hidden md:table-cell">
+                    {{ secondsToString(music.duration) }}
+                  </td>
                   <td>
                     <a :href="music.thumbnail" target="_blank">
                       <img
@@ -153,6 +155,8 @@ export default defineComponent({
     const protocolAndHostname = computed(
       () => window.location.protocol + '//' + window.location.hostname
     )
+    const secondsToString = (seconds: number) =>
+      `${(seconds / 60) | 0}:${('00' + (seconds % 60)).slice(-2)}`
     const displayID = computed(() => route.value.params.displayID)
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
@@ -194,6 +198,7 @@ export default defineComponent({
       letters,
       externalPlaylistURL,
       generateSpotifyUrl,
+      secondsToString,
     }
   },
 })

@@ -111,8 +111,10 @@
                 :key="letter.id"
                 class="border border-gray-400 hover:bg-neon-blue"
               >
-                <td class="pt-2 pb-2 pl-2">{{ letter.radioName }}</td>
-                <td>{{ letter.message }}</td>
+                <template v-if="letter.message != ''">
+                  <td class="pt-2 pb-2 pl-2">{{ letter.radioName }}</td>
+                  <td>{{ letter.message }}</td>
+                </template>
               </tr>
             </tbody>
           </table>

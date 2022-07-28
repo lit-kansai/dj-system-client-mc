@@ -46,7 +46,8 @@ export default function (context: Context) {
 }
 
 const isLoginRequiredPage = (path: string): boolean => {
-  return path.includes('mc') || path.includes('admin')
+  const mcPageRegex = /^(\/mc.*)/
+  return mcPageRegex.test(path) || path.includes('admin')
 }
 
 const isGoogleLoginPage = (path: string): boolean => {

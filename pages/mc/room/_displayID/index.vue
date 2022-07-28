@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full max-w-sm m-auto mb-5 md:max-w-7xl">
+  <div class="relative w-full m-auto mb-5">
     <LoadingOverlay v-if="fetchRoomDetailLoading" />
     <p class="mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ roomDetail.name }}
@@ -63,7 +63,7 @@
                   v-for="(music, index) in playlist"
                   :key="index"
                   class="w-full border border-gray-400 cursor-pointer hover:bg-neon-blue"
-                  @click="redirectOutside(music.thumbnail)"
+                  @click="redirectOutside(generateSpotifyUrl(music.id))"
                 >
                   <td class="w-14">
                     <img
@@ -79,7 +79,9 @@
                   </td>
                   <td class="hidden md:table-cell">{{ music.artists }}</td>
                   <td class="hidden md:table-cell">{{ music.album }}</td>
-                  <td class="hidden md:table-cell">{{ music.duration }}</td>
+                  <td class="hidden md:table-cell">
+                    {{ secondsToString(music.duration) }}
+                  </td>
                   <td>
                     <a :href="music.thumbnail" target="_blank">
                       <img
@@ -153,9 +155,17 @@ export default defineComponent({
     const protocolAndHostname = computed(
       () => window.location.protocol + '//' + window.location.hostname
     )
+    const secondsToString = (seconds: number) =>
+      `${(seconds / 60) | 0}:${('00' + (seconds % 60)).slice(-2)}`
     const displayID = computed(() => route.value.params.displayID)
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
+    }
+    const generateSpotifyUrl = (id: string) => {
+      window.open(
+        `https://open.spotify.com/track/${id.split(':')[2]}`,
+        '_blank'
+      )
     }
     const {
       letters,
@@ -187,6 +197,8 @@ export default defineComponent({
       playlist,
       letters,
       externalPlaylistURL,
+      generateSpotifyUrl,
+      secondsToString,
     }
   },
 })

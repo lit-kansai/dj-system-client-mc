@@ -1,6 +1,9 @@
 <template>
   <div class="w-screen h-screen px-4">
-    <div class="w-full max-w-screen-lg mx-auto my-0 h-full">
+    <div
+      class="w-full max-w-screen-lg mx-auto my-0 h-full"
+      :class="isMcRoute() ? 'md:max-w-7xl' : ''"
+    >
       <div class="relative flex flex-col h-full">
         <Header v-bind="state.header.value">
           <template #right>
@@ -41,8 +44,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const mcPageRegex = /^(\/mc.*)/
-    const currentPath = route.value.path
     const state = toRefs(
       reactive<State>({
         header: { title: '', redirectUrl: '' },
@@ -52,8 +53,13 @@ export default defineComponent({
     const { hasUserCredentials } = useUserCredentials()
     const { fetchRoomOverviewResponse, fetchRoomOverview } =
       useFetchRoomOverview(new FetchRoomOverviewRepository())
+    const isMcRoute = () => {
+      const mcPageRegex = /^(\/mc.*)/
+      const currentPath = route.value.path
+      return mcPageRegex.test(currentPath)
+    }
     const checkShowProfile = () => {
-      if (mcPageRegex.test(currentPath) && hasUserCredentials()) {
+      if (isMcRoute() && hasUserCredentials()) {
         state.isShowProfileButton.value = true
       } else {
         state.isShowProfileButton.value = false
@@ -63,7 +69,7 @@ export default defineComponent({
       router.push(state.header.value.redirectUrl)
     }
     onBeforeMount(() => {
-      if (mcPageRegex.test(currentPath)) {
+      if (isMcRoute()) {
         state.header.value.title = 'DJ Gassi Console'
         state.header.value.redirectUrl = '/mc'
         // TODO: MCの個人情報を取得する
@@ -88,6 +94,7 @@ export default defineComponent({
     return {
       state,
       clickHeaderTitle,
+      isMcRoute,
     }
   },
 })

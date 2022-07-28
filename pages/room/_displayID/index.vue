@@ -4,7 +4,7 @@
   </div>
   <div v-else class="h-full">
     <div
-      class="flex flex-col items-center justify-center w-full max-w-sm m-auto h-5/6 md:max-w-7xl md:flex-row md:gap-x-10"
+      class="flex flex-col items-center justify-center w-full m-auto h-5/6 md:flex-row md:gap-x-10"
     >
       <div v-if="roomNotFound">
         <p>ルームが見つかりませんでした</p>

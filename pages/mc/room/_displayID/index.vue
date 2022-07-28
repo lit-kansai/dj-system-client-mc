@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full max-w-sm m-auto mb-5 md:max-w-7xl">
+  <div class="relative w-full m-auto mb-5">
     <LoadingOverlay v-if="fetchRoomDetailLoading" />
     <p class="mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ roomDetail.name }}

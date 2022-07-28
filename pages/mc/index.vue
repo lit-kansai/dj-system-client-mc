@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm m-auto mb-5 md:max-w-7xl">
+  <div class="w-full m-auto mb-5">
     <p class="mb-5"><NuxtLink to="/mc">ホーム</NuxtLink></p>
     <!-- Rooms -->
     <div class="relative flex flex-col md:flex-row gap-10">

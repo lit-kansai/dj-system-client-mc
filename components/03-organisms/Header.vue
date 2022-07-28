@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm m-auto md:max-w-7xl">
+  <div class="w-full m-auto">
     <div class="flex items-center justify-between py-4 md:py-6">
       <NuxtLink :to="redirectUrl">
         <div class="flex">

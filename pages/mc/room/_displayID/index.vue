@@ -63,7 +63,7 @@
                   v-for="(music, index) in playlist"
                   :key="index"
                   class="w-full border border-gray-400 cursor-pointer hover:bg-neon-blue"
-                  @click="redirectOutside(music.thumbnail)"
+                  @click="redirectOutside(generateSpotifyUrl(music.id))"
                 >
                   <td class="w-14">
                     <img
@@ -157,6 +157,12 @@ export default defineComponent({
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
     }
+    const generateSpotifyUrl = (id: string) => {
+      window.open(
+        `https://open.spotify.com/track/${id.split(':')[2]}`,
+        '_blank'
+      )
+    }
     const {
       letters,
       roomDetail,
@@ -187,6 +193,7 @@ export default defineComponent({
       playlist,
       letters,
       externalPlaylistURL,
+      generateSpotifyUrl,
     }
   },
 })

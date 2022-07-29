@@ -3,7 +3,7 @@ import { NuxtConfig } from '@nuxt/types'
 
 const environment = process.env.NODE_ENV
 const environmentSettings = require(`./environments/${environment}.ts`)
-const baseURL = process.env.BASE_URL || 'http://localhost:3000'
+const baseURL = environmentSettings.BASE_URL || 'http://localhost:3000'
 
 const config: NuxtConfig = {
   telemetry: true,

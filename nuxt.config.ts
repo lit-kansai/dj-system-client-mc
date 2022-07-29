@@ -3,16 +3,12 @@ import { NuxtConfig } from '@nuxt/types'
 
 const environment = process.env.NODE_ENV
 const environmentSettings = require(`./environments/${environment}.ts`)
+const baseURL = process.env.BASE_URL || 'http://localhost:3000'
 
 const config: NuxtConfig = {
   telemetry: true,
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // Target: https://go.nuxtjs.dev/config-target
-  // target: 'static',
-
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'DJ Gassi',
     htmlAttrs: {
@@ -21,8 +17,21 @@ const config: NuxtConfig = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'description', content: 'DJ Gassi' },
+      {
+        property: 'og:site_name',
+        content: 'DJ Gassi',
+      },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:description', content: 'DJ Gassiやで' },
+      {
+        property: 'og:url',
+        content: `${baseURL}`,
+      },
+      { property: 'og:image', content: `${baseURL}/ogp.png` },
+      { property: 'og:title', content: 'DJ Gassi' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: 'DJ Gassi' },
     ],
     link: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon-transparent.svg' },

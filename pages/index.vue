@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <h1>Sample</h1>
-    <button @click="onLoginButtonClick">Login</button>
-    <NuxtLink to="/playground">playground</NuxtLink>
+  <div class="w-full flex items-center justify-center">
+    <RoomLogo class="md:max-w-[500px]" />
   </div>
 </template>
 

@@ -36,7 +36,7 @@ export const useAccountDetail = (
         }
 
         // TODO: Apple Music対応したら削除する
-        if (status.provider !== 'apple_music') {
+        if (status.provider !== 'applemusic') {
           userProviderStatus.value.push({
             name: status.provider,
             displayName: toOfficialProviderName(status.provider),

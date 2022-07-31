@@ -5,9 +5,11 @@ import { IRoomModel } from '~/core/01-models/room'
 import { IFetchRoomsRepository } from '~/core/02-repositories/fetchRooms'
 import { IFetchUserProfileRepository } from '~/core/02-repositories/fetchUserProfile'
 import { ISpotifyLoginRepository } from '~/core/02-repositories/spotifyLogin'
+import { toOfficialProviderName } from '~/utils/toOfficialProviderName'
 
-export interface IAccount {
+export interface IProvider {
   name: string
+  displayName: string
   isConnected: boolean
 }
 
@@ -18,28 +20,29 @@ export const useAccountDetail = (
 ) => {
   const { loading, setLoading } = useLoading()
   const rooms: Ref<IRoomModel[]> = ref([])
-  const userProviderStatus: Ref<IAccount[]> = ref([
-    {
-      name: 'Spotify',
-      isConnected: false,
-    },
-  ])
+  const userProviderStatus: Ref<IProvider[]> = ref([])
+  const isProviderConnected = ref(false)
   const accountDetailError: Ref<AxiosError | Error | undefined> = ref(undefined)
 
-  const fetchRooms = async () => {
+  const fetchAccountDetail = async () => {
     try {
       setLoading(true)
       const roomsResponse = await fetchRoomsRepository.get()
       rooms.value = roomsResponse
       const user = await userProfileRepository.get()
-      user.linkedProviders.map((provider) => {
-        const index = userProviderStatus.value.findIndex(
-          (status) => status.name.toLowerCase() === provider
-        )
-        if (index !== -1) {
-          userProviderStatus.value[index].isConnected = true
+      user.linkedProviders.forEach((status) => {
+        if (status.isConnected) {
+          isProviderConnected.value = true
         }
-        return index
+
+        // TODO: Apple Music対応したら削除する
+        if (status.provider !== 'apple_music') {
+          userProviderStatus.value.push({
+            name: status.provider,
+            displayName: toOfficialProviderName(status.provider),
+            isConnected: status.isConnected,
+          })
+        }
       })
     } catch (error) {
       accountDetailError.value = error
@@ -65,10 +68,11 @@ export const useAccountDetail = (
 
   return {
     userProviderStatus,
+    isProviderConnected,
     loading,
     rooms,
     accountDetailError,
-    fetchRooms,
+    fetchAccountDetail,
     loginSpotify,
   }
 }

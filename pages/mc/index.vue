@@ -9,9 +9,9 @@
           <!-- Header -->
           <div class="flex items-end gap-x-3">
             <HeaderText text="Rooms" />
-            <NuxtLink to="/mc/room/create" class="text-yellow">
+            <button class="text-yellow" @click="onCreateRoomButtonClicked">
               &gt;&gt; ルームを作成する
-            </NuxtLink>
+            </button>
           </div>
           <p class="mt-3">
             "Room"ごとに曲のリクエストを募集することができます。
@@ -82,10 +82,10 @@
               >
                 <td class="flex items-center pt-2 pb-2 pl-3 gap-x-3">
                   <img
-                    :src="require('@/assets/img/' + status.name + '_Icon.svg')"
+                    :src="require('@/assets/img/' + status.name + 'Icon.svg')"
                     class="w-9"
                   />
-                  {{ status.name }}
+                  {{ status.displayName }}
                 </td>
                 <td class="text-center">
                   <button v-if="status.isConnected" class="pt-2 pb-2">
@@ -127,7 +127,8 @@ export default defineComponent({
       loading,
       rooms,
       accountDetailError,
-      fetchRooms,
+      fetchAccountDetail,
+      isProviderConnected,
       loginSpotify,
     } = useAccountDetail(
       new FetchRoomsRepository(),
@@ -141,14 +142,22 @@ export default defineComponent({
     const connectSpotify = () => {
       loginSpotify()
     }
+    const onCreateRoomButtonClicked = () => {
+      if (isProviderConnected.value) {
+        router.push(`/mc/room/create`)
+      } else {
+        alert('ルームの作成にはSpotifyアカウントとの連携が必要です')
+      }
+    }
     watch(accountDetailError, (error) => {
       alert(`ルームの取得に失敗しました。${JSON.stringify(error?.message)}`)
     })
     onMounted(() => {
-      fetchRooms()
+      fetchAccountDetail()
     })
     return {
       userProviderStatus,
+      onCreateRoomButtonClicked,
       loading,
       connectSpotify,
       rooms,

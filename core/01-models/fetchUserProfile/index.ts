@@ -1,18 +1,23 @@
-export type ILinkedProviders = Array<'spotify' | 'applemusic'>
+import { LowerProviderName } from '~/types/data/lowerProviderName'
+
+export interface ILinkedProviders {
+  provider: LowerProviderName
+  isConnected: boolean
+}
 export interface IFetchUserProfileModel {
   name: string
   icon: string
   isAdmin: boolean
-  email: string | undefined
-  linkedProviders: ILinkedProviders
+  email: string
+  linkedProviders: ILinkedProviders[]
 }
 
 export class FetchUserProfileModel implements IFetchUserProfileModel {
   private readonly _name: string
   private readonly _icon: string
   private readonly _isAdmin: boolean
-  private readonly _email: string | undefined
-  private readonly _linkedProviders: ILinkedProviders
+  private readonly _email: string
+  private readonly _linkedProviders: ILinkedProviders[]
   constructor(response: IFetchUserProfileModel) {
     this._name = response.name
     this._icon = response.icon
@@ -33,11 +38,11 @@ export class FetchUserProfileModel implements IFetchUserProfileModel {
     return this._isAdmin
   }
 
-  get email(): string | undefined {
+  get email(): string {
     return this._email
   }
 
-  get linkedProviders(): ILinkedProviders {
+  get linkedProviders(): ILinkedProviders[] {
     return this._linkedProviders
   }
 }

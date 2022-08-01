@@ -88,9 +88,7 @@
                   {{ status.displayName }}
                 </td>
                 <td class="text-center">
-                  <button v-if="status.isConnected" class="pt-2 pb-2">
-                    連携完了
-                  </button>
+                  <p v-if="status.isConnected" class="pt-2 pb-2">連携完了</p>
                   <button
                     v-else
                     class="pt-2 pb-2 text-yellow"

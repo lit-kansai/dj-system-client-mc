@@ -12,6 +12,8 @@ export interface IMusicEntity {
 
 export interface IMusicHelper {
   toMusicOverviewComponentProps: MusicOverview
+  secondsToMMSS: string
+  spotifyUrl: string
 }
 
 export type IMusicModel = IMusicEntity & IMusicHelper
@@ -59,5 +61,13 @@ export class MusicModel implements IMusicModel {
 
   get toMusicOverviewComponentProps(): MusicOverview {
     return Helper.toMusicOverview(this)
+  }
+
+  get secondsToMMSS(): string {
+    return Helper.secondsToMMSS(this)
+  }
+
+  get spotifyUrl(): string {
+    return Helper.spotifyUrl(this)
   }
 }

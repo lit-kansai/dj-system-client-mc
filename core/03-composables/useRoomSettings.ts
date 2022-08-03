@@ -2,10 +2,7 @@ import { ref, Ref } from '@nuxtjs/composition-api'
 import { AxiosError } from 'axios'
 import { IFetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { IUpdateRoomRepository } from '~/core/02-repositories/updateRoom'
-import {
-  IRoomDetail,
-  toRoomDetailComponentProps,
-} from '~/types/components/roomDetail'
+import { IRoomDetail } from '~/types/components/roomDetail'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { IFetchRoomDetailParams } from '~/types/params/fetchRoomDetail'
 import { IUpdateRoomParams } from '~/types/params/updateRoom'
@@ -28,7 +25,7 @@ export const useRoomSettings = (
     try {
       setLoading(true)
       const roomDetailResponse = await fetchRoomDetailRepository.get(params)
-      roomDetail.value = toRoomDetailComponentProps(roomDetailResponse)
+      roomDetail.value = roomDetailResponse.toRoomDetailComponentProps
     } catch (error) {
       fetchRoomSettingsError.value = error
     } finally {

@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full m-auto mb-5">
-    <LoadingOverlay v-if="fetchRoomDetailLoading" />
+    <LoadingOverlay v-if="mountedLoading || fetchPlaylistLoading" />
     <p class="mb-5">
       <NuxtLink to="/mc">ホーム</NuxtLink> / {{ roomDetail.name }}
     </p>
@@ -25,9 +25,11 @@
                 <li>使用サービス: {{ roomDetail.type }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink :to="`/room/${roomDetail.displayId}`">{{
-                    protocolAndHostname + '/room/' + roomDetail.displayId
-                  }}</NuxtLink>
+                  <NuxtLink :to="sharedUrlPath" class="underline"
+                    >{{ fullSharedUrl }}&nbsp;<fa
+                      icon="arrow-up-right-from-square"
+                    />
+                  </NuxtLink>
                 </li>
               </ul>
             </template>
@@ -41,13 +43,13 @@
               <a
                 target="_blank"
                 class="cursor-pointer text-yellow"
-                @click="redirectOutside(externalPlaylistURL)"
+                :href="externalPlaylistUrl"
               >
                 &gt;&gt; プレイリストを見る
               </a>
             </div>
             <!-- Table -->
-            <table class="w-full mt-3 border-collapse">
+            <table class="relative w-full mt-3 border-collapse">
               <thead class="hidden text-left md:table-header-group">
                 <tr>
                   <th>Song</th>
@@ -63,7 +65,7 @@
                   v-for="(music, index) in playlist"
                   :key="index"
                   class="w-full border border-gray-400 cursor-pointer hover:bg-neon-blue"
-                  @click="redirectOutside(generateSpotifyUrl(music.id))"
+                  @click="redirectOutside(music.spotifyUrl)"
                 >
                   <td class="w-14">
                     <img
@@ -80,19 +82,31 @@
                   <td class="hidden md:table-cell">{{ music.artists }}</td>
                   <td class="hidden md:table-cell">{{ music.album }}</td>
                   <td class="hidden md:table-cell">
-                    {{ secondsToString(music.duration) }}
+                    {{ music.secondsToMMSS }}
                   </td>
                   <td>
-                    <a :href="music.thumbnail" target="_blank">
+                    <div>
                       <img
                         src="~/assets/img/copy_url.svg"
                         class="w-4 ml-2 mr-2"
                       />
-                    </a>
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div
+              v-if="!mountedLoading && !fetchPlaylistLoading"
+              class="mt-4 text-center"
+            >
+              <button>
+                <fa
+                  icon="refresh"
+                  class="text-3xl active:opacity-50"
+                  @click="reloadPlaylist"
+                />
+              </button>
+            </div>
           </template>
         </Container>
       </div>
@@ -138,67 +152,51 @@ import { useFetchRoomDetail } from '~/core/03-composables/useFetchRoomDetail'
 import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { FetchRoomPlaylistRepository } from '~/core/02-repositories/fetchRoomPlaylist'
 
-export interface RequestMusicDetail {
-  musicTitle: string
-  albumName: string
-  artistName: string
-  imageUrl: string
-  providerUrl: string
-  duration: number
-  providedMusicId: string
-  radioNames: string[]
-}
-
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const protocolAndHostname = computed(
-      () => window.location.protocol + '//' + window.location.hostname
-    )
-    const secondsToString = (seconds: number) =>
-      `${(seconds / 60) | 0}:${('00' + (seconds % 60)).slice(-2)}`
     const displayID = computed(() => route.value.params.displayID)
     const redirectOutside = (url: string) => {
       window.open(url, '_blank')
-    }
-    const generateSpotifyUrl = (id: string) => {
-      window.open(
-        `https://open.spotify.com/track/${id.split(':')[2]}`,
-        '_blank'
-      )
     }
     const {
       letters,
       roomDetail,
       playlist,
       fetchRoomDetailError,
-      fetchRoomDetailLoading,
-      fetchRoom,
+      fetchPlaylist,
+      fetchPlaylistLoading,
+      mountedLoading,
+      mounted,
+      externalPlaylistUrl,
+      sharedUrlPath,
+      fullSharedUrl,
     } = useFetchRoomDetail(
       new FetchRoomDetailRepository(),
       new FetchRoomPlaylistRepository()
     )
-    const externalPlaylistURL = computed(
-      () => `https://open.spotify.com/playlist/${roomDetail.value.playlistId}`
-    )
     watch(fetchRoomDetailError, (error) => {
       alert(`ルーム情報の取得に失敗しました。${JSON.stringify(error?.message)}`)
     })
+    const reloadPlaylist = () => {
+      fetchPlaylist()
+    }
     onMounted(() => {
-      fetchRoom({
+      mounted({
         roomId: displayID.value,
       })
     })
     return {
-      fetchRoomDetailLoading,
+      mountedLoading,
+      fetchPlaylistLoading,
       redirectOutside,
-      protocolAndHostname,
       roomDetail,
+      reloadPlaylist,
       playlist,
       letters,
-      externalPlaylistURL,
-      generateSpotifyUrl,
-      secondsToString,
+      externalPlaylistUrl,
+      sharedUrlPath,
+      fullSharedUrl,
     }
   },
 })

@@ -9,3 +9,12 @@ export const toMusicOverview = (model: IMusicModel): MusicOverview => {
   }
   return musicOverview
 }
+
+export const secondsToMMSS = (model: IMusicModel): string => {
+  const seconds = model.duration
+  return `${(seconds / 60) | 0}:${('00' + (seconds % 60)).slice(-2)}`
+}
+
+export const spotifyUrl = (model: IMusicModel): string => {
+  return `https://open.spotify.com/track/${model.id.split(':')[2]}`
+}

@@ -1,4 +1,4 @@
-import { IMusicModel } from '~/core/01-models/music'
+import { IMusicEntity, IMusicModel, MusicModel } from '~/core/01-models/music'
 import { IFetchRoomPlaylistParams } from '~/types/params/fetchRoomPlaylistParams'
 import { $axios } from '~/utils/api'
 
@@ -10,9 +10,9 @@ export class FetchRoomPlaylistRepository
   implements IFetchRoomPlaylistRepository
 {
   async get(params: IFetchRoomPlaylistParams): Promise<IMusicModel[]> {
-    const result = await $axios.$get<IMusicModel[]>(
-      `/mc/room/${params.roomId}/playlist`
-    )
+    const result = await $axios
+      .$get<IMusicEntity[]>(`/mc/room/${params.roomId}/playlist`)
+      .then((musics) => musics.map((music) => new MusicModel(music)))
     return result
   }
 }

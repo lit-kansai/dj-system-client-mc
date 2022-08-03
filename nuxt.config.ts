@@ -3,7 +3,7 @@ import { NuxtConfig } from '@nuxt/types'
 
 const environment = process.env.NODE_ENV
 const environmentSettings = require(`./environments/${environment}.ts`)
-const baseURL = environmentSettings.BASE_URL || 'http://localhost:3000'
+const BASE_URL = environmentSettings.BASE_URL || 'http://localhost:3000'
 
 const config: NuxtConfig = {
   telemetry: true,
@@ -26,9 +26,9 @@ const config: NuxtConfig = {
       { property: 'og:description', content: 'DJ Gassiやで' },
       {
         property: 'og:url',
-        content: `${baseURL}`,
+        content: `${BASE_URL}`,
       },
-      { property: 'og:image', content: `${baseURL}/ogp.png` },
+      { property: 'og:image', content: `${BASE_URL}/ogp.png` },
       { property: 'og:title', content: 'DJ Gassi' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: 'DJ Gassi' },
@@ -78,7 +78,10 @@ const config: NuxtConfig = {
   axios: {
     baseURL: environmentSettings.API_URL,
   },
-  env: environmentSettings,
+  env: {
+    ...environmentSettings,
+    BASE_URL,
+  },
   router: {
     middleware: ['auth'],
   },

@@ -1,3 +1,6 @@
+import * as Helper from './helper'
+import { IRoomDetail } from '~/types/components/roomDetail'
+
 export interface User {
   id: number
   isAdmin: boolean
@@ -11,7 +14,7 @@ export interface Letter {
   message: string
 }
 
-export interface IFetchRoomDetailModel {
+export interface IRoomDetailEntity {
   id: number
   ownerUserId: number
   displayId: string
@@ -23,7 +26,13 @@ export interface IFetchRoomDetailModel {
   letters: Letter[]
 }
 
-export class FetchRoomDetailModel implements IFetchRoomDetailModel {
+interface IRoomDetailHelper {
+  toRoomDetailComponentProps: IRoomDetail
+}
+
+export type IRoomDetailModel = IRoomDetailEntity & IRoomDetailHelper
+
+export class RoomDetailModel implements IRoomDetailModel {
   private readonly _id: number
   private readonly _ownerUserId: number
   private readonly _displayId: string
@@ -33,7 +42,7 @@ export class FetchRoomDetailModel implements IFetchRoomDetailModel {
   private readonly _provider: string
   private readonly _users: User[]
   private readonly _letters: Letter[]
-  constructor(response: IFetchRoomDetailModel) {
+  constructor(response: IRoomDetailEntity) {
     this._id = response.id
     this._ownerUserId = response.ownerUserId
     this._displayId = response.displayId
@@ -79,5 +88,9 @@ export class FetchRoomDetailModel implements IFetchRoomDetailModel {
 
   get letters(): Letter[] {
     return this._letters
+  }
+
+  get toRoomDetailComponentProps(): IRoomDetail {
+    return Helper.toRoomDetailComponentProps(this)
   }
 }

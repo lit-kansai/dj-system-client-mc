@@ -83,7 +83,7 @@ const config: NuxtConfig = {
     BASE_URL,
   },
   router: {
-    middleware: ['auth'],
+    middleware: ['auth', 'urlParams'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

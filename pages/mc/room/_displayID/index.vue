@@ -13,7 +13,7 @@
               <div class="flex items-end gap-x-3">
                 <HeaderText text="Detail" />
                 <NuxtLink
-                  :to="`/mc/room/${roomDetail.displayId}/settings`"
+                  :to="`/mc/room/${displayId}/settings`"
                   class="text-yellow"
                 >
                   &gt;&gt; ルームを編集する
@@ -25,7 +25,7 @@
                 <li>使用サービス: {{ roomDetail.type }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink :to="sharedUrlPath" class="underline"
+                  <NuxtLink :to="`/room/${displayId}`" class="underline"
                     >{{ fullSharedUrl }}&nbsp;<fa
                       icon="arrow-up-right-from-square"
                     />
@@ -65,7 +65,7 @@
                   v-for="(music, index) in playlist"
                   :key="index"
                   class="w-full border border-gray-400 cursor-pointer hover:bg-neon-blue"
-                  @click="redirectOutside(music.spotifyUrl)"
+                  @click="openExternalLink(music.spotifyUrl)"
                 >
                   <td class="w-14">
                     <img
@@ -141,24 +141,14 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  useRoute,
-  computed,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, watch } from '@nuxtjs/composition-api'
 import { useFetchRoomDetail } from '~/core/03-composables/useFetchRoomDetail'
 import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { FetchRoomPlaylistRepository } from '~/core/02-repositories/fetchRoomPlaylist'
+import { openExternalLink } from '~/utils/openExternalLink'
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-    const displayID = computed(() => route.value.params.displayID)
-    const redirectOutside = (url: string) => {
-      window.open(url, '_blank')
-    }
     const {
       letters,
       roomDetail,
@@ -166,10 +156,10 @@ export default defineComponent({
       fetchRoomDetailError,
       fetchPlaylist,
       fetchPlaylistLoading,
+      displayId,
       mountedLoading,
       mounted,
       externalPlaylistUrl,
-      sharedUrlPath,
       fullSharedUrl,
     } = useFetchRoomDetail(
       new FetchRoomDetailRepository(),
@@ -182,20 +172,18 @@ export default defineComponent({
       fetchPlaylist()
     }
     onMounted(() => {
-      mounted({
-        roomId: displayID.value,
-      })
+      mounted()
     })
     return {
+      displayId,
       mountedLoading,
       fetchPlaylistLoading,
-      redirectOutside,
       roomDetail,
+      openExternalLink,
       reloadPlaylist,
       playlist,
       letters,
       externalPlaylistUrl,
-      sharedUrlPath,
       fullSharedUrl,
     }
   },

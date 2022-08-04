@@ -1,10 +1,7 @@
 import path from 'path'
 import { NuxtConfig } from '@nuxt/types'
 
-const environment = process.env.NODE_ENV
-const environmentSettings = require(`./environments/${environment}.ts`)
-const BASE_URL = environmentSettings.BASE_URL || 'http://localhost:3000'
-
+const baseUrl = process.env.BASE_URL ?? ''
 const config: NuxtConfig = {
   telemetry: true,
   ssr: false,
@@ -26,9 +23,9 @@ const config: NuxtConfig = {
       { property: 'og:description', content: 'DJ Gassiやで' },
       {
         property: 'og:url',
-        content: `${BASE_URL}`,
+        content: `${baseUrl}`,
       },
-      { property: 'og:image', content: `${BASE_URL}/ogp.png` },
+      { property: 'og:image', content: `${baseUrl}/ogp.png` },
       { property: 'og:title', content: 'DJ Gassi' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: 'DJ Gassi' },
@@ -76,14 +73,10 @@ const config: NuxtConfig = {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: environmentSettings.API_URL,
-  },
-  env: {
-    ...environmentSettings,
-    BASE_URL,
+    baseURL: process.env.BACKEND_URL ?? '',
   },
   router: {
-    middleware: ['auth', 'urlParams'],
+    middleware: ['config', 'auth', 'urlParams'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -97,6 +90,12 @@ const config: NuxtConfig = {
   alias: {
     '@': path.resolve(__dirname),
     '~': path.resolve(__dirname),
+  },
+  publicRuntimeConfig: {
+    baseUrl,
+    backendUrl: process.env.BACKEND_URL ?? '',
+    googleLoginRedirectUrl: process.env.GOOGLE_LOGIN_REDIRECT_URL ?? '',
+    spotifyLoginRedirectUrl: process.env.SPOTIFY_LOGIN_REDIRECT_URL ?? '',
   },
 }
 

@@ -6,7 +6,7 @@ import { IMusicModel } from '~/core/01-models/music'
 import { IFetchRoomPlaylistRepository } from '~/core/02-repositories/fetchRoomPlaylist'
 import { IRoomDetail } from '~/types/components/roomDetail'
 import { sharedUseUrlParams } from '~/core/03-composables/useUrlParams'
-import { BASE_URL } from '~/utils/constants'
+import { config } from '~/environments/config'
 
 export interface ILetter {
   id: number
@@ -62,7 +62,7 @@ export const useFetchRoomDetail = (
     () => `https://open.spotify.com/playlist/${displayId}`
   )
   const fullSharedUrl: ComputedRef<string> = computed(
-    () => `${BASE_URL}/room/${roomDetail.value.playlistId}`
+    () => `${config.baseUrl}/room/${roomDetail.value.playlistId}`
   )
 
   const fetchPlaylist = async (): Promise<void> => {

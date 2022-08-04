@@ -6,6 +6,7 @@ import { IFetchRoomsRepository } from '~/core/02-repositories/fetchRooms'
 import { IFetchUserProfileRepository } from '~/core/02-repositories/fetchUserProfile'
 import { ISpotifyLoginRepository } from '~/core/02-repositories/spotifyLogin'
 import { toOfficialProviderName } from '~/utils/toOfficialProviderName'
+import { config } from '~/environments/config'
 
 export interface IProvider {
   name: string
@@ -54,9 +55,7 @@ export const useAccountDetail = (
   const loginSpotify = async () => {
     try {
       setLoading(true)
-      const REDIRECT_URL =
-        process.env.SPOTIFY_LOGIN_REDIRECT_URL ??
-        'https://dj-system.lit-kansai-mentors.com/api/spotify/callback'
+      const REDIRECT_URL = config.spotifyLoginRedirectUrl
       const result = await spotifyLoginRepository.fetch(REDIRECT_URL)
       window.open(result.redirectUrl)
     } catch (error) {

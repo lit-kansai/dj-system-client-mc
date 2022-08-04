@@ -1,10 +1,9 @@
 import { IGoogleLoginModel } from '~/core/01-models/googleLogin'
 import { GoogleLoginRepository } from '~/core/02-repositories/googleLogin'
+import { config } from '~/environments/config'
 
 export const useGoogleLogin = (): Promise<IGoogleLoginModel> => {
   const repository = new GoogleLoginRepository()
-  const REDIRECT_URL =
-    process.env.GOOGLE_LOGIN_REDIRECT_URL ??
-    'https://dj-system.lit-kansai-mentors.com/api/google/callback'
+  const REDIRECT_URL = config.googleLoginRedirectUrl
   return repository.fetch(REDIRECT_URL)
 }

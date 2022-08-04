@@ -12,6 +12,7 @@ import { $nuxt } from '~/utils/nuxtInstance'
 import { RegisterSpotifyTokenParams } from '~/types/params/registerSpotifyTokenParams'
 import { useRegisterSpotifyToken } from '~/core/03-composables/useRegisterSpotifyToken'
 import { RegisterSpotifyTokenRepository } from '~/core/02-repositories/registerSpotifyToken'
+import { config } from '~/environments/config'
 
 export default function (context: Context) {
   const { route } = context
@@ -39,7 +40,7 @@ export default function (context: Context) {
       >
       onEnterSpotifyLoginCallbackPage({
         code: spotifyLoginCallbackQuery.code,
-        redirectUrl: process.env.SPOTIFY_LOGIN_REDIRECT_URL as string,
+        redirectUrl: config.spotifyLoginRedirectUrl,
       })
     })
   }
@@ -82,9 +83,7 @@ const onEnterGoogleLoginCallbackPage = (query: GoogleLoginCallbackQuery) => {
   const { redirect } = $nuxt
   const params: ILoggedInGoogleParams = {
     ...query,
-    redirectUrl:
-      process.env.GOOGLE_LOGIN_REDIRECT_URL ??
-      'https://dj-system.lit-kansai-mentors.com/api/google/callback',
+    redirectUrl: config.googleLoginRedirectUrl,
   }
   const { loggedInGoogle } = useLoggedInGoogle(params)
   loggedInGoogle.then((_) => redirect('/mc?message=loginSuccess'))

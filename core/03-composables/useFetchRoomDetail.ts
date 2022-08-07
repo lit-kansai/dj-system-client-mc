@@ -2,11 +2,11 @@ import { Ref, ref, computed, ComputedRef } from '@nuxtjs/composition-api'
 import { AxiosError } from 'axios'
 import { IFetchRoomDetailRepository } from '../02-repositories/fetchRoomDetail'
 import { useLoading } from '~/core/03-composables/useLoading'
-import { IMusicModel } from '~/core/01-models/music'
-import { IFetchRoomPlaylistRepository } from '~/core/02-repositories/fetchRoomPlaylist'
 import { IRoomDetail } from '~/types/components/roomDetail'
 import { sharedUseUrlParams } from '~/core/03-composables/useUrlParams'
 import { config } from '~/environments/config'
+import { IFetchUserRequestsRepository } from '~/core/02-repositories/fetchUserRequests'
+import { UserRequestCardProps } from '~/types/components/userRequestCard'
 
 export interface ILetter {
   id: number
@@ -16,16 +16,17 @@ export interface ILetter {
 
 export const useFetchRoomDetail = (
   fetchRoomDetailRepository: IFetchRoomDetailRepository,
-  fetchRoomPlaylistRepository: IFetchRoomPlaylistRepository
+  fetchUserRequestsRepository: IFetchUserRequestsRepository
 ) => {
   const { loading: mountedLoading, setLoading: setMountedLoading } =
     useLoading()
-  const { loading: fetchPlaylistLoading, setLoading: setFetchPlaylistLoading } =
-    useLoading()
+  const {
+    loading: fetchUserRequestsLoading,
+    setLoading: setUserRequestsLoading,
+  } = useLoading()
 
   const displayId = sharedUseUrlParams.getParams('displayID')
-  const playlist: Ref<IMusicModel[]> = ref([])
-  const letters: Ref<ILetter[]> = ref([])
+  const userRequests: Ref<UserRequestCardProps[]> = ref([])
   const roomDetail: Ref<IRoomDetail> = ref({
     name: '',
     description: '',
@@ -45,13 +46,14 @@ export const useFetchRoomDetail = (
       const roomDetailResponse = await fetchRoomDetailRepository.get({
         roomId: displayId,
       })
-      const roomPlaylistResponse = await fetchRoomPlaylistRepository.get({
+      const userRequestsResponse = await fetchUserRequestsRepository.fetch({
         roomId: displayId,
       })
       setMountedLoading(false)
-      letters.value = roomDetailResponse.letters
       roomDetail.value = roomDetailResponse.toRoomDetailComponentProps
-      playlist.value = roomPlaylistResponse
+      userRequests.value = userRequestsResponse.map(
+        (request) => request.toUserRequestCardProps
+      )
     } catch (error) {
       setMountedLoading(false)
       fetchRoomDetailError.value = error
@@ -59,37 +61,38 @@ export const useFetchRoomDetail = (
   }
 
   const externalPlaylistUrl: ComputedRef<string> = computed(
-    () => `https://open.spotify.com/playlist/${displayId}`
+    () => `https://open.spotify.com/playlist/${roomDetail.value.playlistId}`
   )
   const fullSharedUrl: ComputedRef<string> = computed(
     () => `${config.baseUrl}/room/${roomDetail.value.playlistId}`
   )
 
-  const fetchPlaylist = async (): Promise<void> => {
+  const fetchUserRequests = async (): Promise<void> => {
     try {
-      setFetchPlaylistLoading(true)
-      const roomPlaylistResponse = await fetchRoomPlaylistRepository.get({
+      setUserRequestsLoading(true)
+      const userRequestsResponse = await fetchUserRequestsRepository.fetch({
         roomId: displayId,
       })
-      playlist.value = roomPlaylistResponse
-      setFetchPlaylistLoading(false)
+      userRequests.value = userRequestsResponse.map(
+        (request) => request.toUserRequestCardProps
+      )
+      setUserRequestsLoading(false)
     } catch (error) {
-      setFetchPlaylistLoading(false)
+      setUserRequestsLoading(false)
       fetchRoomDetailError.value = error
     }
   }
 
   return {
-    letters,
+    userRequests,
     roomDetail,
-    playlist,
-    fetchPlaylist,
-    fetchPlaylistLoading,
     externalPlaylistUrl,
+    fetchUserRequests,
     fullSharedUrl,
     mounted,
     mountedLoading,
     fetchRoomDetailError,
     displayId,
+    fetchUserRequestsLoading,
   }
 }

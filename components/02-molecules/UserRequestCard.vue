@@ -24,10 +24,7 @@
       </button>
     </div>
     <div v-if="isOpened" class="flex items-center mt-4 gap-2">
-      <img
-        src="https://i.scdn.co/image/ab67616d0000b273afd7777fc1e8d5ca6d5ff61c"
-        class="object-cover w-14 h-14"
-      />
+      <img :src="thumbnail" class="object-cover w-14 h-14" />
       <div>
         <p>{{ musicTitle }}</p>
         <p class="text-gray-400">{{ artists }}</p>

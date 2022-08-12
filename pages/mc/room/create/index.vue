@@ -89,6 +89,7 @@ export default defineComponent({
       selected: selectedMusicProvider,
       options: [
         { value: '', text: '選択しない' },
+        { value: 'applemusic', text: 'AppleMusic' },
         { value: 'spotify', text: 'Spotify' },
       ],
     })

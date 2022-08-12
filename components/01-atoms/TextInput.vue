@@ -11,6 +11,7 @@
       :placeholder="placeholder"
       :spellcheck="spellcheck"
       :autocomplete="autocomplete"
+      :autofocus="autofocus"
       class="w-full px-3 py-4 text-gray-200 bg-gray-800 border-2 rounded-lg appearance-none transition ease-in duration-100 border-neon-blue focus:shadow-text-input-neon-blue focus:outline-none"
       :class="isShowSearchIcon ? 'pl-11' : ''"
     />
@@ -18,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { TextInput } from '~/types/components/textInput'
 
 export default defineComponent({
@@ -28,6 +29,7 @@ export default defineComponent({
     placeholder: { type: String, default: '' },
     spellcheck: { type: Boolean, default: false },
     autocomplete: { type: String, default: 'off' },
+    autofocus: { type: Boolean, default: false },
     isShowSearchIcon: { type: Boolean, default: false },
   },
   emits: ['update:text'],

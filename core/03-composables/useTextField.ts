@@ -6,6 +6,7 @@ interface IUseTextField {
   placeholder: string
   spellcheck: false
   autocomplete: string
+  autofocus: boolean
   isShowSearchIcon: boolean
 }
 

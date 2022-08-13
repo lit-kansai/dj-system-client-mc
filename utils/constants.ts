@@ -4,5 +4,5 @@ export const API_GOOGLE_CALLBACK_PATH = '/api/google/callback'
 export const API_SPOTIFY_CALLBACK_PATH = '/api/spotify/callback'
 export const MEMBER_REQUEST_ALLOW_INTERVAL_TIME_LOCAL_STORAGE_KEY =
   'memberIntervalTime'
-export const MEMBER_REQUEST_LAST_TIME_LOCAL_STORAGE_KEY =
-  'memberRequestLastTime'
+export const MEMBER_LAST_REQUESTED_TIME_LOCAL_STORAGE_KEY =
+  'memberLastRequestedTime'

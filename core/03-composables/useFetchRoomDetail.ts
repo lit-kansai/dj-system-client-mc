@@ -64,7 +64,7 @@ export const useFetchRoomDetail = (
     () => `https://open.spotify.com/playlist/${roomDetail.value.playlistId}`
   )
   const fullSharedUrl: ComputedRef<string> = computed(
-    () => `${config.baseUrl}/room/${roomDetail.value.playlistId}`
+    () => `${config.baseUrl}/room/${roomDetail.value.displayId}`
   )
 
   const fetchUserRequests = async (): Promise<void> => {

@@ -9,6 +9,14 @@
       <div v-if="roomNotFound">
         <p>ルームが見つかりませんでした</p>
       </div>
+      <div v-else-if="!allowTap">
+        <p class="mb-3">次のリクエストまでちょっと待ってね！</p>
+        <div class="flex justify-between">
+          <CountDown time="00" text="HOURS" />
+          <CountDown time="09" text="MINUTES" />
+          <CountDown time="13" text="SECONDS" />
+        </div>
+      </div>
       <template v-else>
         <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
         <div class="flex w-full mt-7 max-w-lg">
@@ -71,6 +79,7 @@ export default defineComponent({
         query: { searchWord: text.value },
       })
     }
+    const allowTap = false
     watch(fetchRoomOverviewResponse, (value) => {
       if (value) {
         roomLogo.value.roomName = value.name
@@ -89,6 +98,7 @@ export default defineComponent({
       submit,
       textInput,
       updateSearchWord,
+      allowTap,
     }
   },
 })

@@ -13,6 +13,7 @@ export default defineComponent({
     time: { type: String, required: true },
     text: { type: String, required: true },
   },
+  emits: ['update:time'],
   setup() {},
 })
 </script>

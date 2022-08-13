@@ -13,8 +13,8 @@
         <p class="mb-3">次のリクエストまでちょっと待ってね！</p>
         <div class="flex justify-between">
           <CountDown time="00" text="HOURS" />
-          <CountDown time="09" text="MINUTES" />
-          <CountDown time="13" text="SECONDS" />
+          <CountDown :time="countDownState.minutes.value" text="MINUTES" />
+          <CountDown :time="countDownState.seconds.value" text="SECONDS" />
         </div>
       </div>
       <template v-else>
@@ -44,11 +44,18 @@ import {
   useRouter,
   onMounted,
   watch,
+  toRefs,
+  reactive,
 } from '@nuxtjs/composition-api'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
 import { useFetchRoomOverview } from '~/core/03-composables/useFetchRoomOverview'
 import { useTextField } from '~/core/03-composables/useTextField'
+
+interface CountDownState {
+  minutes: string
+  seconds: string
+}
 
 export default defineComponent({
   setup() {
@@ -73,6 +80,12 @@ export default defineComponent({
       roomName: '',
       imageUrl: '',
     })
+    const countDownState = toRefs(
+      reactive<CountDownState>({
+        minutes: '00',
+        seconds: '00',
+      })
+    )
     const submit = () => {
       router.push({
         path: `/room/${displayID.value}/result`,
@@ -91,6 +104,38 @@ export default defineComponent({
     onMounted(() => {
       mounted({ roomId: displayID.value })
     })
+
+    // eslint-disable-next-line no-var
+    var totalSeconds = 25 * 60
+    const timerMinutes = computed(() => {
+      const minutes = Math.floor(totalSeconds / 60)
+      return formatTime(minutes)
+    })
+    const timerSeconds = computed(() => {
+      const sec = totalSeconds % 60
+      return formatTime(sec)
+    })
+    const formatTime = (time: number): string => {
+      if (time < 10) {
+        return '0' + time
+      }
+      return time.toString()
+    }
+    onMounted(() => {
+      const timer = setInterval(() => {
+        totalSeconds -= 1
+
+        const minutes = Math.floor(totalSeconds / 60)
+        const sec = totalSeconds % 60
+        countDownState.minutes.value = formatTime(minutes)
+        countDownState.seconds.value = formatTime(sec)
+
+        if (Math.floor(totalSeconds / 60) === 0 && totalSeconds % 60 === 0) {
+          clearInterval(timer)
+        }
+      }, 1000)
+    })
+
     return {
       loading,
       roomNotFound,
@@ -99,6 +144,11 @@ export default defineComponent({
       textInput,
       updateSearchWord,
       allowTap,
+      timerMinutes,
+      timerSeconds,
+      formatTime,
+      totalSeconds,
+      countDownState,
     }
   },
 })

@@ -9,7 +9,7 @@
       <div v-if="roomNotFound">
         <p>ルームが見つかりませんでした</p>
       </div>
-      <div v-else-if="!allowTap">
+      <div v-else-if="totalSeconds >= 0">
         <p class="mb-3">次のリクエストまでちょっと待ってね！</p>
         <div class="flex justify-between">
           <CountDown time="00" text="HOURS" />
@@ -50,6 +50,7 @@ import {
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
 import { useFetchRoomOverview } from '~/core/03-composables/useFetchRoomOverview'
+import { useRequestTimer } from '~/core/03-composables/useRequestTimer'
 import { useTextField } from '~/core/03-composables/useTextField'
 
 interface CountDownState {
@@ -105,32 +106,27 @@ export default defineComponent({
       mounted({ roomId: displayID.value })
     })
 
-    // eslint-disable-next-line no-var
-    var totalSeconds = 25 * 60
-    const timerMinutes = computed(() => {
-      const minutes = Math.floor(totalSeconds / 60)
-      return formatTime(minutes)
-    })
-    const timerSeconds = computed(() => {
-      const sec = totalSeconds % 60
-      return formatTime(sec)
-    })
+    const totalSeconds = ref(0)
     const formatTime = (time: number): string => {
       if (time < 10) {
         return '0' + time
       }
       return time.toString()
     }
+    const { waitingTime } = useRequestTimer()
     onMounted(() => {
+      totalSeconds.value = waitingTime()
+      if (totalSeconds.value < 0) {
+        return
+      }
       const timer = setInterval(() => {
-        totalSeconds -= 1
-
-        const minutes = Math.floor(totalSeconds / 60)
-        const sec = totalSeconds % 60
+        totalSeconds.value -= 1
+        const minutes = Math.floor(totalSeconds.value / 60)
+        const sec = Math.floor(totalSeconds.value % 60)
         countDownState.minutes.value = formatTime(minutes)
         countDownState.seconds.value = formatTime(sec)
 
-        if (Math.floor(totalSeconds / 60) === 0 && totalSeconds % 60 === 0) {
+        if (totalSeconds.value <= 0) {
           clearInterval(timer)
         }
       }, 1000)
@@ -144,8 +140,6 @@ export default defineComponent({
       textInput,
       updateSearchWord,
       allowTap,
-      timerMinutes,
-      timerSeconds,
       formatTime,
       totalSeconds,
       countDownState,

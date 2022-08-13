@@ -2,6 +2,7 @@ import { Context } from '@nuxt/types'
 import {
   MEMBER_LAST_REQUESTED_TIME_LOCAL_STORAGE_KEY,
   MEMBER_REQUEST_ALLOW_INTERVAL_TIME_LOCAL_STORAGE_KEY,
+  MEMBER_REQUEST_ALLOW_INTERVAL_DEFAULT_TIME,
 } from '~/utils/constants'
 import { $nuxt } from '~/utils/nuxtInstance'
 
@@ -23,7 +24,7 @@ const isAllowRequest = (): boolean => {
   const intervalSeconds = Number(
     localStorage.getItem(
       MEMBER_REQUEST_ALLOW_INTERVAL_TIME_LOCAL_STORAGE_KEY
-    ) ?? 10
+    ) ?? MEMBER_REQUEST_ALLOW_INTERVAL_DEFAULT_TIME
   )
   const lastRequested = Date.parse(
     localStorage.getItem(MEMBER_LAST_REQUESTED_TIME_LOCAL_STORAGE_KEY) ?? ''

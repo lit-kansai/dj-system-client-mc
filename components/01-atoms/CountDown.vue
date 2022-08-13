@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-max text-center text-neon-pink drop-shadow-neon-pink">
-    <p class="text-7xl">{{ time }}</p>
+    <p class="text-7xl mb-1">{{ time }}</p>
     <p class="tracking-wide">{{ text }}</p>
   </div>
 </template>

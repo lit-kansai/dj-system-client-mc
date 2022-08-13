@@ -1,9 +1,5 @@
 import { Context } from '@nuxt/types'
-import {
-  MEMBER_LAST_REQUESTED_TIME_LOCAL_STORAGE_KEY,
-  MEMBER_REQUEST_ALLOW_INTERVAL_TIME_LOCAL_STORAGE_KEY,
-  MEMBER_REQUEST_ALLOW_INTERVAL_DEFAULT_TIME,
-} from '~/utils/constants'
+import { useRequestTimer } from '~/core/03-composables/useRequestTimer'
 import { $nuxt } from '~/utils/nuxtInstance'
 
 export default function (context: Context) {
@@ -21,17 +17,10 @@ const isRequestResultPage = (path: string): boolean => {
 }
 
 const isAllowRequest = (): boolean => {
-  const intervalSeconds = Number(
-    localStorage.getItem(
-      MEMBER_REQUEST_ALLOW_INTERVAL_TIME_LOCAL_STORAGE_KEY
-    ) ?? MEMBER_REQUEST_ALLOW_INTERVAL_DEFAULT_TIME
-  )
-  const lastRequested = Date.parse(
-    localStorage.getItem(MEMBER_LAST_REQUESTED_TIME_LOCAL_STORAGE_KEY) ?? ''
-  )
-  const allowRequest = lastRequested + intervalSeconds * 1000
+  const { allowRequestTime, lastRequestedTime } = useRequestTimer()
+  const now = new Date().getTime()
 
-  if (isNaN(lastRequested) || lastRequested <= allowRequest) {
+  if (lastRequestedTime() === 0 || now > allowRequestTime()) {
     return true
   } else {
     return false

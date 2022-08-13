@@ -3,6 +3,7 @@ import { AxiosError } from 'axios'
 import { useLoading } from '~/core/03-composables/useLoading'
 import { IRequestMusicRepository } from '~/core/02-repositories/requestMusic'
 import { IRequestMusicParams } from '~/types/params/requestMusic'
+import { useRequestTimer } from '~/core/03-composables/useRequestTimer'
 
 export interface UseRequestMusicInputs {
   params: IRequestMusicParams
@@ -13,6 +14,7 @@ export const useRequestMusic = (repository: IRequestMusicRepository) => {
   const { loading: requestMusicLoading, setLoading } = useLoading()
   const requestMusicResult: Ref<{ ok: boolean } | undefined> = ref(undefined)
   const requestMusicError: Ref<AxiosError | Error | undefined> = ref(undefined)
+  const { saveRequestedTime } = useRequestTimer()
 
   const requestMusic = (inputs: UseRequestMusicInputs) => {
     setLoading(true)
@@ -21,6 +23,7 @@ export const useRequestMusic = (repository: IRequestMusicRepository) => {
       .then((result) => {
         setLoading(false)
         requestMusicResult.value = result
+        saveRequestedTime()
       })
       .catch((error) => {
         setLoading(false)

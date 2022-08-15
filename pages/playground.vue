@@ -1,5 +1,6 @@
 <template>
   <div>
+    <count-down time="90" text="MINUTES" />
     <fa icon="search" />
     <RoomLogo class="w-20 h-20" v-bind="roomLogo" />
     <!-- <MemberOtayori /> -->
@@ -40,8 +41,10 @@ import { MusicOverview } from '~/types/components/music_overview'
 import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { Button } from '~/components/01-atoms/Button.vue'
 import { HeaderText } from '~/components/01-atoms/HeaderText.vue'
+import CountDown from '~/components/01-atoms/CountDown.vue'
 
 export default defineComponent({
+  components: { CountDown },
   layout: 'default',
   setup() {
     const card = ref<MusicOverview>({
@@ -67,6 +70,7 @@ export default defineComponent({
       placeholder: '曲名・アーティスト名を入力',
       spellcheck: false,
       autocomplete: 'off',
+      autofocus: false,
       isShowSearchIcon: true,
     })
     const updateSearchWord = (val: string) => {

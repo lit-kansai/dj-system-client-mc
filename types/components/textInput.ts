@@ -6,5 +6,6 @@ export interface TextInput {
   placeholder: string
   spellcheck: boolean
   autocomplete: string
+  autofocus: boolean
   isShowSearchIcon: boolean
 }

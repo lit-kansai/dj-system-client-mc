@@ -76,7 +76,7 @@ const config: NuxtConfig = {
     baseURL: process.env.BACKEND_URL ?? '',
   },
   router: {
-    middleware: ['config', 'auth', 'urlParams'],
+    middleware: ['config', 'auth', 'urlParams', 'requestTimer'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

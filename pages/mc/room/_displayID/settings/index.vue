@@ -45,8 +45,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  computed,
-  useRoute,
   toRefs,
   reactive,
   useRouter,
@@ -56,6 +54,7 @@ import {
 import { FetchRoomDetailRepository } from '~/core/02-repositories/fetchRoomDetail'
 import { UpdateRoomRepository } from '~/core/02-repositories/updateRoom'
 import { useRoomSettings } from '~/core/03-composables/useRoomSettings'
+import { sharedUseUrlParams } from '~/core/03-composables/useUrlParams'
 
 interface State {
   urlName: string
@@ -66,7 +65,6 @@ interface State {
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const route = useRoute()
     const {
       useRoomSettingsLoading,
       updateRoomDetail,
@@ -84,7 +82,7 @@ export default defineComponent({
         description: '',
       })
     )
-    const displayID = computed(() => route.value.params.displayID)
+    const displayID = sharedUseUrlParams.getParams('displayID')
     const updateUrlName = (displayId: string): void => {
       state.urlName.value = displayId
     }
@@ -97,7 +95,7 @@ export default defineComponent({
     const submit = async () => {
       try {
         await updateRoomDetail({
-          roomId: displayID.value,
+          roomId: displayID,
           urlName: state.urlName.value,
           roomName: state.roomName.value,
           description: state.description.value,
@@ -107,11 +105,11 @@ export default defineComponent({
       } catch (error) {}
     }
     const cancel = () => {
-      router.push(`/mc/room/${displayID.value}`)
+      router.push(`/mc/room/${displayID}`)
     }
     onMounted(async () => {
       try {
-        await fetchRoomDetail({ roomId: displayID.value })
+        await fetchRoomDetail({ roomId: displayID })
         updateUrlName(roomDetail.value.displayId)
         updateRoomName(roomDetail.value.name)
         updateDescription(roomDetail.value.description)

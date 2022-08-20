@@ -11,7 +11,7 @@
       </div>
       <template v-else>
         <RoomLogo v-bind="roomLogo" class="md:max-w-[500px]" />
-        <div class="flex w-full mt-7 max-w-lg">
+        <div class="flex w-full max-w-lg mt-7">
           <TextInput
             v-model="textInput.text"
             v-bind="textInput"
@@ -31,8 +31,6 @@
 import {
   defineComponent,
   ref,
-  computed,
-  useRoute,
   useRouter,
   onMounted,
   watch,
@@ -41,6 +39,7 @@ import { RoomLogo } from '~/components/02-molecules/RoomLogo.vue'
 import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
 import { useFetchRoomOverview } from '~/core/03-composables/useFetchRoomOverview'
 import { useTextField } from '~/core/03-composables/useTextField'
+import { sharedUseUrlParams } from '~/core/03-composables/useUrlParams'
 
 export default defineComponent({
   setup() {
@@ -51,7 +50,7 @@ export default defineComponent({
       fetchRoomOverviewError,
       mounted,
     } = useFetchRoomOverview(new FetchRoomOverviewRepository())
-    const displayID = computed(() => useRoute().value.params.displayID)
+    const displayID = sharedUseUrlParams.getParams('displayID')
     const router = useRouter()
     const { text, textInput, updateSearchWord } = useTextField({
       type: 'text',
@@ -66,7 +65,7 @@ export default defineComponent({
     })
     const submit = () => {
       router.push({
-        path: `/room/${displayID.value}/result`,
+        path: `/room/${displayID}/result`,
         query: { searchWord: text.value },
       })
     }
@@ -79,7 +78,7 @@ export default defineComponent({
       alert(`ルームの取得に失敗しました。${JSON.stringify(error)}`)
     )
     onMounted(() => {
-      mounted({ roomId: displayID.value })
+      mounted({ roomId: displayID })
     })
     return {
       loading,

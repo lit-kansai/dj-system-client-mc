@@ -17,7 +17,6 @@ const useUrlParams = (): IUseUrlParams => {
     if (!hasProperty(params.value, key)) {
       return ''
     }
-
     return params.value[key]
   }
   return {

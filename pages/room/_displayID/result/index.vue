@@ -53,11 +53,12 @@ import {
   submitMusicInjectionKey,
   useRequestMusicModal,
 } from '~/core/03-composables/useRequestMusicModal'
+import { sharedUseUrlParams } from '~/core/03-composables/useUrlParams'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const displayID = computed(() => route.value.params.displayID)
+    const displayID = sharedUseUrlParams.getParams('displayID')
     const query = computed(() => getQuery(route.value.query.searchWord))
     const { searchWord, textInput, updateSearchWord } = useTextFieldComponent()
     const { musics, fetchMusics, fetchMusicsLoading } = useFetchMusics(
@@ -82,15 +83,15 @@ export default defineComponent({
 
     const onPressEnter = () => {
       fetchMusics({
-        roomId: displayID.value,
+        roomId: displayID,
         q: searchWord.value,
       })
     }
     onMounted(() => {
-      setDisplayID(displayID.value)
+      setDisplayID(displayID)
       updateSearchWord(query.value)
       fetchMusics({
-        roomId: displayID.value,
+        roomId: displayID,
         q: searchWord.value,
       })
     })

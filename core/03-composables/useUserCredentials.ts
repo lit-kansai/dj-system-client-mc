@@ -6,7 +6,15 @@ export const useUserCredentials = () => {
     }
     return false
   }
+
+  // NOTE: ちゃんと消えてたらtrueが返ります
+  const clearUserCredentials = (): boolean => {
+    localStorage.clear()
+    return !localStorage.length
+  }
+
   return {
     hasUserCredentials,
+    clearUserCredentials,
   }
 }

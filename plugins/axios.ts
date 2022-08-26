@@ -4,8 +4,9 @@ import { initializeAxios } from '~/utils/api'
 import { SnakeToCamel } from '~/utils/snakeToCamel'
 import { useLocalStorageUserCredentials } from '~/core/03-composables/useLocalStorageUserCredentials'
 import { UserCredentialsRepository } from '~/core/02-repositories/UserCredentials'
+import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
 
-export default function ({ $axios }: Context) {
+export default function ({ $axios, redirect }: Context) {
   $axios.onRequest(async (request) => {
     if (request.data && request.data?.convert) {
       const data = SnakeToCamel.convert(request.data)
@@ -32,6 +33,18 @@ export default function ({ $axios }: Context) {
   })
 
   $axios.onResponseError((error) => {
+    // NOTE: 401エラーはトークンが期限切れした事を表しているので、ログアウトさせる
+    if (error.response?.status === 401) {
+      error.message =
+        'ログインの有効期限が切れました。もう一度ログインし直してください'
+      const { clearUserCredentials } = useUserCredentials()
+      const ok = clearUserCredentials()
+      if (!ok) {
+        error.message += '\n can not clear user credentials in local storage'
+      }
+      redirect('/mc/login')
+      throw error
+    }
     throw error
   })
 }

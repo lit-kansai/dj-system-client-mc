@@ -1,13 +1,13 @@
-export interface IUserCredentialsModel {
+export interface ILocalUserCredentialsModel {
   apiToken: string
   userId: string
 }
 
-export class UserCredentialsModel implements IUserCredentialsModel {
+export class LocalUserCredentialsModel implements ILocalUserCredentialsModel {
   private readonly _apiToken: string
   private readonly _userId: string
 
-  constructor(response: IUserCredentialsModel) {
+  constructor(response: ILocalUserCredentialsModel) {
     this._apiToken = response.apiToken
     this._userId = response.userId
   }
@@ -20,5 +20,3 @@ export class UserCredentialsModel implements IUserCredentialsModel {
     return this._userId
   }
 }
-
-export namespace UsercredentialsModelNameSpace {}

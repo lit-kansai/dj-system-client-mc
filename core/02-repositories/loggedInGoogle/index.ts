@@ -1,16 +1,19 @@
-import { IUserCredentialsModel } from '~/core/01-models/userCredentials'
+import { ILocalUserCredentialsModel } from '~/core/01-models/localUserCredentials'
 import { ILoggedInGoogleParams } from '~/types/params/loggedInGoogleParams'
 import { $axios } from '~/utils/api'
 
 export interface ILoggedInGoogleRepository {
-  post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel>
+  post(params: ILoggedInGoogleParams): Promise<ILocalUserCredentialsModel>
 }
 
-export class LoggedinGoogleRepository implements ILoggedInGoogleRepository {
-  post(params: ILoggedInGoogleParams): Promise<IUserCredentialsModel> {
-    return $axios.$post<IUserCredentialsModel>('/mc/auth/signin/callback', {
-      ...params,
-      convert: true,
-    })
+export class LoggedInGoogleRepository implements ILoggedInGoogleRepository {
+  post(params: ILoggedInGoogleParams): Promise<ILocalUserCredentialsModel> {
+    return $axios.$post<ILocalUserCredentialsModel>(
+      '/mc/auth/signin/callback',
+      {
+        ...params,
+        convert: true,
+      }
+    )
   }
 }

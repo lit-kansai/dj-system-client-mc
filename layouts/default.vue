@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen px-4">
     <div
-      class="w-full max-w-screen-lg mx-auto my-0 h-full"
+      class="w-full h-full mx-auto my-0 max-w-screen-lg"
       :class="isMcRoute() ? 'md:max-w-7xl' : ''"
     >
       <div class="relative flex flex-col h-full">
@@ -32,8 +32,9 @@ import {
 } from '@nuxtjs/composition-api'
 import { Header } from '~/components/03-organisms/Header.vue'
 import { FetchRoomOverviewRepository } from '~/core/02-repositories/fetchRoomOverview'
+import { LocalUserCredentialsRepository } from '~/core/02-repositories/localUserCredentials'
 import { useFetchRoomOverview } from '~/core/03-composables/useFetchRoomOverview'
-import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
+import { useLocalUserCredentials } from '~/core/03-composables/useLocalUserCredentials'
 
 interface State {
   header: Header
@@ -50,7 +51,9 @@ export default defineComponent({
         isShowProfileButton: false,
       })
     )
-    const { hasUserCredentials } = useUserCredentials()
+    const { hasUserCredentials } = useLocalUserCredentials(
+      new LocalUserCredentialsRepository()
+    )
     const { fetchRoomOverviewResponse, fetchRoomOverview } =
       useFetchRoomOverview(new FetchRoomOverviewRepository())
     const isMcRoute = () => {

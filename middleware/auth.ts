@@ -6,13 +6,14 @@ import {
 } from '~/utils/constants'
 import { ILoggedInGoogleParams } from '~/types/params/loggedInGoogleParams'
 import { GoogleLoginCallbackQuery } from '~/types/query/googleLoginCallbackQuery'
-import { useLoggedInGoogle } from '~/core/03-composables/useLoggedinGoogle'
-import { useUserCredentials } from '~/core/03-composables/useUserCredentials'
+import { useLoggedInGoogle } from '~/core/03-composables/useLoggedInGoogle'
+import { useLocalUserCredentials } from '~/core/03-composables/useLocalUserCredentials'
 import { $nuxt } from '~/utils/nuxtInstance'
 import { RegisterSpotifyTokenParams } from '~/types/params/registerSpotifyTokenParams'
 import { useRegisterSpotifyToken } from '~/core/03-composables/useRegisterSpotifyToken'
 import { RegisterSpotifyTokenRepository } from '~/core/02-repositories/registerSpotifyToken'
 import { config } from '~/environments/config'
+import { LocalUserCredentialsRepository } from '~/core/02-repositories/localUserCredentials'
 
 export default function (context: Context) {
   const { route } = context
@@ -64,7 +65,9 @@ const isSpotifyAPICallbackPage = (path: string): boolean => {
 }
 
 const onEnterGoogleLoginPage = () => {
-  const { hasUserCredentials } = useUserCredentials()
+  const { hasUserCredentials } = useLocalUserCredentials(
+    new LocalUserCredentialsRepository()
+  )
   if (hasUserCredentials()) {
     const { redirect } = $nuxt
     redirect('/mc')
@@ -73,7 +76,9 @@ const onEnterGoogleLoginPage = () => {
 
 const onEnterLoginRequiredPage = () => {
   const { redirect } = $nuxt
-  const { hasUserCredentials } = useUserCredentials()
+  const { hasUserCredentials } = useLocalUserCredentials(
+    new LocalUserCredentialsRepository()
+  )
   if (!hasUserCredentials()) {
     redirect(GOOGLE_LOGIN_PAGE_PATH)
   }

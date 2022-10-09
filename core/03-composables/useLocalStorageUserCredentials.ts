@@ -1,14 +1,14 @@
-import { IUserCredentialsModel } from '~/core/01-models/userCredentials'
-import { IUserCredentialsRepository } from '~/core/02-repositories/UserCredentials'
+import { ILocalUserCredentialsModel } from '~/core/01-models/localUserCredentials'
+import { ILocalUserCredentialsRepository } from '~/core/02-repositories/localUserCredentials'
 
 export const useLocalStorageUserCredentials = (
-  repository: IUserCredentialsRepository
+  repository: ILocalUserCredentialsRepository
 ) => {
-  const save = (userInfo: IUserCredentialsModel): Promise<String> => {
+  const save = (userInfo: ILocalUserCredentialsModel): boolean => {
     return repository.save(userInfo)
   }
 
-  const fetch = (): Promise<IUserCredentialsModel | null> => {
+  const fetch = (): ILocalUserCredentialsModel | null => {
     return repository.fetch()
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="md:p-4">
     <div class="flex items-end mb-5 md:mb-10">
-      <HeaderText text="OTAYORI" class="mr-3 mt-2 md:mt-0" />
+      <HeaderText text="OTAYORI" class="mt-2 mr-3 md:mt-0" />
       <p class="hidden md:block">MCに! お便り! 送れますよ!</p>
     </div>
     <div
@@ -10,7 +10,7 @@
       <p>リクエスト曲</p>
       <RequestMusicOverview
         :props="requestMusicOverview"
-        class="border-neon-pink mb-5 md:mb-0 shadow-card-neon-pink"
+        class="mb-5 border-neon-pink md:mb-0 shadow-card-neon-pink"
       />
       <p>ラジオネーム（任意）</p>
       <TextInput
@@ -40,16 +40,9 @@ import {
   PropType,
   computed,
   ComputedRef,
-  inject,
 } from '@nuxtjs/composition-api'
 import { MusicOverview } from '~/types/components/music_overview'
 import { IMusicModel } from '~/core/01-models/music'
-import {
-  previousModalInjectionKey,
-  submitMusicInjectionKey,
-  SubmitMusicType,
-  PreviousModalType,
-} from '~/core/03-composables/useRequestMusicModal'
 
 interface State {
   radioName: string
@@ -63,9 +56,12 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const submitMusic = inject(submitMusicInjectionKey) as SubmitMusicType
-    const previousModal = inject(previousModalInjectionKey) as PreviousModalType
+  emits: {
+    // NOTE: never usedって怒られるので応急処置
+    submitMusic: (music: IMusicModel, radioName: string, message: string) =>
+      music && radioName && message,
+  },
+  setup(props, { emit }) {
     const state = toRefs(
       reactive<State>({
         radioName: '',
@@ -86,14 +82,12 @@ export default defineComponent({
       state.message.value = message
     }
     const submit = () => {
-      submitMusic({
-        message: state.message.value,
-        radioName: state.radioName.value,
-        music: props.music,
-      })
-    }
-    const cancel = () => {
-      previousModal()
+      emit(
+        'submitMusic',
+        props.music,
+        state.message.value,
+        state.radioName.value
+      )
     }
     return {
       state,
@@ -101,7 +95,6 @@ export default defineComponent({
       updateRadioName,
       updateMessage,
       submit,
-      cancel,
     }
   },
 })

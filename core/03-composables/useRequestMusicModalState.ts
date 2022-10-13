@@ -2,26 +2,26 @@ import { ref } from '@nuxtjs/composition-api'
 
 export const ModalState = ['confirm', 'finished'] as const
 export const useRequestMusicModalState = () => {
-  const currentModal = ref<typeof ModalState[number]>('confirm')
+  const currentState = ref<typeof ModalState[number]>('confirm')
   const nextModal = () => {
-    switch (currentModal.value) {
+    switch (currentState.value) {
       case 'confirm':
-        currentModal.value = 'finished'
+        currentState.value = 'finished'
         break
       case 'finished':
-        currentModal.value = 'confirm'
+        currentState.value = 'confirm'
         break
     }
   }
   const previousModal = () => {
-    switch (currentModal.value) {
+    switch (currentState.value) {
       case 'confirm':
         break
       case 'finished':
-        currentModal.value = 'confirm'
+        currentState.value = 'confirm'
         break
     }
   }
 
-  return { currentModal, nextModal, previousModal }
+  return { currentState, nextModal, previousModal }
 }

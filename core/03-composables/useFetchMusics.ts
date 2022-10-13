@@ -9,11 +9,7 @@ export const useFetchMusics = (repository: IFetchMusicsRepository) => {
   const { loading: fetchMusicsLoading, setLoading } = useLoading()
   const musics: Ref<IMusicModel[] | undefined> = ref(undefined)
   const fetchMusicsError: Ref<AxiosError | Error | undefined> = ref(undefined)
-  const fetchMusics = (q: string, roomId: string) => {
-    const params: IFetchMusicsParams = {
-      q,
-      roomId,
-    }
+  const fetchMusics = (params: IFetchMusicsParams) => {
     setLoading(true)
     repository
       .fetch(params)

@@ -3,7 +3,7 @@
     <div v-if="!state.cards.value.length" class="text-center">
       検索結果が見つかりませんでした
     </div>
-    <p v-else class="mb-3 text-xl">リクエストしたい曲を選択しよう！</p>
+    <p v-else class="text-xl mb-3">リクエストしたい曲を選択しよう！</p>
     <div class="grid gap-y-3 md:gap-6 md:grid-cols-5">
       <template v-if="state.cards.value">
         <div v-for="(card, index) in state.cards.value" :key="index">
@@ -30,9 +30,14 @@ import {
   reactive,
   onMounted,
   PropType,
+  inject,
 } from '@nuxtjs/composition-api'
 import { MusicOverview } from '~/types/components/music_overview'
 import { IMusicModel } from '~/core/01-models/music'
+import {
+  SelectMusicType,
+  selectMusicInjectionKey,
+} from '~/core/03-composables/useRequestMusicModal'
 
 interface State {
   cards: Array<MusicOverview>
@@ -42,18 +47,15 @@ export default defineComponent({
   props: {
     musics: { type: Array as PropType<IMusicModel[]>, required: true },
   },
-  emits: {
-    // NOTE: never usedって怒られるので応急処置
-    selectMusic: (music: IMusicModel) => !!music,
-  },
-  setup(props, { emit }) {
+  setup(props) {
+    const selectMusic = inject(selectMusicInjectionKey) as SelectMusicType
     const state = toRefs(
       reactive<State>({
         cards: [],
       })
     )
     const onClickCard = (index: number): void => {
-      emit('selectMusic', props.musics[index])
+      selectMusic({ music: props.musics[index] })
     }
     onMounted(() => {
       props.musics.map((music) =>

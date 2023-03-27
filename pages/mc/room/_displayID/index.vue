@@ -25,13 +25,11 @@
                 <li>使用サービス: {{ roomDetail.type }}</li>
                 <li>
                   ルームURL:
-                  <NuxtLink
-                    :to="`/room/${displayId}`"
-                    class="underline break-words"
-                    >{{ fullSharedUrl }}&nbsp;<fa
+                  <a :href="fullSharedUrl" class="underline break-words">
+                    {{ fullSharedUrl }}&nbsp;<fa
                       icon="arrow-up-right-from-square"
                     />
-                  </NuxtLink>
+                  </a>
                 </li>
                 <li>
                   <a :href="externalPlaylistUrl" target="_blank"

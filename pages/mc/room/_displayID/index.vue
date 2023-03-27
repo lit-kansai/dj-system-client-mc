@@ -25,7 +25,12 @@
                 <li>使用サービス: {{ roomDetail.type }}</li>
                 <li>
                   ルームURL:
-                  <a :href="fullSharedUrl" class="underline break-words">
+                  <a
+                    :href="fullSharedUrl"
+                    target="_blank"
+                    rel="noopener"
+                    class="underline break-words"
+                  >
                     {{ fullSharedUrl }}&nbsp;<fa
                       icon="arrow-up-right-from-square"
                     />
